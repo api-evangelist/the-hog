@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search Deep Research API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Deep Research
+paths:
+  /api/deep-research:
+    post:
+      description: Start a deep research job with a prompt and JSON Schema. The response includes an operation ID and poll URL for retrieving the structured result.
+      operationId: startDeepResearch
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Prevents duplicate work if you retry the same request with the same key.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeepResearchRequestDto'
+      responses:
+        '202':
+          description: Research job accepted. Poll the returned URL for status and results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepResearchQueuedResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Start deep research
+      tags:
+      - Deep Research
+components:
+  schemas:
+    DeepResearchBudgetRequestDto:
+      type: object
+      properties:
+        maxCredits:
+          type: integer
+          format: int32
+          description: Maximum credits to spend on this research run.
+    DeepResearchQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/DeepResearchAcceptedMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    DeepResearchRequestDto:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: Research instructions.
+          example: Research AI CRM competitors
+        schema:
+          type: object
+          additionalProperties: true
+          description: JSON Schema that defines the dynamic shape of result.data returned after the operation completes.
+          example:
+            type: object
+            properties:
+              competitors:
+                type: array
+        model:
+          type: string
+          description: Optional model override.
+        urls:
+          description: Optional seed URLs to prioritize during research.
+          type: array
+          items:
+            type: string
+        inputAnchors:
+          oneOf:
+          - type: array
+            items:
+              type: object
+              additionalProperties: true
+          - type: object
+            additionalProperties: true
+          description: Optional caller-owned anchor metadata overlaid into matching schema paths. Arrays preserve the previously documented contract; objects support keyed anchors used by the runtime.
+          example:
+          - input_anchor:
+              candidate_index: 1
+        maxCredits:
+          type: integer
+          format: int32
+          description: Maximum credits to spend. Must match budget.maxCredits when both are provided.
+        budget:
+          $ref: '#/components/schemas/DeepResearchBudgetRequestDto'
+        enrich:
+          type: boolean
+          description: Set false to disable server-side schema enrichment and fill exactly the supplied schema. Closed schemas (additionalProperties:false) are never enriched.
+        confirm:
+          type: boolean
+          description: Set true to continue after a confirmation_required estimate warning.
+      required:
+      - prompt
+      - schema
+    DeepResearchAcceptedMetaDto:
+      type: object
+      properties:
+        schemaContract:
+          type: object
+          additionalProperties: true
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

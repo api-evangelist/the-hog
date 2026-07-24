@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search Operations API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Operations
+paths:
+  /api/operations:
+    get:
+      description: List your most-recent background operations, scoped to the active organization and the requesting user. Use this to recover an `operationId` you no longer have. Ordered newest-first; `limit` returns up to that many (default 20, max 100). Optional `status` filters to a single operation status.
+      operationId: listOperations
+      parameters: []
+      responses:
+        '200':
+          description: Most-recent operations for the caller (newest first).
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OperationResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '429':
+          description: Too many requests. Slow down before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Too many requests.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List recent operations
+      tags:
+      - Operations
+  /api/operations/{id}:
+    get:
+      description: Check the status of a background operation and retrieve its result once it completes.
+      operationId: getOperation
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Operation ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Current operation status, progress, result, or error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '429':
+          description: Too many requests. Slow down before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Too many requests.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get operation
+      tags:
+      - Operations
+components:
+  schemas:
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    OperationResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        progress:
+          type: number
+          nullable: true
+        result:
+          type: object
+          nullable: true
+          additionalProperties: true
+        error:
+          type: object
+          nullable: true
+          additionalProperties: true
+      required:
+      - id
+      - status
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

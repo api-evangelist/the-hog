@@ -1,0 +1,791 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search Monitors API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Monitors
+paths:
+  /api/v1/monitors:
+    post:
+      description: Create a recurring monitor that runs on a schedule and stores matching events for later review.
+      operationId: createMonitor
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMonitorDto'
+      responses:
+        '201':
+          description: Monitor created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Create monitor
+      tags:
+      - Monitors
+    get:
+      description: List monitors for your organization.
+      operationId: listMonitors
+      parameters:
+      - name: status
+        required: false
+        in: query
+        schema: {}
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        schema: {}
+      responses:
+        '200':
+          description: Monitors with pagination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorListResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List monitors
+      tags:
+      - Monitors
+  /api/v1/monitors/{id}:
+    patch:
+      description: Update a monitor configuration, schedule, or status.
+      operationId: updateMonitor
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Monitor ID.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMonitorDto'
+      responses:
+        '200':
+          description: Monitor updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Update monitor
+      tags:
+      - Monitors
+    delete:
+      description: Delete a monitor by ID.
+      operationId: deleteMonitor
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Monitor ID.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Monitor deleted.
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Delete monitor
+      tags:
+      - Monitors
+    get:
+      description: Retrieve a monitor by ID.
+      operationId: getMonitor
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Monitor ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Monitor details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get monitor
+      tags:
+      - Monitors
+  /api/v1/monitors/{id}/run-now:
+    post:
+      description: Trigger a monitor run immediately instead of waiting for its next scheduled time.
+      operationId: runMonitorNow
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Monitor ID.
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunNowBodyDto'
+      responses:
+        '202':
+          description: Monitor run accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Run monitor now
+      tags:
+      - Monitors
+  /api/v1/monitors/{id}/events:
+    get:
+      description: List events found by a monitor.
+      operationId: listMonitorEvents
+      parameters:
+      - name: since
+        required: false
+        in: query
+        description: ISO timestamp — only return events detected after this time
+        schema: {}
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        schema: {}
+      - name: id
+        required: true
+        in: path
+        description: Monitor ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Monitor events with pagination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorEventListResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List monitor events
+      tags:
+      - Monitors
+components:
+  schemas:
+    MonitorResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - linkedin_keyword
+          - linkedin_profile
+          - linkedin_company
+          - linkedin_post
+          - instagram_profile
+          - instagram_post
+          - x_profile
+          - x_keyword
+          - reddit_keyword
+          - reddit_subreddit
+          - tiktok_keyword
+          - tiktok_hashtag
+          - web_search
+          - site_search
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          - disabled
+        config:
+          type: object
+          additionalProperties: true
+        cadence_minutes:
+          type: number
+        last_run_at:
+          type: string
+          nullable: true
+        next_run_at:
+          type: string
+          nullable: true
+        consecutive_failures:
+          type: number
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - type
+      - status
+      - config
+      - cadence_minutes
+      - last_run_at
+      - next_run_at
+      - consecutive_failures
+      - created_at
+      - updated_at
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    RunNowBodyDto:
+      type: object
+      properties:
+        force_fresh:
+          type: boolean
+          description: Force a fresh scrape for this run, bypassing cache
+    MonitorEventListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorEventDto'
+        next_cursor:
+          type: string
+          nullable: true
+      required:
+      - data
+      - next_cursor
+    UpdateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+        config:
+          type: object
+        cadence_minutes:
+          type: number
+        max_results:
+          type: number
+        force_fresh:
+          type: boolean
+        cache_ttl_days:
+          type: number
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          description: Only active and paused are user-settable
+    MonitorListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorResponseDto'
+        next_cursor:
+          type: string
+          nullable: true
+      required:
+      - data
+      - next_cursor
+    CreateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Human-readable name
+          example: Competitor mentions
+        type:
+          type: string
+          description: Monitor type
+          enum:
+          - linkedin_keyword
+          - linkedin_profile
+          - linkedin_company
+          - linkedin_post
+          - instagram_profile
+          - instagram_post
+          - x_profile
+          - x_keyword
+          - reddit_keyword
+          - reddit_subreddit
+          - tiktok_keyword
+          - tiktok_hashtag
+          - web_search
+          - site_search
+        config:
+          type: object
+          description: Type-specific configuration (query, filters, etc.)
+          example:
+            query: hiring engineers
+            max_results: 20
+        cadence_minutes:
+          type: number
+          description: 'Cadence in minutes (minimum 60 for scraper-based types: LinkedIn, Instagram, X, Reddit, TikTok; minimum 15 for web)'
+          default: 60
+        max_results:
+          type: number
+          description: Max results per run (1-100)
+          default: 10
+        force_fresh:
+          type: boolean
+          description: Force fresh scrape bypassing cache
+          default: false
+        cache_ttl_days:
+          type: number
+          description: Cache TTL in days for profile/company monitors (1-90)
+          default: 14
+        post_url:
+          type: string
+          description: LinkedIn post URL (required for linkedin_post type)
+      required:
+      - name
+      - type
+      - config
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    MonitorEventDto:
+      type: object
+      properties:
+        id:
+          type: string
+        monitor_id:
+          type: string
+        dedup_key:
+          type: string
+        event_type:
+          type: string
+        event_json:
+          type: object
+          additionalProperties: true
+        canonical_person_id:
+          type: string
+          nullable: true
+        canonical_company_id:
+          type: string
+          nullable: true
+        detected_at:
+          type: string
+      required:
+      - id
+      - monitor_id
+      - dedup_key
+      - event_type
+      - event_json
+      - canonical_person_id
+      - canonical_company_id
+      - detected_at
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

@@ -1,0 +1,361 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search Enrichments API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Enrichments
+paths:
+  /api/enrichments:
+    post:
+      description: Enrich one contact or a batch of contacts with requested fields such as verified email, phone, and signals. Small contact-only requests can complete immediately; larger requests return an operation to poll.
+      operationId: submitEnrichment
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Prevents duplicate work if you retry the same request with the same key.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostEnrichmentDto'
+      responses:
+        '200':
+          description: Enrichment completed immediately.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrichmentSyncResponseDto'
+        '202':
+          description: Enrichment accepted. Poll the returned URL for status and results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrichmentQueuedResponseDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Submit enrichment
+      tags:
+      - Enrichments
+  /api/enrichments/{id}:
+    get:
+      description: Check the status of an enrichment request and retrieve the result once it completes.
+      operationId: getEnrichment
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Enrichment operation ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Current enrichment status, progress, result, or error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '429':
+          description: Too many requests. Slow down before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Too many requests.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get enrichment
+      tags:
+      - Enrichments
+components:
+  schemas:
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    PostEnrichmentDto:
+      type: object
+      properties:
+        identifier:
+          description: Single person (mutually exclusive with identifiers)
+          allOf:
+          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        identifiers:
+          description: Batch (max 100); mutually exclusive with identifier
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        fields:
+          example:
+          - contact.email
+          - signals
+          type: array
+          items:
+            type: string
+        signals_config:
+          $ref: '#/components/schemas/SignalsConfigDto'
+      required:
+      - fields
+    PersonIdentifierRecordDto:
+      type: object
+      properties:
+        linkedin_url:
+          type: string
+        email:
+          type: string
+        x_handle:
+          type: string
+        github_username:
+          type: string
+    EnrichmentQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
+    SignalsConfigDto:
+      type: object
+      properties:
+        platforms:
+          description: Opt-in platforms; omit or empty = all
+          type: array
+          items:
+            type: string
+        max_posts:
+          type: object
+        intent_signals:
+          type: array
+          items:
+            type: string
+        since_days:
+          type: number
+        handles:
+          type: object
+    PublicResponseMetaDto:
+      type: object
+      properties:
+        requestId:
+          type: string
+      required:
+      - requestId
+    OperationResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        progress:
+          type: number
+          nullable: true
+        result:
+          type: object
+          nullable: true
+          additionalProperties: true
+        error:
+          type: object
+          nullable: true
+          additionalProperties: true
+      required:
+      - id
+      - status
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    EnrichmentSyncResponseDto:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - data
+      - meta
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

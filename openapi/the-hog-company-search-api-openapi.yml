@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Company Search
+paths:
+  /api/v1/companies/search:
+    post:
+      description: Async company discovery. Returns operationId; poll GET /api/operations/:id.
+      operationId: searchCompanies
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Optional. Reusing the same key for the same organization returns the existing queued operation.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCompanySearchDto'
+      responses:
+        '202':
+          description: Company search accepted. Poll the returned URL for results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntitySearchAcceptedPublicDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Search companies
+      tags:
+      - Company Search
+components:
+  schemas:
+    PostCompanySearchDto:
+      type: object
+      properties:
+        query:
+          type: string
+          example: B2B SaaS companies in Austin hiring engineers
+          maxLength: 500
+        limit:
+          type: number
+          default: 25
+          minimum: 1
+          maximum: 100
+        includeSignals:
+          type: boolean
+          default: false
+        filters:
+          $ref: '#/components/schemas/EntitySearchFiltersDto'
+        confirm:
+          type: boolean
+      required:
+      - query
+    EntitySearchFiltersDto:
+      type: object
+      properties:
+        titles:
+          type: array
+          items:
+            type: string
+        titleMatch:
+          type: string
+          enum:
+          - exact
+          - similar
+        locations:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+        company:
+          $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
+    EntityEmployeeCountFilterDto:
+      type: object
+      properties:
+        min:
+          type: number
+          minimum: 0
+        max:
+          type: number
+          minimum: 0
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    EntityCompanyNestedFilterDto:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            type: string
+        linkedinUrls:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    EntitySearchAcceptedPublicDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

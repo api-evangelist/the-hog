@@ -1,0 +1,5874 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search Scrapers API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Scrapers
+paths:
+  /api/v1/platform/scrapers/image/deepfake-detection:
+    post:
+      description: Analyze an image for signs of face manipulation. Submit either a public image URL or a multipart image file.
+      operationId: detectImageDeepfake
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformImageDeepfakeDetectionDto'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PlatformImageDeepfakeDetectionDto'
+      responses:
+        '200':
+          description: Image authenticity analysis result.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ImageDeepfakeDetectionResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Detect image deepfakes
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/finder:
+    post:
+      description: Find LinkedIn company URLs from website domains or URLs.
+      operationId: findLinkedInCompanies
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInFinderDto'
+      responses:
+        '200':
+          description: LinkedIn company URLs found from domains or URLs.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInFinderResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Find LinkedIn companies
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/profile:
+    post:
+      description: Fetch public profile details for a LinkedIn username.
+      operationId: getLinkedInProfile
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInProfileDto'
+      responses:
+        '200':
+          description: LinkedIn profile data.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    nullable: true
+                    allOf:
+                    - $ref: '#/components/schemas/LinkedInProfileResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get LinkedIn profile
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/company:
+    post:
+      description: Fetch public company details for a LinkedIn slug or URL.
+      operationId: getLinkedInCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInCompanyDto'
+      responses:
+        '200':
+          description: LinkedIn company data.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    nullable: true
+                    allOf:
+                    - $ref: '#/components/schemas/LinkedInCompanyResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get LinkedIn company
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/company-posts:
+    post:
+      description: Fetch recent posts for a LinkedIn company page.
+      operationId: listLinkedInCompanyPosts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInCompanyPostsDto'
+      responses:
+        '200':
+          description: LinkedIn company posts.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/LinkedInCompanyPostsResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn company posts
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/profile-posts:
+    post:
+      description: Queue a LinkedIn profile posts scrape and poll the returned operation URL for results.
+      operationId: listLinkedInProfilePosts
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Optional. Reusing the same key for the same organization returns the existing queued profile-posts operation.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInProfilePostsDto'
+      responses:
+        '202':
+          description: Profile posts scrape accepted. Poll the returned operation URL for results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebCrawlAcceptedResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn profile posts
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/keyword-posts:
+    post:
+      description: Search LinkedIn posts by keyword.
+      operationId: searchLinkedInKeywordPosts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInKeywordPostsDto'
+      responses:
+        '200':
+          description: LinkedIn posts matching a keyword.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInPostResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Search LinkedIn posts
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/post-reactions:
+    post:
+      description: Fetch reactions for one or more LinkedIn post URLs.
+      operationId: listLinkedInPostReactions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInPostUrlsDto'
+      responses:
+        '200':
+          description: LinkedIn post reactions.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInPostReactionResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn post reactions
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/post-comments:
+    post:
+      description: Fetch comments for one or more LinkedIn post URLs.
+      operationId: listLinkedInPostComments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInPostUrlsDto'
+      responses:
+        '200':
+          description: LinkedIn post comments.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInPostCommentResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn post comments
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/profile-reactions:
+    post:
+      description: Fetch recent LinkedIn posts a public profile has reacted to.
+      operationId: listLinkedInProfileReactions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInProfileActivityDto'
+      responses:
+        '200':
+          description: LinkedIn profile reactions.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInProfileReactionResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn profile reactions
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/linkedin/profile-comments:
+    post:
+      description: Fetch recent LinkedIn posts a public profile has commented on.
+      operationId: listLinkedInProfileComments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformLinkedInProfileActivityDto'
+      responses:
+        '200':
+          description: LinkedIn profile comments.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinkedInProfileCommentResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List LinkedIn profile comments
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/x/profile:
+    post:
+      description: Fetch public profile details and recent posts for an X (Twitter) username.
+      operationId: getXProfile
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformXProfileDto'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/XProfileResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get X profile
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/x/search-posts:
+    post:
+      description: Search public X (Twitter) posts by keyword or query, with optional date, language, and location filters.
+      operationId: searchXPosts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformXSearchPostsDto'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/XTweetResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Search X posts
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/x/post:
+    post:
+      description: Fetch a single public X (Twitter) post by its URL.
+      operationId: getXPost
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformXPostDto'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    nullable: true
+                    allOf:
+                    - $ref: '#/components/schemas/XTweetResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get X post by URL
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/x/conversation:
+    post:
+      description: Fetch a public X (Twitter) conversation thread by post ID.
+      operationId: getXConversation
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformXConversationDto'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/XTweetResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get X conversation thread
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/profile:
+    post:
+      description: Fetch public profile details for an Instagram username.
+      operationId: getInstagramProfile
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramUsernameDto'
+      responses:
+        '200':
+          description: Instagram profile data.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    nullable: true
+                    allOf:
+                    - $ref: '#/components/schemas/InstagramProfileResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get Instagram profile
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/posts:
+    post:
+      description: Fetch recent posts for an Instagram username.
+      operationId: listInstagramPosts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramUsernameDto'
+      responses:
+        '200':
+          description: Instagram posts.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InstagramPostResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List Instagram posts
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/post-details:
+    post:
+      description: Fetch details for an Instagram post or reel URL.
+      operationId: getInstagramPost
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramPostDetailsDto'
+      responses:
+        '200':
+          description: Instagram post details.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    nullable: true
+                    allOf:
+                    - $ref: '#/components/schemas/InstagramPostResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get Instagram post
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/post-comments:
+    post:
+      description: Fetch comments for an Instagram post or reel URL.
+      operationId: listInstagramPostComments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramPostCommentsDto'
+      responses:
+        '200':
+          description: Instagram post comments.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InstagramCommentResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List Instagram post comments
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/followers:
+    post:
+      description: Fetch followers for an Instagram username.
+      operationId: listInstagramFollowers
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramFollowersDto'
+      responses:
+        '200':
+          description: Instagram followers.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/InstagramFollowScrapeResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List Instagram followers
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/instagram/following:
+    post:
+      description: Fetch accounts followed by an Instagram username.
+      operationId: listInstagramFollowing
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformInstagramFollowingDto'
+      responses:
+        '200':
+          description: Instagram following.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/InstagramFollowScrapeResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List Instagram following
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/youtube/video:
+    post:
+      description: Fetch public page content for a YouTube video URL.
+      operationId: getYouTubeVideo
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformYouTubeVideoDto'
+      responses:
+        '200':
+          description: YouTube video page content.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/YouTubeVideoResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get YouTube video
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/youtube/channel:
+    post:
+      description: Fetch public page content for a YouTube channel URL.
+      operationId: getYouTubeChannel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformYouTubeChannelDto'
+      responses:
+        '200':
+          description: YouTube channel page content.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/YouTubeChannelResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get YouTube channel
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/facebook/post:
+    post:
+      description: Fetch public page content for a Facebook post URL.
+      operationId: getFacebookPost
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformFacebookPostDto'
+      responses:
+        '200':
+          description: Facebook post page content.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FacebookPostResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get Facebook post
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/facebook/page:
+    post:
+      description: Fetch public page content for a Facebook page URL.
+      operationId: getFacebookPage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformFacebookPageDto'
+      responses:
+        '200':
+          description: Facebook page content.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FacebookPageResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get Facebook page
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/tiktok/profile:
+    post:
+      description: Fetch public profile details and recent videos for a TikTok username.
+      operationId: getTikTokProfile
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformTikTokUsernameDto'
+      responses:
+        '200':
+          description: TikTok profile and video data.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TikTokProfileScrapeResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get TikTok profile
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/seo/domain:
+    post:
+      description: Returns organic and paid search signals, keyword themes, and inferred tech stack for a domain.
+      operationId: getSeoDomainOverview
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformSeoDomainDto'
+      responses:
+        '200':
+          description: Organic and paid search overview for a domain.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SeoDomainResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get SEO domain overview
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/seo/keywords:
+    post:
+      description: Returns organic search keywords for a domain with optional filters and search-type segmentation.
+      operationId: getSeoKeywords
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformSeoKeywordsDto'
+      responses:
+        '200':
+          description: Organic search keywords for a domain.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SearchIntelligenceKeywordsResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get SEO keywords
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/seo/competing-keywords:
+    post:
+      description: Returns organic keywords shared across the supplied domains.
+      operationId: getSeoCompetingKeywords
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformSearchIntelligenceCompetingDto'
+      responses:
+        '200':
+          description: Organic keywords shared across domains.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SearchIntelligenceKeywordsResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get shared SEO keywords
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/web/search:
+    post:
+      description: Search the web and return normalized results in a stable response shape.
+      operationId: searchWeb
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformWebSearchDto'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebSearchResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Search web
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/web/crawl:
+    post:
+      description: Queue an asynchronous website crawl. Poll the returned operation URL for status and results.
+      operationId: crawlWebSite
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Optional. Reusing the same key for the same organization returns the existing queued crawl operation.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformWebCrawlDto'
+      responses:
+        '202':
+          description: Crawl accepted. Poll the returned operation URL for results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebCrawlAcceptedResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '403':
+          description: Error 403.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 403
+                error: Forbidden
+                message: Error 403.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Crawl website
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/web/scrape:
+    post:
+      description: Fetch a web page and return readable text plus requested markdown, HTML, links, metadata, or schema-guided JSON.
+      operationId: scrapeWebPage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformWebScrapeDto'
+      responses:
+        '200':
+          description: Scraped web page content.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebScrapeResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '502':
+          description: The upstream service could not complete the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 502
+                error: Bad Gateway
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '504':
+          description: The upstream service timed out before completing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 504
+                error: Gateway Timeout
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Scrape web page
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/web/scrape/jobs:
+    post:
+      description: Queue an async browser scrape for dynamic or long pages and poll the returned operation URL for results.
+      operationId: createWebScrapeJob
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Optional. Reusing the same key for the same organization returns the existing queued deep scrape operation.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformWebScrapeJobDto'
+      responses:
+        '202':
+          description: Deep scrape accepted. Poll the returned operation URL for results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebScrapeJobAcceptedResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Queue a deep web scrape job
+      tags:
+      - Scrapers
+  /api/v1/platform/scrapers/web/scrape/batch:
+    post:
+      description: Queue a batch scrape job and poll the returned operation URL for per-URL results.
+      operationId: batchScrapeWebPages
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Optional. Reusing the same key for the same organization returns the existing queued batch operation.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformWebScrapeBatchDto'
+      responses:
+        '202':
+          description: Batch scrape accepted. Poll the returned operation URL for results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                - meta
+                additionalProperties: false
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WebScrapeBatchAcceptedResponseDto'
+                  meta:
+                    $ref: '#/components/schemas/PublicResponseMetaDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '503':
+          description: The service is temporarily unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 503
+                error: Service Unavailable
+                message: Service temporarily unavailable.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Batch scrape web pages
+      tags:
+      - Scrapers
+components:
+  schemas:
+    XTweetResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        created_at:
+          type: string
+          nullable: true
+        source:
+          type: string
+          nullable: true
+        lang:
+          type: string
+          nullable: true
+        conversation_id:
+          type: string
+          nullable: true
+        view_count:
+          type: number
+          nullable: true
+        bookmark_count:
+          type: number
+          nullable: true
+        like_count:
+          type: number
+          nullable: true
+        retweet_count:
+          type: number
+          nullable: true
+        reply_count:
+          type: number
+          nullable: true
+        quote_count:
+          type: number
+          nullable: true
+        url:
+          type: string
+          nullable: true
+        is_retweet:
+          type: boolean
+        is_quote:
+          type: boolean
+          nullable: true
+        is_reply:
+          type: boolean
+          nullable: true
+        author_x_user_id:
+          type: string
+          nullable: true
+        author_username:
+          type: string
+          nullable: true
+        author_display_name:
+          type: string
+          nullable: true
+        retweet_tweet_id:
+          type: string
+          nullable: true
+        quote_tweet_id:
+          type: string
+          nullable: true
+      required:
+      - id
+      - text
+      - is_retweet
+    PlatformWebCrawlDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Domain or URL to crawl
+          example: https://example.com
+        limit:
+          type: number
+          minimum: 1
+          maximum: 50
+          default: 5
+        maxPages:
+          type: number
+          description: Maximum number of pages to crawl. Overrides limit when set.
+          minimum: 1
+          maximum: 50
+          default: 5
+        maxDepth:
+          type: number
+          description: Maximum link depth from the starting URL.
+          minimum: 0
+          maximum: 5
+          default: 1
+        sameDomainOnly:
+          type: boolean
+          description: Restrict discovered links to the starting hostname.
+          default: true
+        instructions:
+          type: string
+          description: Instructions for content extraction
+      required:
+      - url
+    FacebookPageResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type: number
+          nullable: true
+        pageId:
+          type: string
+          nullable: true
+        pageName:
+          type: string
+          nullable: true
+        pageUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        likesCount:
+          type: number
+          nullable: true
+        followersCount:
+          type: number
+          nullable: true
+        websiteUrl:
+          type: string
+          nullable: true
+        category:
+          type: string
+          nullable: true
+      required:
+      - url
+      - text
+    ImageDeepfakeSignalsResponseDto:
+      type: object
+      properties:
+        fullImageGeneration:
+          $ref: '#/components/schemas/ImageDeepfakeSignalResponseDto'
+        faceManipulation:
+          $ref: '#/components/schemas/ImageDeepfakeFaceManipulationSignalResponseDto'
+      required:
+      - fullImageGeneration
+      - faceManipulation
+    PlatformXConversationDto:
+      type: object
+      properties:
+        postId:
+          type: string
+          example: '1234567890123456789'
+        maxTweets:
+          type: number
+          minimum: 1
+          maximum: 500
+      required:
+      - postId
+    PlatformInstagramPostDetailsDto:
+      type: object
+      properties:
+        postUrl:
+          type: string
+          example: https://www.instagram.com/p/ABC123/
+      required:
+      - postUrl
+    PlatformWebScrapeBatchDto:
+      type: object
+      properties:
+        urls:
+          description: URLs to scrape using the top-level renderJs and cache freshness options.
+          type: array
+          items:
+            type: string
+        items:
+          description: Per-item scrape requests. Use either items or urls, not both.
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformWebScrapeBatchItemDto'
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping for urls entries.
+          default: false
+        maxAgeMs:
+          type: number
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          minimum: 0
+          maximum: 30
+          default: 0
+        maxConcurrency:
+          type: number
+          minimum: 1
+          maximum: 10
+          default: 3
+          description: Maximum number of batch items processed concurrently.
+    PlatformLinkedInCompanyPostsDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+          example: acme-inc
+        limit:
+          type: number
+          minimum: 1
+          maximum: 500
+          default: 20
+      required:
+      - companySlug
+    PlatformFacebookPageDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.facebook.com/openai
+      required:
+      - url
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    PlatformInstagramUsernameDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: instagram
+        maxPosts:
+          type: number
+          minimum: 1
+          maximum: 200
+      required:
+      - username
+    InstagramPostResponseDto:
+      type: object
+      properties:
+        shortcode:
+          type: string
+        post_url:
+          type: string
+          nullable: true
+        post_type:
+          type: string
+          nullable: true
+        caption:
+          type: string
+          nullable: true
+        hashtags:
+          nullable: true
+          type: array
+          items:
+            type: string
+        mentions:
+          nullable: true
+          type: array
+          items:
+            type: string
+        likes_count:
+          type: number
+          nullable: true
+        comments_count:
+          type: number
+          nullable: true
+        video_views_count:
+          type: number
+          nullable: true
+        display_url:
+          type: string
+          nullable: true
+        dimensions_height:
+          type: number
+          nullable: true
+        dimensions_width:
+          type: number
+          nullable: true
+        is_sponsored:
+          type: boolean
+          nullable: true
+        location_name:
+          type: string
+          nullable: true
+        location_id:
+          type: string
+          nullable: true
+        posted_at:
+          type: string
+          nullable: true
+        author_username:
+          type: string
+          nullable: true
+        owner_id:
+          type: string
+          nullable: true
+      required:
+      - shortcode
+    SearchIntelligenceKeywordsResponseDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          nullable: true
+        seedKeyword:
+          type: string
+          nullable: true
+        includedDomains:
+          nullable: true
+          type: array
+          items:
+            type: string
+        excludedDomains:
+          nullable: true
+          type: array
+          items:
+            type: string
+        searchType:
+          type: string
+          nullable: true
+        intent:
+          type: string
+          enum:
+          - seo
+          - aeo
+          - geo
+          - ppc
+        resultCount:
+          type: number
+        totalMatchingResults:
+          type: number
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchIntelligenceKeywordRowResponseDto'
+      required:
+      - intent
+      - resultCount
+      - totalMatchingResults
+      - keywords
+    LinkedInPostReactionResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        reactionType:
+          type: string
+        postId:
+          type: string
+        actor:
+          $ref: '#/components/schemas/LinkedInReactionActorResponseDto'
+      required:
+      - id
+      - reactionType
+      - postId
+      - actor
+    PlatformImageDeepfakeDetectionDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Public http(s) image URL to analyze. Provide either url or multipart image, not both.
+          example: https://example.com/image.jpg
+          maxLength: 4096
+        image:
+          type: string
+          format: binary
+          description: Multipart image file to analyze. Provide either image or url, not both.
+    PlatformWebScrapeJobDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to scrape with an async deep browser acquisition job.
+          example: https://example.com/page
+        formats:
+          type: array
+          description: Output formats to store on the completed operation. Defaults to ["text", "metadata"]. Request "json" only with jsonSchema.
+          default:
+          - text
+          - metadata
+          items:
+            type: string
+            enum:
+            - text
+            - markdown
+            - html
+            - links
+            - metadata
+            - json
+        jsonSchema:
+          type: object
+          description: JSON Schema used for schema-guided extraction when formats includes "json".
+          additionalProperties: true
+        instructions:
+          type: string
+          description: Additional extraction instructions used only when formats includes "json".
+          maxLength: 8000
+        maxAgeMs:
+          type: number
+          description: Maximum accepted cache age in milliseconds. Defaults to 0 for deep jobs so dynamic pages are fetched fresh.
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxDurationMs:
+          type: number
+          description: Maximum deep render wall-clock duration in milliseconds.
+          minimum: 5000
+          maximum: 600000
+          default: 120000
+        maxScrolls:
+          type: number
+          description: Maximum viewport scroll steps during deep render.
+          minimum: 0
+          maximum: 200
+          default: 40
+        scrollWaitMs:
+          type: number
+          description: Delay after each deep-render scroll step.
+          minimum: 100
+          maximum: 5000
+          default: 500
+        contentStableRounds:
+          type: number
+          description: Stop after this many consecutive scroll rounds without meaningful content growth.
+          minimum: 1
+          maximum: 20
+          default: 3
+        expandClickableContent:
+          type: boolean
+          description: Click generic visible "load more" or "show more" controls during deep render.
+          default: true
+        maxExpansionClicks:
+          type: number
+          description: Maximum generic expansion clicks during deep render.
+          minimum: 0
+          maximum: 200
+          default: 25
+      required:
+      - url
+    LinkedInRepostedByResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+        publicIdentifier:
+          type: string
+      required:
+      - name
+      - publicIdentifier
+    InstagramProfileResponseDto:
+      type: object
+      properties:
+        instagram_user_id:
+          type: string
+          nullable: true
+        username:
+          type: string
+        display_name:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        profile_url:
+          type: string
+          nullable: true
+        profile_picture_url:
+          type: string
+          nullable: true
+        website_url:
+          type: string
+          nullable: true
+        followers_count:
+          type: number
+          nullable: true
+        following_count:
+          type: number
+          nullable: true
+        posts_count:
+          type: number
+          nullable: true
+        is_verified:
+          type: boolean
+          nullable: true
+        is_business_account:
+          type: boolean
+          nullable: true
+        is_private:
+          type: boolean
+          nullable: true
+      required:
+      - username
+    WebScrapeMetadataResponseDto:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        canonicalUrl:
+          type: string
+          nullable: true
+        finalUrl:
+          type: string
+          nullable: true
+        contentType:
+          type: string
+          nullable: true
+        statusCode:
+          type: number
+          nullable: true
+        textLength:
+          type: number
+          nullable: true
+        responseBytes:
+          type: number
+          nullable: true
+        capture:
+          $ref: '#/components/schemas/WebScrapeCaptureMetadataResponseDto'
+    PlatformFacebookPostDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.facebook.com/openai/posts/1234567890
+      required:
+      - url
+    YouTubeVideoResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type: number
+          nullable: true
+        videoId:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        channelId:
+          type: string
+          nullable: true
+        channelName:
+          type: string
+          nullable: true
+        channelUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        publishedAt:
+          type: string
+          nullable: true
+        durationSeconds:
+          type: number
+          nullable: true
+        viewCount:
+          type: number
+          nullable: true
+        likeCount:
+          type: number
+          nullable: true
+        commentCount:
+          type: number
+          nullable: true
+        thumbnailUrl:
+          type: string
+          nullable: true
+        transcriptText:
+          type: string
+          nullable: true
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/YouTubeVideoCommentResponseDto'
+      required:
+      - url
+      - text
+    TikTokProfileScrapeResponseDto:
+      type: object
+      properties:
+        profile:
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
+        videos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TikTokVideoResponseDto'
+        relatedVideos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TikTokRelatedVideoResponseDto'
+      required:
+      - profile
+      - videos
+      - relatedVideos
+    LinkedInReactionActorResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        linkedinUrl:
+          type: string
+        position:
+          type: string
+        pictureUrl:
+          type: string
+          nullable: true
+        sourceActorIdKind:
+          type: string
+          enum:
+          - linkedin_member_id
+          - source_row_id
+          - unknown
+        profileUrlKind:
+          type: string
+          enum:
+          - vanity_slug
+          - opaque_member_id
+          - company
+          - unknown
+        universalName:
+          type: string
+          nullable: true
+        canonicalPersonId:
+          type: string
+          nullable: true
+        resolutionStatus:
+          type: string
+          enum:
+          - resolved
+          - unresolved
+          - not_attempted
+      required:
+      - id
+      - name
+      - linkedinUrl
+      - position
+      - sourceActorIdKind
+      - profileUrlKind
+      - universalName
+      - canonicalPersonId
+      - resolutionStatus
+    WebCrawlAcceptedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        pollUrl:
+          type: string
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+    InstagramFollowScrapeResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        relation_type:
+          type: string
+          enum:
+          - followers
+          - following
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstagramFollowEdgeResponseDto'
+        requested_limit:
+          type: number
+          nullable: true
+        returned_count:
+          type: number
+      required:
+      - username
+      - relation_type
+      - edges
+      - returned_count
+    LinkedInProfileActivityActorResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+          - profile
+          - company
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        linkedinUrl:
+          type: string
+          nullable: true
+        position:
+          type: string
+          nullable: true
+        universalName:
+          type: string
+          nullable: true
+        pictureUrl:
+          type: string
+          nullable: true
+    PlatformLinkedInKeywordPostsDto:
+      type: object
+      properties:
+        keyword:
+          type: string
+          example: b2b saas
+        config:
+          $ref: '#/components/schemas/LinkedInKeywordPostsConfigBodyDto'
+      required:
+      - keyword
+    PlatformLinkedInProfilePostsDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: some-public-id
+        maxPosts:
+          type: number
+          minimum: 1
+          maximum: 200
+          default: 20
+      required:
+      - username
+    PlatformLinkedInPostUrlsDto:
+      type: object
+      properties:
+        postUrls:
+          example:
+          - https://www.linkedin.com/feed/update/urn:li:activity:123
+          type: array
+          items:
+            type: string
+        maxItems:
+          type: number
+          minimum: 1
+          maximum: 500
+          default: 10
+      required:
+      - postUrls
+    LinkedInCommentEngagementResponseDto:
+      type: object
+      properties:
+        likes:
+          type: number
+        comments:
+          type: number
+        shares:
+          type: number
+      required:
+      - likes
+      - comments
+      - shares
+    LinkedInPostCommentResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        commentary:
+          type: string
+        linkedinUrl:
+          type: string
+        createdAt:
+          type: string
+        createdAtTimestamp:
+          type: number
+        engagement:
+          $ref: '#/components/schemas/LinkedInCommentEngagementResponseDto'
+        postId:
+          type: string
+        pinned:
+          type: boolean
+        edited:
+          type: boolean
+        actor:
+          $ref: '#/components/schemas/LinkedInCommentActorResponseDto'
+        replies:
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkedInPostCommentResponseDto'
+      required:
+      - id
+      - commentary
+      - linkedinUrl
+      - createdAt
+      - createdAtTimestamp
+      - engagement
+      - postId
+      - pinned
+      - edited
+      - actor
+    InstagramFollowEdgeResponseDto:
+      type: object
+      properties:
+        relation_type:
+          type: string
+          enum:
+          - followers
+          - following
+        seed_username:
+          type: string
+        follower:
+          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
+        following:
+          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
+      required:
+      - relation_type
+      - seed_username
+      - follower
+      - following
+    PlatformSeoDomainDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: acme.com
+          description: Domain or http(s) URL to look up SEO and paid search signals for.
+      required:
+      - domain
+    PlatformInstagramFollowingDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: instagram
+        maxFollowing:
+          type: number
+          minimum: 1
+          maximum: 5000
+          description: Requested following limit. The upstream source may return more than requested. Unlimited is not exposed on v1.
+      required:
+      - username
+    LinkedInCommentActorResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+          - profile
+          - company
+        name:
+          type: string
+        linkedinUrl:
+          type: string
+        position:
+          type: string
+        universalName:
+          type: string
+          nullable: true
+        pictureUrl:
+          type: string
+          nullable: true
+      required:
+      - id
+      - type
+      - name
+      - linkedinUrl
+      - position
+    PlatformInstagramFollowersDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: instagram
+        maxFollowers:
+          type: number
+          minimum: 1
+          maximum: 5000
+          description: Maximum followers to request. Unlimited is not exposed on v1.
+      required:
+      - username
+    LinkedInLocationResponseDto:
+      type: object
+      properties:
+        country:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        full:
+          type: string
+          nullable: true
+    LinkedInCompanyResponseDto:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        website:
+          type: string
+          nullable: true
+        industry:
+          type: string
+          nullable: true
+        company_size:
+          type: string
+          nullable: true
+        headquarters:
+          type: string
+          nullable: true
+        founded:
+          type: number
+          nullable: true
+        specialties:
+          nullable: true
+          type: array
+          items:
+            type: string
+        logo_url:
+          type: string
+          nullable: true
+        follower_count:
+          type: number
+          nullable: true
+        employee_count:
+          type: number
+          nullable: true
+        linkedin_url:
+          type: string
+          nullable: true
+      required:
+      - identifier
+    XProfileResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        tweets:
+          type: array
+          items:
+            $ref: '#/components/schemas/XTweetResponseDto'
+        referencedTweets:
+          type: array
+          items:
+            $ref: '#/components/schemas/XTweetResponseDto'
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/XAuthorResponseDto'
+        bio:
+          type: string
+          nullable: true
+      required:
+      - username
+      - tweets
+      - referencedTweets
+      - authors
+    ImageDeepfakeSignalResponseDto:
+      type: object
+      properties:
+        score:
+          type: number
+          nullable: true
+      required:
+      - score
+    LinkedInProfileResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        full_name:
+          type: string
+          nullable: true
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        headline:
+          type: string
+          nullable: true
+        about:
+          type: string
+          nullable: true
+        profile_picture_url:
+          type: string
+          nullable: true
+        location:
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/LinkedInLocationResponseDto'
+        follower_count:
+          type: number
+          nullable: true
+        connection_count:
+          type: number
+          nullable: true
+        current_company:
+          type: string
+          nullable: true
+        current_company_url:
+          type: string
+          nullable: true
+        background_picture_url:
+          type: string
+          nullable: true
+        linkedin_id:
+          type: string
+          nullable: true
+        profile_url:
+          type: string
+          nullable: true
+        open_to_work:
+          type: boolean
+          nullable: true
+        is_premium:
+          type: boolean
+          nullable: true
+        is_creator:
+          type: boolean
+          nullable: true
+        is_influencer:
+          type: boolean
+          nullable: true
+        is_top_voice:
+          type: boolean
+          nullable: true
+        is_verified:
+          type: boolean
+          nullable: true
+        is_hiring:
+          type: boolean
+          nullable: true
+        top_skills:
+          nullable: true
+          type: array
+          items:
+            type: string
+        experience:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        education:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        certifications:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        skills:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        languages:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        volunteering:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        projects:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        publications:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        honors_awards:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        courses:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        patents:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        featured:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        recommendations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        organizations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        causes:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+      - username
+    TikTokRelatedVideoResponseDto:
+      type: object
+      properties:
+        relationship:
+          type: string
+          enum:
+          - collaboration
+        matched_username:
+          type: string
+        video:
+          $ref: '#/components/schemas/TikTokVideoResponseDto'
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
+      required:
+      - relationship
+      - matched_username
+      - video
+      - collaborators
+    YouTubeChannelResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type: number
+          nullable: true
+        channelId:
+          type: string
+          nullable: true
+        handle:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        subscriberCount:
+          type: number
+          nullable: true
+        videoCount:
+          type: number
+          nullable: true
+        viewCount:
+          type: number
+          nullable: true
+        thumbnailUrl:
+          type: string
+          nullable: true
+      required:
+      - url
+      - text
+    PlatformYouTubeChannelDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.youtube.com/@OpenAI
+      required:
+      - url
+    LinkedInPostResponseDto:
+      type: object
+      properties:
+        activityId:
+          type: string
+        postUrl:
+          type: string
+          nullable: true
+        text:
+          type: string
+        postedAt:
+          type: string
+          nullable: true
+        authorName:
+          type: string
+          nullable: true
+        authorHeadline:
+          type: string
+          nullable: true
+        authorProfileUrl:
+          type: string
+          nullable: true
+        authorProfileUsername:
+          type: string
+          nullable: true
+        totalReactions:
+          type: number
+          nullable: true
+        commentsCount:
+          type: number
+          nullable: true
+        repostsCount:
+          type: number
+          nullable: true
+        isReshare:
+          type: boolean
+          nullable: true
+        repostedBy:
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/LinkedInRepostedByResponseDto'
+        contentType:
+          type: string
+          nullable: true
+        contentData:
+          type: object
+          additionalProperties: true
+        hashtags:
+          nullable: true
+          type: array
+          items:
+            type: string
+      required:
+      - activityId
+      - text
+    PlatformSeoKeywordsDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: acme.com
+          description: Domain to analyze organic search keywords for.
+        searchType:
+          type: string
+          enum:
+          - GainedClicks
+          - LostClicks
+          - GainedRanks
+          - LostRanks
+          - MostValuable
+          - NewlyRanked
+          - JustMadeIt
+          - JustFellOff
+          example: MostValuable
+        pageSize:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 25
+        searchVolumeMin:
+          type: number
+          minimum: 0
+        searchVolumeMax:
+          type: number
+          minimum: 0
+        rankMin:
+          type: number
+          minimum: 1
+        rankMax:
+          type: number
+          minimum: 1
+        includeTerms:
+          type: string
+          description: Comma-separated terms that must appear in keywords.
+        excludeTerms:
+          type: string
+          description: Comma-separated terms to exclude from keywords.
+      required:
+      - domain
+      - searchType
+    ImageDeepfakeDetectionResponseDto:
+      type: object
+      properties:
+        verdict:
+          type: string
+          enum:
+          - likely_real
+          - uncertain
+          - likely_deepfake
+        score:
+          type: number
+        status:
+          type: string
+          enum:
+          - complete
+          - inconclusive
+        signals:
+          $ref: '#/components/schemas/ImageDeepfakeSignalsResponseDto'
+      required:
+      - verdict
+      - score
+      - status
+      - signals
+    InstagramCommentResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        text:
+          type: string
+        owner_username:
+          type: string
+          nullable: true
+        owner_id:
+          type: string
+          nullable: true
+        timestamp:
+          type: string
+          nullable: true
+        likes_count:
+          type: number
+          nullable: true
+        replies_count:
+          type: number
+          nullable: true
+        replies:
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/InstagramCommentResponseDto'
+      required:
+      - text
+    LinkedInFinderResponseDto:
+      type: object
+      properties:
+        linkedin_url:
+          type: string
+          nullable: true
+        domain:
+          type: string
+          nullable: true
+        company_name:
+          type: string
+          nullable: true
+    PlatformInstagramPostCommentsDto:
+      type: object
+      properties:
+        postUrl:
+          type: string
+          example: https://www.instagram.com/p/ABC123/
+        maxComments:
+          type: number
+          minimum: 1
+          maximum: 200
+        includeNested:
+          type: boolean
+          description: When true, requests nested reply threads from the comment actor (more items / cost).
+      required:
+      - postUrl
+    PlatformXSearchPostsDto:
+      type: object
+      properties:
+        query:
+          type: string
+          example: typescript nestjs
+        maxTweets:
+          type: number
+          minimum: 1
+          maximum: 200
+        options:
+          $ref: '#/components/schemas/XSearchOptionsBodyDto'
+      required:
+      - query
+    PlatformWebSearchDto:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search query
+          example: best CRM software 2025
+        maxResults:
+          type: number
+          minimum: 1
+          maximum: 50
+          default: 10
+        searchDepth:
+          type: string
+          enum:
+          - basic
+          - advanced
+          default: basic
+        topic:
+          type: string
+          enum:
+          - general
+          - news
+          default: general
+        days:
+          type: number
+          description: Limit results to last N days (news only)
+        includeDomains:
+          description: Only include results from these domains
+          type: array
+          items:
+            type: string
+        excludeDomains:
+          description: Exclude results from these domains
+          type: array
+          items:
+            type: string
+      required:
+      - query
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    PlatformWebScrapeBatchItemDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to scrape
+          example: https://example.com/page
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping
+          default: false
+        maxAgeMs:
+          type: number
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          minimum: 0
+          maximum: 30
+          default: 0
+      required:
+      - url
+    LinkedInProfileReactionResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        profileUrl:
+          type: string
+        profileUsername:
+          type: string
+        reactionType:
+          type: string
+        reactedAt:
+          type: string
+          nullable: true
+        sourceUrl:
+          type: string
+          nullable: true
+        post:
+          $ref: '#/components/schemas/LinkedInProfileActivityPostResponseDto'
+        actor:
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/LinkedInProfileActivityActorResponseDto'
+      required:
+      - profileUrl
+      - profileUsername
+      - reactionType
+      - post
+    PlatformSearchIntelligenceCompetingDto:
+      type: object
+      properties:
+        includedDomains:
+          example:
+          - acme.com
+          - competitor.com
+          description: Domains to compare for shared keywords.
+          type: array
+          items:
+            type: string
+        excludedDomains:
+          example:
+          - excluded.com
+          description: Domains to exclude from the comparison.
+          type: array
+          items:
+            type: string
+        pageSize:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 25
+      required:
+      - includedDomains
+    PlatformTikTokUsernameDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: tiktok
+        maxVideos:
+          type: number
+          minimum: 1
+          maximum: 500
+      required:
+      - username
+    PublicResponseMetaDto:
+      type: object
+      properties:
+        requestId:
+          type: string
+      required:
+      - requestId
+    TikTokVideoResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        platform_video_id:
+          type: string
+        tiktok_profile_id:
+          type: string
+          nullable: true
+        caption:
+          type: string
+          nullable: true
+        post_url:
+          type: string
+          nullable: true
+        author_username:
+          type: string
+          nullable: true
+        author_display_name:
+          type: string
+          nullable: true
+        author_profile_url:
+          type: string
+          nullable: true
+        play_count:
+          type: number
+          nullable: true
+        like_count:
+          type: number
+          nullable: true
+        comment_count:
+          type: number
+          nullable: true
+        share_count:
+          type: number
+          nullable: true
+        hashtags:
+          nullable: true
+          type: array
+          items:
+            type: string
+        cdn_url:
+          type: string
+          nullable: true
+        s3_key:
+          type: string
+          nullable: true
+        thumbnail_s3_key:
+          type: string
+          nullable: true
+        duration_secs:
+          type: number
+          nullable: true
+        posted_at:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+      required:
+      - id
+      - platform_video_id
+      - created_at
+    PlatformWebScrapeDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to scrape
+          example: https://example.com/page
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping
+          default: false
+        formats:
+          type: array
+          description: Output formats to return. Defaults to ["text"]. Request "json" only with jsonSchema.
+          default:
+          - text
+          items:
+            type: string
+            enum:
+            - text
+            - markdown
+            - html
+            - links
+            - metadata
+            - json
+        jsonSchema:
+          type: object
+          description: JSON Schema used for schema-guided extraction when formats includes "json".
+          additionalProperties: true
+        instructions:
+          type: string
+          description: Additional extraction instructions used only when formats includes "json".
+          maxLength: 8000
+        maxAgeMs:
+          type: number
+          description: Maximum accepted cache age in milliseconds. Use 0 or omit to force a fresh scrape.
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          description: Maximum accepted cache age in days. Use 0 or omit to force a fresh scrape. Ignored when maxAgeMs is provided.
+          minimum: 0
+          maximum: 30
+          default: 0
+      required:
+      - url
+    SeoDomainResponseDto:
+      type: object
+      properties:
+        hasData:
+          type: boolean
+        organicKeywordsCount:
+          type: number
+          nullable: true
+        paidKeywordsCount:
+          type: number
+          nullable: true
+        summary:
+          type: string
+          nullable: true
+        keyword_category:
+          type: string
+          nullable: true
+        tech_stack:
+          nullable: true
+          type: array
+          items:
+            type: string
+        match_score:
+          type: number
+          nullable: true
+      required:
+      - hasData
+    LinkedInProfileActivityPostResponseDto:
+      type: object
+      properties:
+        postId:
+          type: string
+          nullable: true
+        postUrl:
+          type: string
+          nullable: true
+        text:
+          type: string
+          nullable: true
+        authorName:
+          type: string
+          nullable: true
+        authorProfileUrl:
+          type: string
+          nullable: true
+        authorCompanyUrl:
+          type: string
+          nullable: true
+        postedAt:
+          type: string
+          nullable: true
+        reactionCount:
+          type: number
+          nullable: true
+        commentCount:
+          type: number
+          nullable: true
+        repostCount:
+          type: number
+          nullable: true
+    PlatformLinkedInCompanyDto:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: acme-inc
+      required:
+      - identifier
+    WebSearchResponseDto:
+      type: object
+      properties:
+        query:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSearchResultItemResponseDto'
+        totalResults:
+          type: number
+          nullable: true
+      required:
+      - query
+      - results
+    WebScrapeCaptureMetadataResponseDto:
+      type: object
+      properties:
+        mode:
+          type: string
+        completionReason:
+          type: string
+        scrollsCompleted:
+          type: number
+        maxScrolls:
+          type: number
+        expansionClicks:
+          type: number
+        maxExpansionClicks:
+          type: number
+        durationMs:
+          type: number
+      required:
+      - mode
+      - completionReason
+      - scrollsCompleted
+      - maxScrolls
+      - expansionClicks
+      - maxExpansionClicks
+      - durationMs
+    InstagramFollowProfileResponseDto:
+      type: object
+      properties:
+        instagram_user_id:
+          type: string
+          nullable: true
+        username:
+          type: string
+        display_name:
+          type: string
+          nullable: true
+        profile_url:
+          type: string
+          nullable: true
+        profile_picture_url:
+          type: string
+          nullable: true
+        is_private:
+          type: boolean
+          nullable: true
+        is_verified:
+          type: boolean
+          nullable: true
+      required:
+      - username
+    XAuthorResponseDto:
+      type: object
+      properties:
+        x_user_id:
+          type: string
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        display_name:
+          type: string
+          nullable: true
+        profile_url:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        profile_picture_url:
+          type: string
+          nullable: true
+        followers_count:
+          type: number
+          nullable: true
+        following_count:
+          type: number
+          nullable: true
+        tweet_count:
+          type: number
+          nullable: true
+        is_verified:
+          type: boolean
+          nullable: true
+        is_blue_verified:
+          type: boolean
+          nullable: true
+        account_created_at:
+          type: string
+          nullable: true
+    SearchIntelligenceKeywordRowResponseDto:
+      type: object
+      properties:
+        keyword:
+          type: string
+        searchVolume:
+          type: number
+          nullable: true
+        rank:
+          type: number
+          nullable: true
+        rankingDifficulty:
+          type: number
+          nullable: true
+        totalMonthlyClicks:
+          type: number
+          nullable: true
+        percentOrganicClicks:
+          type: number
+          nullable: true
+        broadCostPerClick:
+          type: number
+          nullable: true
+        isQuestion:
+          type: boolean
+          nullable: true
+      required:
+      - keyword
+    LinkedInKeywordPostsConfigBodyDto:
+      type: object
+      properties:
+        limit:
+          type: number
+          minimum: 1
+          maximum: 500
+        sortBy:
+          type: string
+          enum:
+          - relevance
+          - recent
+        dateFilter:
+          type: string
+          enum:
+          - past-24h
+          - past-week
+          - past-month
+        matchMode:
+          type: string
+          enum:
+          - exact
+          - broad
+          default: exact
+          description: Use exact to search the keyword as a quoted phrase, or broad to let LinkedIn match related terms.
+    YouTubeVideoCommentResponseDto:
+      type: object
+      properties:
+        authorName:
+          type: string
+          nullable: true
+        authorUrl:
+          type: string
+          nullable: true
+        text:
+          type: string
+        publishedAt:
+          type: string
+          nullable: true
+        likeCount:
+          type: number
+          nullable: true
+        replyCount:
+          type: number
+          nullable: true
+      required:
+      - text
+    PlatformLinkedInProfileDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: some-public-id
+      required:
+      - username
+    LinkedInProfileCommentResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        profileUrl:
+          type: string
+        profileUsername:
+          type: string
+        commentText:
+          type: string
+        commentedAt:
+          type: string
+          nullable: true
+        sourceUrl:
+          type: string
+          nullable: true
+        post:
+          $ref: '#/components/schemas/LinkedInProfileActivityPostResponseDto'
+        actor:
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/LinkedInProfileActivityActorResponseDto'
+      required:
+      - profileUrl
+      - profileUsername
+      - commentText
+      - post
+    WebScrapeJobAcceptedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+    PlatformYouTubeVideoDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      required:
+      - url
+    WebScrapeBatchAcceptedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+    XSearchOptionsBodyDto:
+      type: object
+      properties:
+        dateFrom:
+          type: string
+        dateTo:
+          type: string
+        lang:
+          type: string
+        geocode:
+          type: string
+    PlatformXProfileDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: elonmusk
+        maxTweets:
+          type: number
+          minimum: 1
+          maximum: 200
+      required:
+      - username
+    PlatformXPostDto:
+      type: object
+      properties:
+        postUrl:
+          type: string
+          example: https://x.com/elonmusk/status/123456789
+      required:
+      - postUrl
+    PlatformLinkedInFinderDto:
+      type: object
+      properties:
+        domains:
+          description: Website domains or URLs to look up.
+          example:
+          - https://example.com
+          maxItems: 50
+          type: array
+          items:
+            type: string
+      required:
+      - domains
+    WebScrapeResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type: number
+          nullable: true
+        markdown:
+          type: string
+          nullable: true
+        html:
+          type: string
+          nullable: true
+        links:
+          type: array
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/WebScrapeMetadataResponseDto'
+        json:
+          type: object
+          additionalProperties: true
+      required:
+      - url
+      - text
+    FacebookPostResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type: number
+          nullable: true
+        postId:
+          type: string
+          nullable: true
+        authorName:
+          type: string
+          nullable: true
+        authorUrl:
+          type: string
+          nullable: true
+        postedAt:
+          type: string
+          nullable: true
+        likeCount:
+          type: number
+          nullable: true
+        commentCount:
+          type: number
+          nullable: true
+        shareCount:
+          type: number
+          nullable: true
+        viewCount:
+          type: number
+          nullable: true
+      required:
+      - url
+      - text
+    TikTokProfileSeedResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        tiktok_user_id:
+          type: string
+          nullable: true
+        display_name:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        follower_count:
+          type: number
+          nullable: true
+        following_count:
+          type: number
+          nullable: true
+        verified:
+          type: boolean
+          nullable: true
+        avatar_url:
+          type: string
+          nullable: true
+      required:
+      - username
+    ImageDeepfakeFaceManipulationSignalResponseDto:
+      type: object
+      properties:
+        score:
+          type: number
+          nullable: true
+        facesAnalyzed:
+          type: number
+      required:
+      - score
+      - facesAnalyzed
+    PlatformLinkedInProfileActivityDto:
+      type: object
+      properties:
+        profiles:
+          description: LinkedIn profile URLs or public profile usernames.
+          example:
+          - https://www.linkedin.com/in/satyanadella
+          - some-public-id
+          type: array
+          items:
+            type: string
+        maxItems:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 10
+        postedLimit:
+          type: string
+          enum:
+          - any
+          - 24h
+          - week
+          - month
+          - 3months
+          - 6months
+          - year
+          default: any
+          description: Fetch posts no older than this time window.
+      required:
+      - profiles
+    WebSearchResultItemResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+          nullable: true
+        content:
+          type: string
+          nullable: true
+        publishedDate:
+          type: string
+          nullable: true
+        position:
+          type: number
+          nullable: true
+      required:
+      - url
+      - title
+    LinkedInCompanyPostsResponseDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkedInPostResponseDto'
+        description:
+          type: string
+          nullable: true
+      required:
+      - companySlug
+      - posts
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.

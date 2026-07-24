@@ -1,0 +1,569 @@
+openapi: 3.0.0
+info:
+  title: The Hog Company Search API
+  description: Public API reference for The Hog.
+  version: '1.0'
+  contact: {}
+servers:
+- url: https://developer.thehog.ai
+tags:
+- name: Search
+paths:
+  /api/v1/search:
+    post:
+      description: Run a search across supported web and social sources. The default response returns an operation to poll; add sync=true only when you want to wait briefly for an immediate result.
+      operationId: submitSearch
+      parameters:
+      - name: sync
+        required: false
+        in: query
+        description: Set to true to wait briefly for a completed result instead of immediately returning an operation to poll.
+        schema:
+          type: boolean
+      - name: Idempotency-Key
+        in: header
+        description: Prevents duplicate work if you retry the same request with the same key.
+        required: false
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostSearchDto'
+      responses:
+        '200':
+          description: Search completed immediately.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultDto'
+        '202':
+          description: Search accepted. Poll the returned URL for status and results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAcceptedDto'
+        '400':
+          description: The request body or parameters are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '402':
+          description: The organization does not have enough credits for this request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 402
+                error: Payment Required
+                message: Insufficient credits.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '422':
+          description: The request body is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 422
+                error: Unprocessable Entity
+                message: Validation failed
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+                errors:
+                - property: body.query
+                  message: query must be a string
+                  constraints:
+                    isString: query must be a string
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Submit search
+      tags:
+      - Search
+    get:
+      description: List previous searches for your organization.
+      operationId: listSearches
+      parameters:
+      - name: type
+        required: false
+        in: query
+        description: Filter by search type
+        schema: {}
+      - name: limit
+        required: false
+        in: query
+        description: Page size (max 200)
+        schema:
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        description: Pagination cursor (created_at ISO)
+        schema: {}
+      responses:
+        '200':
+          description: Searches with pagination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchListResponseDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: List searches
+      tags:
+      - Search
+  /api/v1/search/{id}:
+    get:
+      description: Check the status of a search and retrieve the result once it completes.
+      operationId: getSearchResult
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: Search ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Current search status, progress, result, or error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultDto'
+        '401':
+          description: Authentication is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Authentication is required.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 404
+                error: Not Found
+                message: Resource not found.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '429':
+          description: Too many requests. Slow down before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Too many requests.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicErrorResponseDto'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: An unexpected error occurred.
+                path: /api/v1/search
+                timestamp: '2026-05-21T09:08:10.000Z'
+                requestId: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+      security:
+      - AccessKey: []
+        SecretKey: []
+      summary: Get search result
+      tags:
+      - Search
+components:
+  schemas:
+    PostSearchDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of search to perform
+          enum:
+          - web_search
+          - site_search
+          - linkedin_keyword
+          - x_keyword
+          - reddit_search
+          - tiktok_keyword
+          - tiktok_hashtag
+          example: web_search
+        query:
+          type: string
+          description: Search query string. Required unless match_any/match_all are provided.
+          example: AI startup funding 2026
+        match_any:
+          description: Keywords where ANY must match (OR logic). Used to build search query.
+          example:
+          - AI startup
+          - machine learning funding
+          type: array
+          items:
+            type: string
+        match_all:
+          description: Keywords where ALL must match (AND logic). Used to build search query.
+          example:
+          - Series A
+          - '2026'
+          type: array
+          items:
+            type: string
+        exclude:
+          description: Keywords to exclude from results.
+          example:
+          - crypto
+          - blockchain
+          type: array
+          items:
+            type: string
+        max_results:
+          type: number
+          description: Maximum results to return (default 10, max 50)
+          default: 10
+        site:
+          type: string
+          description: Domain to restrict search to (required for site_search)
+          example: techcrunch.com
+        include_domains:
+          description: Domains to include results from (web_search only)
+          type: array
+          items:
+            type: string
+        exclude_domains:
+          description: Domains to exclude results from (web_search only)
+          type: array
+          items:
+            type: string
+        sort_by:
+          type: string
+          description: Sort by relevance or recency for supported keyword searches. Reddit maps recent to Reddit's new sort.
+          enum:
+          - relevance
+          - recent
+          default: relevance
+        match_mode:
+          type: string
+          description: Match mode for LinkedIn keyword searches. exact searches the query as a quoted phrase; broad sends the query without phrase quotes.
+          enum:
+          - exact
+          - broad
+          default: exact
+        date_filter:
+          type: string
+          description: Date filter for LinkedIn search (e.g. past-24h, past-week)
+        hashtag:
+          type: string
+          description: 'Hashtag to search for (required for tiktok_hashtag type, without # prefix)'
+          example: productanalytics
+        subreddit:
+          type: string
+          description: Subreddit to search within (reddit_search only)
+          example: startups
+      required:
+      - type
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    SearchResultItemDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Result URL
+        title:
+          type: string
+          description: Result title
+        content:
+          type: string
+          description: Content snippet or post text
+          nullable: true
+        published_at:
+          type: string
+          description: Published date (ISO)
+          nullable: true
+        author_name:
+          type: string
+          description: Author name (LinkedIn)
+          nullable: true
+        author_headline:
+          type: string
+          description: Author headline (LinkedIn)
+          nullable: true
+        id:
+          type: string
+          description: Source-native stable entity ID, when available
+          nullable: true
+        platform_video_id:
+          type: string
+          description: Source-native stable post/video/activity ID, when available
+          nullable: true
+        post_url:
+          type: string
+          description: Source-native canonical post URL, when available
+          nullable: true
+        author_username:
+          type: string
+          description: Author handle or username, when available
+          nullable: true
+      required:
+      - url
+      - title
+    SearchErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Safe error message
+        retryable:
+          type: boolean
+          description: Whether retrying the search may succeed
+      required:
+      - message
+      - retryable
+    SearchListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultDto'
+        next_cursor:
+          type: string
+          nullable: true
+      required:
+      - data
+    SearchAcceptedDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Search operation ID
+        status:
+          type: string
+          enum:
+          - queued
+        poll_url:
+          type: string
+          description: URL to poll for result
+        meta:
+          $ref: '#/components/schemas/SearchAcceptedMetaDto'
+      required:
+      - id
+      - status
+      - poll_url
+      - meta
+    SearchAcceptedMetaDto:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Request ID for support and tracing
+      required:
+      - request_id
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    SearchResultDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique search result ID
+        status:
+          type: string
+          description: Current status
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+        type:
+          type: string
+          description: Search type
+          enum:
+          - web_search
+          - site_search
+          - linkedin_keyword
+          - x_keyword
+          - reddit_search
+          - tiktok_keyword
+          - tiktok_hashtag
+        query:
+          type: string
+          description: Original query
+        poll_url:
+          type: string
+          description: URL to poll for result
+        results:
+          description: Search results array
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultItemDto'
+        total_results:
+          type: number
+          description: Total results found
+          nullable: true
+        error:
+          description: Error details when failed
+          nullable: true
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SearchErrorDto'
+        created_at:
+          type: string
+          description: ISO timestamp of creation
+        completed_at:
+          type: string
+          description: ISO timestamp of completion
+          nullable: true
+      required:
+      - id
+      - status
+      - type
+      - query
+      - created_at
+  securitySchemes:
+    AccessKey:
+      type: apiKey
+      in: header
+      name: X-Access-Key
+      description: The public API key from the Credentials page.
+    SecretKey:
+      type: apiKey
+      in: header
+      name: X-Secret-Key
+      description: The API secret shown when the credential is created.
