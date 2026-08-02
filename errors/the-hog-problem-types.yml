@@ -1,0 +1,89 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.thehog.ai/reference/error-handling
+docs: https://docs.thehog.ai/reference/error-handling
+format: rfc7807-style
+media_type: application/json
+note: >-
+  The Hog returns a consistent JSON error envelope for every failure (documented as
+  RFC 7807-style, though served as application/json rather than application/problem+json).
+  Codes derived from OpenAPI 4xx/5xx responses and enriched from the docs error reference.
+envelope:
+  fields:
+    - name: statusCode
+      type: integer
+      description: HTTP status code.
+    - name: error
+      type: string
+      description: Short HTTP reason phrase (e.g. "Bad Request").
+    - name: message
+      type: string
+      description: Human-readable summary of the failure.
+    - name: path
+      type: string
+      description: Request path that triggered the error.
+    - name: requestId
+      type: string
+      description: UUID for the request; also returned in the X-Request-Id header.
+    - name: timestamp
+      type: string
+      description: ISO 8601 time the error occurred.
+    - name: errors
+      type: array
+      description: Present only on 400 validation failures; items are {property, message}.
+problems:
+  - status: 400
+    error: Bad Request
+    title: Validation failed
+    remediation: Fix every entry in the errors[] array; the request keeps failing until all rules pass.
+    retry: false
+  - status: 401
+    error: Unauthorized
+    title: Invalid or missing authentication credentials
+    remediation: Verify X-Access-Key and X-Secret-Key from the Credentials page; rotate if revoked.
+    retry: false
+  - status: 402
+    error: Payment Required
+    title: Insufficient credits to complete this request
+    remediation: Top up the credit balance or reduce request scope; no credits are deducted on 402.
+    retry: false
+  - status: 403
+    error: Forbidden
+    title: No organization context / insufficient permissions
+    remediation: Use a dashboard-created key/secret bound to the intended organization.
+    retry: false
+  - status: 404
+    error: Not Found
+    title: Operation or resource not found
+    remediation: Check the operation ID / resource belongs to your organization.
+    retry: false
+  - status: 422
+    error: Unprocessable Entity
+    title: Request could not be processed
+    remediation: Review the request payload against the endpoint schema.
+    retry: false
+  - status: 429
+    error: Too Many Requests
+    title: Rate limit exceeded
+    remediation: Honor Retry-After and back off exponentially; see rate-limits/the-hog-rate-limits.yml.
+    retry: true
+  - status: 500
+    error: Internal Server Error
+    title: An unexpected error occurred
+    remediation: Retry after a short wait; if persistent, contact support with the requestId.
+    retry: true
+  - status: 502
+    error: Bad Gateway
+    title: Upstream failure
+    remediation: Retry after a short wait.
+    retry: true
+  - status: 503
+    error: Service Unavailable
+    title: Service temporarily unavailable
+    remediation: Retry after a short wait with backoff.
+    retry: true
+  - status: 504
+    error: Gateway Timeout
+    title: Upstream timed out
+    remediation: Retry after a short wait; for long jobs prefer the async 202 + poll pattern.
+    retry: true

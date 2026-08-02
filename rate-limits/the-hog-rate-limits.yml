@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.thehog.ai/reference/rate-limits
+docs: https://docs.thehog.ai/reference/rate-limits
+scope: per organization-and-user (not per API key alone)
+status_code: 429
+headers:
+  - Retry-After
+  - X-RateLimit-*
+limits:
+  - name: global
+    limit_count: 600
+    window: minute
+    applies_to: all authenticated endpoints combined
+  - name: polling
+    limit_count: 300
+    window: minute
+    applies_to: GET /api/operations/{id}
+    note: Dedicated bucket separate from the global limit; polling is the highest-frequency pattern.
+recommended_polling_intervals:
+  - job: enrichment (POST /api/enrichments)
+    interval: 2-5 seconds
+  - job: search (POST /api/v1/search)
+    interval: 5-10 seconds
+  - job: deep research (POST /api/deep-research)
+    interval: 10-30 seconds
+retry_behavior: >-
+  On 429, honor Retry-After as the minimum wait, then use exponential backoff with jitter
+  (e.g. 1s, 2s, 4s, 8s, 16s). Do not poll in a tight loop or on every UI tick.

@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/the-hog-openapi.json + https://docs.thehog.ai/
+note: >-
+  Cross-cutting standards this API conforms to, derived from the OpenAPI and docs.
+  No published compliance certifications (SOC 2 / ISO 27001 / etc.) were found, so no
+  Compliance pointer is emitted.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: Published OpenAPI 3.0.0 document at docs.thehog.ai/api-reference/openapi.json.
+  - id: oauth2
+    conforms: true
+    evidence: Hosted MCP server uses OAuth 2.0 (Clerk) with authorization_code + refresh_token flows.
+  - id: oidc
+    conforms: true
+    evidence: OAuth metadata advertises openid scope, id_token RS256 signing, and OIDC claims.
+  - id: rfc8414-oauth-as-metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server served on mcp.thehog.ai.
+  - id: rfc9728-oauth-protected-resource
+    conforms: true
+    evidence: /.well-known/oauth-protected-resource served on mcp.thehog.ai.
+  - id: rfc7807-problem-details
+    conforms: partial
+    evidence: Docs describe RFC 7807-style error bodies, but served as application/json (not application/problem+json).
+  - id: rfc9110-idempotency
+    conforms: true
+    evidence: Idempotency-Key header supported on async POST endpoints, org-scoped.
+  - id: cursor-pagination
+    conforms: true
+    evidence: List endpoints use limit + cursor request params and next_cursor response field.
+  - id: fhir-r4
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: scim
+    conforms: false
+  - id: json-api
+    conforms: false

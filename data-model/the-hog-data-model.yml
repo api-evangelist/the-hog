@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/the-hog-openapi.json
+note: >-
+  Entity graph derived from OpenAPI schemas and id-reference fields. The Hog is an
+  async, credit-metered intelligence API: most long-running calls create an Operation
+  that is polled for a typed result payload.
+entities:
+  - name: Operation
+    id_prefix: op_
+    description: Async job envelope for search, enrichment, and deep-research work.
+    key_fields: [id, operationId, status, progress, result, error]
+    statuses: [queued, processing, succeeded, failed, partial_success, cancelled]
+  - name: Company
+    description: Firmographic/technographic account record returned by company search.
+    source_schema: PostCompanySearchDto / EntitySearchFiltersDto
+  - name: Person
+    description: Contact record returned by people search and enrichment.
+    source_schema: PostPeopleSearchDto / PersonIdentifierRecordDto
+  - name: Enrichment
+    description: Schema-driven person enrichment job (sync 200 or async 202).
+    source_schema: PostEnrichmentDto / EnrichmentQueuedResponseDto
+  - name: Search
+    description: Multi-platform search operation across web, LinkedIn, X, Reddit, TikTok.
+    source_schema: PostSearchDto / SearchResultDto / SearchResultItemDto
+  - name: DeepResearch
+    description: LLM-powered structured research job driven by a prompt + JSON Schema.
+    source_schema: DeepResearchRequestDto / DeepResearchQueuedResponseDto
+  - name: Monitor
+    id_prefix: null
+    description: Recurring watcher over keywords, profiles, companies, or posts.
+    key_fields: [id, name, type, status, config, cadence_minutes, last_run_at, next_run_at]
+    types: [linkedin_keyword, linkedin_profile, linkedin_company, linkedin_post, instagram_profile, instagram_post, x_profile, x_keyword, reddit_keyword, reddit_subreddit, tiktok_keyword]
+  - name: MonitorEvent
+    description: A signal detected by a monitor, retrieved by polling (no webhook push).
+    key_fields: [id, monitor_id, dedup_key, event_type, event_json, canonical_person_id, canonical_company_id, detected_at]
+relationships:
+  - from: Monitor
+    to: MonitorEvent
+    kind: has_many
+    via: monitor_id
+  - from: MonitorEvent
+    to: Person
+    kind: belongs_to
+    via: canonical_person_id
+  - from: MonitorEvent
+    to: Company
+    kind: belongs_to
+    via: canonical_company_id
+  - from: Operation
+    to: Search
+    kind: has_one
+    via: result
+  - from: Operation
+    to: Enrichment
+    kind: has_one
+    via: result
+  - from: Operation
+    to: DeepResearch
+    kind: has_one
+    via: result
+  - from: Search
+    to: SearchResultItem
+    kind: has_many
+    via: data

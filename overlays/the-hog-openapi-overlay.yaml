@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for The Hog API
+  version: 1.0.0
+extends: openapi/the-hog-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enrichment: '2026-07-21'
+      x-api-style: rest-async-credit-metered
+      x-authentication: dual-api-key-header (X-Access-Key + X-Secret-Key)
+      x-idempotency:
+        header: Idempotency-Key
+        scope: organization
+        applies_to:
+          - POST /api/enrichments
+          - POST /api/deep-research
+          - POST /api/v1/search
+          - POST /api/v1/companies/search
+          - POST /api/v1/people/search
+      x-pagination:
+        style: cursor
+        request_params: [limit, cursor]
+        response_field: next_cursor
+      x-rate-limits:
+        global_per_min: 600
+        polling_per_min: 300
+      x-mcp-server: https://mcp.thehog.ai/mcp
+      x-request-id-header: X-Request-Id
+  - target: $.servers
+    update:
+      - url: https://developer.thehog.ai
+        description: Production API host.

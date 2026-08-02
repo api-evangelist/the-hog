@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: live /.well-known/ probes of The Hog hosts
+hosts:
+  - host: https://mcp.thehog.ai
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: the-hog-oauth-authorization-server.json
+        note: RFC 8414 OAuth 2.0 Authorization Server Metadata (Clerk-backed issuer clerk.thehog.ai).
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: the-hog-oauth-protected-resource.json
+        note: RFC 9728 OAuth 2.0 Protected Resource Metadata for the hosted MCP server.
+  - host: https://developer.thehog.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://thehog.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+oauth_summary:
+  issuer: https://clerk.thehog.ai
+  authorization_endpoint: https://clerk.thehog.ai/oauth/authorize
+  token_endpoint: https://clerk.thehog.ai/oauth/token
+  registration_endpoint: https://clerk.thehog.ai/oauth/register
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  scopes_supported: [openid, profile, email, public_metadata, private_metadata, offline_access, "user:org:read"]
+  note: >-
+    These are Clerk identity scopes governing the hosted MCP OAuth flow, not The Hog REST
+    API authorization scopes (the REST API uses the X-Access-Key/X-Secret-Key key pair).

@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.npmjs.com/package/@thehog/mcp
+note: >-
+  The Hog does not publish language client SDKs; the docs show raw HTTP examples
+  (curl/httpx/fetch). The one first-party published package is the MCP server that
+  exposes the API as agent tools. No SDKs pointer is emitted because this is an MCP
+  server runner, not a client SDK.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@thehog/mcp"
+    url: https://www.npmjs.com/package/@thehog/mcp
+    install: npx @thehog/mcp
+    version: 0.8.1
+    license: MIT
+    repo: https://github.com/The-Hog/the-hog-mcp
+    description: MCP server for The Hog API (local stdio transport).
+    official: true

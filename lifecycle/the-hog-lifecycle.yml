@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.thehog.ai/
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.thehog.ai/introduction
+  note: >-
+    Resource endpoints are served under /api/v1/; a few platform endpoints
+    (deep-research, enrichments, operations) are unversioned under /api/.
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found (July 2026).
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_note: No status page found (status.thehog.ai does not resolve; /status returns 404).
+deprecated_operations: []
+deprecated_operations_note: No operations flagged deprecated in the OpenAPI.

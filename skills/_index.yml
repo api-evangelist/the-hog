@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/the-hog-openapi.json + https://docs.thehog.ai/reference/mcp-tools
+note: Agent Skills grounded in verified OpenAPI operationIds, mirroring The Hog MCP workflow tools.
+skills:
+  - file: the-hog-build-prospect-list.md
+    name: Build a prospect list with The Hog
+    api: openapi/the-hog-openapi.json
+    operations: [searchCompanies, searchPeople, estimatePeopleSearch, submitEnrichment, getEnrichment, getOperation]
+  - file: the-hog-deep-research.md
+    name: Run structured deep research with The Hog
+    api: openapi/the-hog-openapi.json
+    operations: [startDeepResearch, getOperation]
+  - file: the-hog-social-monitoring.md
+    name: Monitor social signals with The Hog
+    api: openapi/the-hog-openapi.json
+    operations: [createMonitor, runMonitorNow, listMonitorEvents, listMonitors, getMonitor, updateMonitor, deleteMonitor]
+  - file: the-hog-scrape-and-extract.md
+    name: Scrape and extract web data with The Hog
+    api: openapi/the-hog-openapi.json
+    operations: [searchWeb, scrapeWebPage, crawlWebSite, createWebScrapeJob, startDeepResearch, getOperation]

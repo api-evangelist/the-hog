@@ -1,0 +1,56 @@
+# The Hog API
+
+## Docs
+
+- [POST /api/v1/companies/search](https://docs.thehog.ai/api/companies/company-search.md): Search for companies by firmographics, technographics, and signals. Async.
+- [POST /api/deep-research](https://docs.thehog.ai/api/deep-research.md): Start an async LLM research job with a prompt and JSON Schema.
+- [GET /api/enrichments/:id](https://docs.thehog.ai/api/enrichments/get-enrichment.md): Poll status and result of an async enrichment.
+- [POST /api/enrichments](https://docs.thehog.ai/api/enrichments/submit-enrichment.md): Schema-driven person enrichment. Returns 200 sync or 202 async.
+- [POST /api/v1/monitors](https://docs.thehog.ai/api/monitors/create.md): Create a recurring monitor to track keywords, profiles, or posts.
+- [DELETE /api/v1/monitors/:id](https://docs.thehog.ai/api/monitors/delete.md): Permanently delete a monitor.
+- [GET /api/v1/monitors/:id/events](https://docs.thehog.ai/api/monitors/events.md): List events detected by a monitor.
+- [GET /api/v1/monitors](https://docs.thehog.ai/api/monitors/list.md): List all monitors for your organization.
+- [POST /api/v1/monitors/:id/run-now](https://docs.thehog.ai/api/monitors/run-now.md): Trigger an immediate run of a monitor.
+- [PATCH /api/v1/monitors/:id](https://docs.thehog.ai/api/monitors/update.md): Update a monitor's configuration or cadence.
+- [GET /api/operations/:id](https://docs.thehog.ai/api/operations/get-operation.md): Poll the status of any async operation.
+- [POST /api/v1/people/search](https://docs.thehog.ai/api/people/people-search.md): Search for people by role, seniority, company, and more.
+- [POST /api/v1/people/search/estimate](https://docs.thehog.ai/api/people/people-search-estimate.md): Estimate people search credits, including contact enrichment risk.
+- [POST /api/v1/platform/scrapers/image/deepfake-detection](https://docs.thehog.ai/api/scrapers/image-deepfake-detection.md): Analyze an image for signs of face manipulation.
+- [POST /api/v1/platform/scrapers/linkedin/finder](https://docs.thehog.ai/api/scrapers/linkedin-finder.md): Find LinkedIn company URLs from website domains or URLs.
+- [POST /api/v1/platform/scrapers/linkedin/profile](https://docs.thehog.ai/api/scrapers/linkedin-profile.md): Get LinkedIn profile details by username.
+- [POST /api/v1/platform/scrapers/linkedin/company](https://docs.thehog.ai/api/scrapers/linkedin-company.md): Get LinkedIn company details by slug or URL.
+- [POST /api/v1/platform/scrapers/linkedin/company-posts](https://docs.thehog.ai/api/scrapers/linkedin-company-posts.md): List recent posts from a LinkedIn company page.
+- [POST /api/v1/platform/scrapers/linkedin/profile-posts](https://docs.thehog.ai/api/scrapers/linkedin-profile-posts.md): List recent posts from a LinkedIn profile.
+- [POST /api/v1/platform/scrapers/linkedin/keyword-posts](https://docs.thehog.ai/api/scrapers/linkedin-keyword-posts.md): Search LinkedIn posts by keyword with exact or broad matching.
+- [POST /api/v1/platform/scrapers/linkedin/post-reactions](https://docs.thehog.ai/api/scrapers/linkedin-post-reactions.md): List reactions on LinkedIn posts.
+- [POST /api/v1/platform/scrapers/linkedin/post-comments](https://docs.thehog.ai/api/scrapers/linkedin-post-comments.md): List comments on LinkedIn posts.
+- [POST /api/v1/platform/scrapers/linkedin/profile-reactions](https://docs.thehog.ai/api/scrapers/linkedin-profile-reactions.md): List posts a LinkedIn profile reacted to.
+- [POST /api/v1/platform/scrapers/linkedin/profile-comments](https://docs.thehog.ai/api/scrapers/linkedin-profile-comments.md): List posts a LinkedIn profile commented on.
+- [POST /api/v1/platform/scrapers/instagram/followers](https://docs.thehog.ai/api/scrapers/instagram-followers.md): Get followers for an Instagram account.
+- [POST /api/v1/platform/scrapers/instagram/following](https://docs.thehog.ai/api/scrapers/instagram-following.md): Get accounts an Instagram user is following.
+- [POST /api/v1/platform/scrapers/instagram/post-comments](https://docs.thehog.ai/api/scrapers/instagram-post-comments.md): Get comments on a specific Instagram post.
+- [POST /api/v1/platform/scrapers/instagram/post-details](https://docs.thehog.ai/api/scrapers/instagram-post-details.md): Get full details for a specific Instagram post.
+- [POST /api/v1/platform/scrapers/instagram/posts](https://docs.thehog.ai/api/scrapers/instagram-posts.md): Fetch recent posts from an Instagram account.
+- [POST /api/v1/platform/scrapers/instagram/profile](https://docs.thehog.ai/api/scrapers/instagram-profile.md): Fetch an Instagram user's profile information.
+- [POST /api/v1/platform/scrapers/tiktok/profile](https://docs.thehog.ai/api/scrapers/tiktok-profile.md): Fetch a TikTok user's profile and recent videos.
+- [POST /api/v1/platform/scrapers/web/scrape](https://docs.thehog.ai/api/scrapers/web-scrape.md): Scrape a single web page and return text, markdown, HTML, links, metadata, or schema-guided JSON.
+- [GET /api/v1/search/:id](https://docs.thehog.ai/api/search/get-result.md): Poll for search results.
+- [GET /api/v1/search](https://docs.thehog.ai/api/search/list.md): List all search operations.
+- [POST /api/v1/search](https://docs.thehog.ai/api/search/submit.md): Submit a search across web, LinkedIn, X, Reddit, or TikTok. Returns 202.
+- [Authenticate with The Hog API](https://docs.thehog.ai/authentication.md): The Hog API uses the API key and API secret from your dashboard. Pass them as `X-Access-Key` and `X-Secret-Key` headers on every request.
+- [Company-First Search in The Hog](https://docs.thehog.ai/concepts/company-first-search.md): The Hog's company-first approach lets you find target accounts by firmographics and signals first, then drill into contacts — improving ICP match quality.
+- [Credits and Usage in The Hog](https://docs.thehog.ai/concepts/credits.md): The Hog charges credits for API calls that fetch, enrich, scrape, or research data. Understand how credits are charged across API endpoints.
+- [Sync and Async Operations in The Hog](https://docs.thehog.ai/concepts/sync-vs-async.md): Fast API calls return 200 immediately. Long-running tasks return 202 with a poll URL. Learn when each pattern applies and how to poll for results.
+- [Run Deep Research with LLM-Powered Analysis](https://docs.thehog.ai/guides/deep-research.md): Submit a research prompt and JSON Schema to The Hog's deep research endpoint. Get back structured data matching your schema, extracted from web sources.
+- [Enrich Contacts with Emails and Phone Numbers](https://docs.thehog.ai/guides/enrich-contacts.md): Get verified email addresses and phone numbers for your prospects. Control enrichment depth and choose sync or async delivery for bulk batches.
+- [Find and Research People with The Hog](https://docs.thehog.ai/guides/find-people.md): Discover ICP-matched contacts with natural language queries, then build detailed research dossiers using cross-platform identity resolution.
+- [Find Outreach Hooks from LinkedIn Activity](https://docs.thehog.ai/guides/linkedin-outreach-hooks.md): Use LinkedIn profile reactions and comments to find recent posts your prospects engaged with, then turn that context into relevant outreach hooks.
+- [Build Social Listening Workflows for X](https://docs.thehog.ai/guides/social-listening-x.md): Use X keyword and profile monitors to track hot topics, competitors, executive posts, and new conversation opportunities.
+- [Search Companies by Firmographics and Tech Stack](https://docs.thehog.ai/guides/search-companies.md): Use The Hog's company search to find target accounts by industry, employee count, revenue, technology, and buying signals like hiring and funding.
+- [Use The Hog with MCP](https://docs.thehog.ai/guides/use-mcp.md): Connect The Hog to an MCP client with the hosted remote MCP server or the local stdio MCP package.
+- [The Hog: GTM Intelligence API for Revenue Teams](https://docs.thehog.ai/introduction.md): The Hog is a REST API for go-to-market teams. Search companies, discover people, enrich contacts, run deep research, and monitor social mentions -- all in one platform.
+- [Get Started with The Hog API](https://docs.thehog.ai/quickstart.md): Make your first The Hog API call in minutes. Search companies, find people, and enrich contacts with step-by-step examples.
+- [Error Handling and HTTP Status Codes](https://docs.thehog.ai/reference/error-handling.md): The Hog returns RFC 7807-style JSON error bodies for all failures. Learn the error shape, status codes, validation errors, and how to handle them.
+- [Idempotent Requests with The Hog API](https://docs.thehog.ai/reference/idempotency.md): Pass the Idempotency-Key header on async POST requests to safely retry without creating duplicate jobs. The key is scoped to your organization.
+- [Rate Limits for The Hog API](https://docs.thehog.ai/reference/rate-limits.md): The Hog enforces rate limits per organization to ensure fair usage. Polling operations has a separate dedicated throttle. Learn limits and retry behavior.
+- [API Response Shapes and Data Formats](https://docs.thehog.ai/reference/response-shapes.md): Every The Hog API response uses a consistent envelope. Learn the sync, async, estimate, and operation response shapes plus cost and meta fields.

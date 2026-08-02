@@ -1,0 +1,28 @@
+{
+  "provider": "the-hog",
+  "sources": [
+    "the-hog-company-search-api-openapi.yml",
+    "the-hog-deep-research-api-openapi.yml",
+    "the-hog-enrichments-api-openapi.yml",
+    "the-hog-monitors-api-openapi.yml",
+    "the-hog-operations-api-openapi.yml",
+    "the-hog-people-search-api-openapi.yml",
+    "the-hog-scrapers-api-openapi.yml",
+    "the-hog-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "the-hog-company-search-api-openapi.yml",
+    "the-hog-deep-research-api-openapi.yml",
+    "the-hog-enrichments-api-openapi.yml",
+    "the-hog-monitors-api-openapi.yml",
+    "the-hog-operations-api-openapi.yml",
+    "the-hog-people-search-api-openapi.yml",
+    "the-hog-scrapers-api-openapi.yml",
+    "the-hog-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

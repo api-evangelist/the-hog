@@ -1,0 +1,102 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.thehog.ai/
+docs:
+  - https://docs.thehog.ai/concepts/sync-vs-async
+  - https://docs.thehog.ai/reference/idempotency
+  - https://docs.thehog.ai/reference/response-shapes
+  - https://docs.thehog.ai/reference/rate-limits
+  - https://docs.thehog.ai/reference/error-handling
+  - https://docs.thehog.ai/authentication
+summary: >-
+  The Hog is a credit-based REST API for go-to-market intelligence. Fast calls
+  return 200 synchronously; long-running jobs (search, enrichment, deep research)
+  return 202 with a pollUrl and are polled at GET /api/operations/{id}. Auth is a
+  dual API-key header pair; idempotency, request tracing, cursor pagination and a
+  consistent JSON error envelope are documented cross-cutting semantics.
+
+authentication:
+  style: api-key
+  scheme: dual-header
+  headers:
+    - name: X-Access-Key
+      description: Public API key (ak_ prefix) from the dashboard Credentials page.
+    - name: X-Secret-Key
+      description: API secret (sk_ prefix) shown when the credential is created.
+  notes: Do not use the Authorization header for dashboard-created API credentials.
+  ref: authentication/the-hog-authentication.yml
+
+sync_vs_async:
+  sync:
+    status: 200
+    envelope: '{ data, meta }'
+  async:
+    status: 202
+    fields: [id, operationId, status, pollUrl, meta.requestId]
+    poll_operation: GET /api/operations/{id}
+    statuses: [queued, processing, succeeded, failed, partial_success, cancelled]
+    progress: integer 0-100 or null
+  async_endpoints:
+    - POST /api/enrichments
+    - POST /api/deep-research
+    - POST /api/v1/search
+    - POST /api/v1/companies/search
+    - POST /api/v1/people/search
+
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  scope: organization
+  recommended_format: UUID v4
+  behavior: >-
+    On a repeated async POST with the same key, The Hog returns the existing
+    operation (same operationId and pollUrl) without creating a new job or
+    charging additional credits.
+  applies_to:
+    - POST /api/enrichments
+    - POST /api/deep-research
+    - POST /api/v1/search
+    - POST /api/v1/companies/search
+    - POST /api/v1/people/search
+  docs: https://docs.thehog.ai/reference/idempotency
+
+pagination:
+  style: cursor
+  request_params: [limit, cursor]
+  response_fields: [data, next_cursor]
+  notes: List endpoints (monitors, monitor events, searches) return next_cursor for forward paging.
+
+request_tracing:
+  response_header: X-Request-Id
+  body_field: meta.requestId
+  format: UUID
+  usage: Include the value when contacting support to trace the exact request.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  note: >-
+    Most resource endpoints are under /api/v1/; a few platform endpoints
+    (deep-research, enrichments, operations) sit at /api/ without a version segment.
+  ref: lifecycle/the-hog-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  style: RFC 7807-style (custom JSON envelope, not application/problem+json)
+  fields: [statusCode, error, message, path, requestId, timestamp, errors]
+  validation: 'On 400, message is "Validation failed" and errors[] lists {property, message} per failing field.'
+  ref: errors/the-hog-problem-types.yml
+
+rate_limit_signaling:
+  global_per_org_user: 600/min
+  polling_per_org_user: 300/min
+  status: 429
+  headers: [Retry-After, X-RateLimit-*]
+  ref: rate-limits/the-hog-rate-limits.yml
+
+credits:
+  unit: credit
+  metered_response_fields: [creditsCharged, estimatedMaxCredits, meta.cost]
+  free_operations: ['GET /api/health', 'GET /api/operations/{id}']
+  insufficient: 402 Payment Required (no credits deducted)
+  docs: https://docs.thehog.ai/concepts/credits

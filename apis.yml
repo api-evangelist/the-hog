@@ -1,7 +1,28 @@
 aid: the-hog
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/the-hog.png
 name: The Hog
-description: The Hog is a company surfaced as a portfolio company of y-combinator and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  The Hog is a real-time web intelligence API for AI agents and go-to-market teams,
+  founded in 2025 (Y Combinator F25) by Hudson Liao and Paulo Nascimento in San Francisco.
+  One credit-based REST API unifies company and people search, contact enrichment,
+  LLM-powered deep research, multi-platform web and social scraping (LinkedIn, X, Reddit,
+  Instagram, TikTok, YouTube, Facebook), SEO intelligence, and recurring signal monitors.
+  Fast calls return synchronously; long-running jobs run asynchronously with polling,
+  organization-scoped idempotency keys, cursor pagination, request-id tracing, and a
+  consistent JSON error envelope. A hosted OAuth MCP server and a local stdio MCP package
+  expose the same capabilities to agents.
 url: https://raw.githubusercontent.com/api-evangelist/the-hog/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,12 +32,159 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- GTM Intelligence
+- Sales Intelligence
+- Data Enrichment
+- Web Scraping
+- People Data
+- Company Data
+- Deep Research
+- Social Monitoring
+- MCP
+- AI Agents
+- Y Combinator
+apis:
+- aid: the-hog:the-hog-company-search-api
+  name: The Hog Company Search API
+  description: The Company Search API from The Hog — 1 operation(s) for company search.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Company Search
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-company-search-api-openapi.yml
+- aid: the-hog:the-hog-deep-research-api
+  name: The Hog Deep Research API
+  description: The Deep Research API from The Hog — 1 operation(s) for deep research.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Deep Research
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-deep-research-api-openapi.yml
+- aid: the-hog:the-hog-enrichments-api
+  name: The Hog Enrichments API
+  description: The Enrichments API from The Hog — 2 operation(s) for enrichments.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Enrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-enrichments-api-openapi.yml
+- aid: the-hog:the-hog-monitors-api
+  name: The Hog Monitors API
+  description: The Monitors API from The Hog — 4 operation(s) for monitors.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Monitors
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-monitors-api-openapi.yml
+- aid: the-hog:the-hog-operations-api
+  name: The Hog Operations API
+  description: The Operations API from The Hog — 2 operation(s) for operations.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-operations-api-openapi.yml
+- aid: the-hog:the-hog-people-search-api
+  name: The Hog People Search API
+  description: The People Search API from The Hog — 2 operation(s) for people search.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - People Search
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-people-search-api-openapi.yml
+- aid: the-hog:the-hog-scrapers-api
+  name: The Hog Scrapers API
+  description: The Scrapers API from The Hog — 34 operation(s) for scrapers.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Scrapers
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-scrapers-api-openapi.yml
+- aid: the-hog:the-hog-search-api
+  name: The Hog Search API
+  description: The Search API from The Hog — 2 operation(s) for search.
+  humanURL: https://docs.thehog.ai/
+  baseURL: https://developer.thehog.ai
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/the-hog-search-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
+common:
+- type: DeveloperPortal
+  url: https://platform.thehog.ai/
+- type: Documentation
+  url: https://docs.thehog.ai/
+- type: APIReference
+  url: https://docs.thehog.ai/introduction
+- type: GettingStarted
+  url: https://docs.thehog.ai/quickstart
+- type: Blog
+  url: https://thehog.ai/blog
+- type: Pricing
+  url: https://thehog.ai/pricing
+- type: SignUp
+  url: https://platform.thehog.ai/
+- type: TermsOfService
+  url: https://thehog.ai/terms
+- type: PrivacyPolicy
+  url: https://thehog.ai/privacy
+- type: GitHubOrganization
+  url: https://github.com/The-Hog
+- type: Authentication
+  url: authentication/the-hog-authentication.yml
+- type: Conventions
+  url: conventions/the-hog-conventions.yml
+- type: Idempotency
+  url: conventions/the-hog-conventions.yml
+- type: ErrorCatalog
+  url: errors/the-hog-problem-types.yml
+- type: RateLimits
+  url: rate-limits/the-hog-rate-limits.yml
+- type: MCPServer
+  url: mcp/the-hog-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/the-hog-packages.yml
+- type: WellKnown
+  url: well-known/the-hog-well-known.yml
+- type: Lifecycle
+  url: lifecycle/the-hog-lifecycle.yml
+- type: Conformance
+  url: conformance/the-hog-conformance.yml
+- type: DataModel
+  url: data-model/the-hog-data-model.yml
+- type: LLMsTxt
+  url: llms/the-hog-llms.txt
+- type: DomainSecurity
+  url: security/the-hog-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/the-hog-agentic-access.yml

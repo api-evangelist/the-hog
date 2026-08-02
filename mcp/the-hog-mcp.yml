@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.thehog.ai/guides/use-mcp
+docs:
+  - https://docs.thehog.ai/guides/use-mcp
+  - https://docs.thehog.ai/reference/mcp-tools
+  - https://docs.thehog.ai/guides/local-mcp
+server:
+  name: The Hog
+  hosted:
+    transport: http
+    url: https://mcp.thehog.ai/mcp
+    auth: OAuth (sign in with The Hog, select billed organization); Clerk-backed authorization server
+    oauth_metadata: well-known/the-hog-oauth-protected-resource.json
+  local:
+    transport: stdio
+    package: "@thehog/mcp"
+    registry: npm
+    command: npx @thehog/mcp
+    repo: https://github.com/The-Hog/the-hog-mcp
+    auth: API key + API secret (X-Access-Key / X-Secret-Key) from the Credentials page
+management: https://platform.thehog.ai/settings/integrations/mcp
+workflow_tools:
+  - name: build_prospect_list
+    description: Search target companies, find relevant people, and optionally enrich contacts.
+  - name: find_people_at_target_accounts
+    description: Find contacts at a known list of company domains or names.
+  - name: enrich_prospect_list
+    description: Enrich a batch of known prospects with requested contact fields or signals.
+  - name: research_company
+    description: Crawl a company site, search recent web results, and run structured deep research.
+  - name: research_person
+    description: Build a structured research dossier for a person or prospect.
+  - name: monitor_topic
+    description: Create monitors for a topic, company, profile, or post, and optionally run them.
+  - name: analyze_social_profile
+    description: Fetch and summarize bounded public Instagram or TikTok profile data.
+  - name: scrape_and_extract
+    description: Scrape one URL and optionally extract structured data with deep research.
+api_tools:
+  companies_people: [search_companies, search_people]
+  enrichment: [enrich_contact, enrich_contacts, get_enrichment]
+  research_operations: [start_deep_research, get_operation]
+  search: [submit_search, get_search_result, list_searches]
+  web_scraping: [search_web, crawl_website, scrape_web_page]
+  social_scraping: [get_instagram_profile, list_instagram_posts, get_instagram_post, list_instagram_post_comments, list_instagram_followers, list_instagram_following, get_tiktok_profile]
+  monitors: [create_monitor, list_monitors, get_monitor, update_monitor, delete_monitor, run_monitor_now, list_monitor_events]

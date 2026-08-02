@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/the-hog-openapi.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: AccessKey
+  type: apiKey
+  in: header
+  parameter: X-Access-Key
+  description: The public API key from the Credentials page.
+  sources:
+  - openapi/the-hog-openapi.json
+- name: SecretKey
+  type: apiKey
+  in: header
+  parameter: X-Secret-Key
+  description: The API secret shown when the credential is created.
+  sources:
+  - openapi/the-hog-openapi.json
