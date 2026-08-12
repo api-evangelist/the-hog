@@ -138,6 +138,8 @@ x-enrichment:
   artifacts_added: 20
   pass: local-v1
 common:
+- type: Overlay
+  url: overlays/the-hog-openapi-overlay.yaml
 - type: DeveloperPortal
   url: https://platform.thehog.ai/
 - type: Documentation
