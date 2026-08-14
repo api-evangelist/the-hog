@@ -1,16 +1,24 @@
 aid: the-hog
 accessModel:
-  pricing: unknown
-  onboarding: self-serve
-  trial: false
+  pricing: usage-based
+  onboarding: waitlist
+  trial: true
+  trial_detail: 500 free calls per month across all endpoints, no credit card required.
   try_now: false
   public: false
-  label: Self-serve signup
-  confidence: medium
+  label: Waitlist (beta launch full)
+  confidence: high
   source:
+  - https://thehog.ai/pricing
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  note: >-
+    Published per-call rates (no tiers, no seats, no feature gates) with an automatic
+    volume discount past 100k calls/month and a customer-set spend cap. New self-serve
+    signup was closed as of 2026-08-14 -- the site header and pricing page both read
+    "Our beta launch is full. Join the waitlist."
+  ref: plans/the-hog-plans-pricing.yml
+  generated: '2026-08-14'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/the-hog.png
 name: The Hog
 description: >-
@@ -32,7 +40,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-14'
 tags:
 - Company
 - GTM Intelligence
@@ -133,9 +141,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-14'
   status: enriched
-  artifacts_added: 20
+  artifacts_added: 9
   pass: local-v1
 common:
 - type: Overlay
@@ -190,3 +198,15 @@ common:
   url: security/the-hog-domain-security.yml
 - type: AgenticAccess
   url: agentic-access/the-hog-agentic-access.yml
+- type: AgentCard
+  url: a2a/the-hog-a2a.yml
+- type: ToolCrosswalk
+  url: mcp/the-hog-tool-crosswalk.yml
+- type: Plans
+  url: plans/the-hog-plans-pricing.yml
+- type: OAuthScopes
+  url: scopes/the-hog-scopes.yml
+- type: CLI
+  url: cli/the-hog-cli.yml
+- type: SDKs
+  url: packages/the-hog-packages.yml
