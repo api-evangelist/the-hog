@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search People Search API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "People Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Estimate people search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/people/search/estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Pre-flight conservative credit estimate for POST /api/v1/people/search. Includes contact enrichment assumptions when includeContacts is true."
+        },
+        {
+          "info": {
+            "name": "Search people",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/people/search",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Async people discovery. Returns operationId; poll GET /api/operations/:id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

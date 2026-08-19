@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Company Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/companies/search",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Async company discovery. Returns operationId; poll GET /api/operations/:id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

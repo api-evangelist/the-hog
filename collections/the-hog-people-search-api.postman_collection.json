@@ -1,0 +1,693 @@
+{
+  "item": [
+    {
+      "id": "d84c0eba-2703-4e5b-a813-04bd02f70292",
+      "name": "People Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "28edbf4c-451c-4eab-bcde-b8816042fd20",
+          "name": "Estimate people search",
+          "request": {
+            "name": "Estimate people search",
+            "description": {
+              "content": "Pre-flight conservative credit estimate for POST /api/v1/people/search. Includes contact enrichment assumptions when includeContacts is true.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "people",
+                "search",
+                "estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"<string>\"\n  ],\n  \"maxCredits\": \"<number>\",\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa6dcbf2-edcb-4342-8437-6385168b9f7e",
+              "name": "Conservative people search preflight estimate and contact enrichment breakdown.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"estimatedCredits\": 9980.1104727639,\n  \"likelySyncOrAsync\": \"async\",\n  \"withinPlanLimits\": false,\n  \"breakdown\": {\n    \"baseSearchCredits\": 3420.8875218687963,\n    \"contactEnrichment\": {\n      \"includeContacts\": true,\n      \"fields\": [\n        \"email\",\n        \"email\"\n      ],\n      \"maxPeople\": 2217.072333453398,\n      \"contactAttemptsPerFieldPerPerson\": 7629.410772688741,\n      \"estimatedCredits\": 3614.1075604744287\n    }\n  },\n  \"assumptions\": {\n    \"mode\": \"conservative_preflight_ceiling\",\n    \"description\": \"string\"\n  },\n  \"expectedLatencyRange\": \"30s-5m\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72485b1e-e4da-4644-8920-bec4edd6cfbe",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2e87ca7-8c63-489b-ba47-f13e7b0fd4fb",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a5c265f-0066-459e-8c0f-6cf7a3753511",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68a43e47-8628-40c4-8344-fa2ca5608244",
+          "name": "Search people",
+          "request": {
+            "name": "Search people",
+            "description": {
+              "content": "Async people discovery. Returns operationId; poll GET /api/operations/:id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "people",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"<string>\"\n  ],\n  \"maxCredits\": \"<number>\",\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17e1a4cb-0586-48f9-9545-97b5fba3cbad",
+              "name": "People search accepted. Poll the returned URL for results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"operationId\": \"string\",\n  \"status\": \"queued\",\n  \"pollUrl\": \"string\",\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "200ccdd6-9adb-4185-9a1e-c9b1aac24a4f",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "272afc01-bc25-4d73-aacd-f32f50cc5c5b",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87fb0897-f65e-43af-8ae2-cc4ca6b33fc2",
+              "name": "The organization does not have enough credits for this request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"error\": \"Payment Required\",\n  \"message\": \"Insufficient credits.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b453238-cdef-4004-b3b6-04031c9bca43",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "people",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"VP Engineering at hiring B2B SaaS companies in SF\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"includeContacts\": false,\n  \"contactFields\": [\n    \"email\"\n  ],\n  \"maxCredits\": 2500,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.thehog.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "21191dcf-111b-4b49-a9aa-a8c47f20756c",
+    "name": "The Hog Company Search People Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API reference for The Hog.",
+      "type": "text/plain"
+    }
+  }
+}

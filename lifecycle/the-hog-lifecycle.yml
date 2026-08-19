@@ -1,6 +1,7 @@
-generated: '2026-07-21'
+generated: '2026-08-14'
 method: searched
-source: https://docs.thehog.ai/
+source: https://docs.thehog.ai/ + https://thehog.ai/pricing + https://github.com/The-Hog
+checked: '2026-08-14'
 versioning:
   scheme: uri-path
   current: v1
@@ -8,14 +9,69 @@ versioning:
   note: >-
     Resource endpoints are served under /api/v1/; a few platform endpoints
     (deep-research, enrichments, operations) are unversioned under /api/.
+  spec_version: '1.0'
+  spec_version_note: OpenAPI info.version is "1.0" at docs.thehog.ai/api-reference/openapi.json.
 deprecation:
   policy_url: null
   sunset_header: null
-  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found (July 2026).
+  note: >-
+    No published deprecation policy and no RFC 8594 Sunset/Deprecation header support
+    found. Re-checked 2026-08-14 across docs.thehog.ai, thehog.ai and the GitHub org.
+    No Deprecation pointer is emitted.
 sla:
   url: null
   uptime_target: null
+  availability: enterprise-only
+  note: >-
+    The pricing page lists "Uptime SLAs and priority routing" only under the
+    contact-sales Enterprise arrangement. No SLA terms, uptime target, or credit
+    schedule is published for the self-serve metered plan.
+  source: https://thehog.ai/pricing
 status_page: null
-status_page_note: No status page found (status.thehog.ai does not resolve; /status returns 404).
+status_page_probes:
+  - url: https://status.thehog.ai
+    status: 000
+    note: Does not resolve (no DNS).
+  - url: https://thehog.ai/status
+    status: 404
+status_page_note: >-
+  No status page on any host as of 2026-08-14. No StatusPage pointer is emitted.
+changelog: null
+changelog_probes:
+  - url: https://thehog.ai/changelog
+    status: 404
+  - url: https://docs.thehog.ai/changelog
+    status: 404
+  - url: https://docs.thehog.ai/reference/changelog
+    status: 404
+changelog_note: >-
+  No dated changelog on the marketing site or the docs site, so no ChangeLog artifact
+  or pointer is emitted. The only public release history is per-repo in the GitHub
+  org (see release_signals below), which is package history, not API change history.
+release_signals_note: >-
+  Recorded as evidence of activity, NOT as a published API changelog. The public API
+  itself has no dated change record.
+release_signals:
+  - repo: The-Hog/the-hog-mcp
+    latest: 0.8.1 (npm)
+    date: '2026-06-29'
+  - repo: The-Hog/the-hog-cli
+    latest: v0.1.0-preview.1
+    date: '2026-06-02'
+  - repo: The-Hog/the-hog-sdk-js
+    latest: 0.1.0 (unreleased; no tag, no npm publication)
+    date: '2026-06-02'
+    note: last push
+  - repo: The-Hog/docs
+    date: '2026-05-21'
+    note: last push
 deprecated_operations: []
 deprecated_operations_note: No operations flagged deprecated in the OpenAPI.
+availability:
+  onboarding: waitlist
+  observed: '2026-08-14'
+  note: >-
+    thehog.ai and thehog.ai/pricing both carry "Our beta launch is full. Join the
+    waitlist" in place of a signup call to action. The developer console at
+    platform.thehog.ai remains reachable, but new self-serve signup is closed.
+  ref: plans/the-hog-plans-pricing.yml

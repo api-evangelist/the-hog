@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search Deep Research API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deep Research",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start deep research",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/deep-research",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Start a deep research job with a prompt and JSON Schema. The response includes an operation ID and poll URL for retrieving the structured result."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,19 +1,137 @@
-generated: '2026-07-21'
+generated: '2026-08-14'
 method: searched
-source: https://www.npmjs.com/package/@thehog/mcp
+source: >-
+  https://registry.npmjs.org/@thehog/mcp and the GitHub organization listing at
+  https://api.github.com/orgs/The-Hog/repos
+checked: '2026-08-14'
 note: >-
-  The Hog does not publish language client SDKs; the docs show raw HTTP examples
-  (curl/httpx/fetch). The one first-party published package is the MCP server that
-  exposes the API as agent tools. No SDKs pointer is emitted because this is an MCP
-  server runner, not a client SDK.
+  Corrected on 2026-08-14. The previous round recorded "The Hog does not publish
+  language client SDKs" -- that was wrong. Enumerating the GitHub organization turned
+  up an OFFICIAL TypeScript SDK (@the-hog/sdk, The-Hog/the-hog-sdk-js) and an
+  official Go CLI (The-Hog/the-hog-cli). Neither is linked from docs.thehog.ai or
+  thehog.ai, and neither is published to a package registry yet, which is why a
+  docs-only search missed them. The SDK is real, first-party, MIT-licensed and
+  installable today via a GitHub install specifier, so an SDKs pointer IS warranted.
+
+registry_distribution_finding: >-
+  Only one of the three first-party packages is on a registry. @thehog/mcp is on npm;
+  @the-hog/sdk is install-from-GitHub only (its own README says "After the npm
+  package is published, you can install from the registry instead"); the Go CLI is
+  distributed as GitHub Release archives with no Homebrew tap, no `go install` path
+  documented, and no package-manager entry. A consumer cannot `npm install` the SDK
+  or `brew install` the CLI from a registry today.
+
 packages:
   - language: javascript
+    kind: mcp-server
     registry: npm
     name: "@thehog/mcp"
     url: https://www.npmjs.com/package/@thehog/mcp
-    install: npx @thehog/mcp
+    install: npx -y @thehog/mcp@latest
     version: 0.8.1
+    published: '2026-06-29'
     license: MIT
     repo: https://github.com/The-Hog/the-hog-mcp
     description: MCP server for The Hog API (local stdio transport).
     official: true
+    registry_metadata: https://registry.npmjs.org/@thehog/mcp
+    release_history: [0.2.0, 0.4.0, 0.5.0, 0.6.0, 0.6.1, 0.7.0, 0.8.0, 0.8.1]
+    currency_note: >-
+      Read from the npm registry metadata endpoint on 2026-08-14: dist-tags.latest is
+      0.8.1, published 2026-06-29. The freshest of the three packages.
+
+  - language: typescript
+    kind: client-sdk
+    registry: github
+    name: "@the-hog/sdk"
+    url: https://github.com/The-Hog/the-hog-sdk-js
+    install: npm install github:The-Hog/the-hog-sdk-js
+    intended_install: npm install @the-hog/sdk
+    version: 0.1.0
+    published: null
+    published_note: >-
+      version read from package.json on the default branch, NOT from a registry:
+      https://registry.npmjs.org/@the-hog/sdk returns 404 and the repo carries no git
+      tags and no GitHub release. There is no publication date to record because the
+      package has never been published. Last push to the repo was 2026-06-02.
+    license: MIT
+    repo: https://github.com/The-Hog/the-hog-sdk-js
+    description: >-
+      Official TypeScript SDK and lightweight CLI for The Hog API. Targets Node.js,
+      Bun, Deno, browser and TypeScript apps. Ships a `the-hog` bin, typed models
+      under docs/models/, and a generate-from-openapi GitHub Action workflow.
+    official: true
+    auth_env: [THE_HOG_ACCESS_KEY, THE_HOG_SECRET_KEY]
+    base_url_default: https://developer.thehog.ai
+    base_url_override_env: THE_HOG_SERVER_URL
+    engines: "node >=18"
+    generated_from_openapi: true
+    generated_from_openapi_note: >-
+      .github/workflows/generate-from-openapi.yml regenerates the client from The
+      Hog's OpenAPI contract, so the SDK tracks the spec rather than being hand-written.
+
+  - language: go
+    kind: cli
+    registry: github-releases
+    name: thehog
+    url: https://github.com/The-Hog/the-hog-cli/releases
+    install: >-
+      Download the platform archive from GitHub Releases, extract, and move thehog /
+      thehog-mcp onto PATH.
+    version: v0.1.0-preview.1
+    published: '2026-06-02'
+    license: Apache-2.0
+    repo: https://github.com/The-Hog/the-hog-cli
+    description: >-
+      Official standalone Go CLI plus a `thehog-mcp` local stdio MCP companion, both
+      generated from the public OpenAPI via CLI Printing Press.
+    official: true
+    maturity: preview
+    detail: cli/the-hog-cli.yml
+
+  - language: python
+    kind: example
+    registry: github
+    name: hog-linkedin-outreach
+    url: https://github.com/The-Hog/hog-linkedin-outreach
+    version: null
+    published: null
+    published_note: >-
+      Example application, not a distributable package -- no tags, no releases, no
+      registry entry. Last push 2026-05-26.
+    license: MIT
+    repo: https://github.com/The-Hog/hog-linkedin-outreach
+    description: >-
+      End-to-end example: find LinkedIn profile engagers, scrape their context, draft
+      personalized cold-outreach DMs. Built on The Hog API + OpenAI.
+    official: true
+
+client_sdk_count: 1
+client_sdk_languages: [typescript]
+client_sdk_note: >-
+  One official client SDK (TypeScript). No Python, Go, Ruby, PHP, Java, .NET or Rust
+  client library exists -- verified with 404s against pypi.org/pypi/thehog/json,
+  rubygems.org/api/v1/gems/thehog.json, crates.io/api/v1/crates/thehog and
+  registry.npmjs.org/thehog, plus an empty npm scope search for scope:thehog. The Go
+  repo in the org is a CLI, not a Go client library. Python users are still on raw
+  HTTP, which is what the docs and the provider's own agent skill teach.
+
+negative_probes:
+  - url: https://registry.npmjs.org/@the-hog/sdk
+    status: 404
+  - url: https://registry.npmjs.org/thehog
+    status: 404
+  - url: https://registry.npmjs.org/@thehog/sdk
+    status: 404
+  - url: https://registry.npmjs.org/@thehog/client
+    status: 404
+  - url: https://pypi.org/pypi/thehog/json
+    status: 404
+  - url: https://pypi.org/pypi/the-hog/json
+    status: 404
+  - url: https://pypi.org/pypi/thehog-sdk/json
+    status: 404
+  - url: https://rubygems.org/api/v1/gems/thehog.json
+    status: 404
+  - url: https://crates.io/api/v1/crates/thehog
+    status: 404

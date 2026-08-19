@@ -1,0 +1,87 @@
+generated: '2026-08-14'
+method: probed
+source: https://docs.thehog.ai/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.thehog.ai
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://docs.thehog.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+card_file: a2a/the-hog-agent-card.json
+card:
+  name: The Hog API
+  description: API reference for The Hog.
+  url: https://docs.thehog.ai/
+  version: 1.0.0
+  protocolVersion: '0.3'
+  preferredTransport: HTTP+JSON
+  provider_organization: The Hog API
+  documentationUrl: https://docs.thehog.ai/
+  capabilities:
+    streaming: false
+    pushNotifications: false
+  skills:
+    - id: thehog
+      name: Thehog
+      url: https://docs.thehog.ai/.well-known/agent-skills/thehog/skill.md
+      note: >-
+        The card links a real, fetchable Agent Skill markdown document (HTTP 200,
+        text/markdown, 14,527 bytes). Saved verbatim to
+        skills/the-hog-thehog-provider-skill.md.
+grade: conformant
+grade_basis: >-
+  Passes every A2A 1.0.0 hard check: capabilities is a JSON OBJECT, protocolVersion
+  is present, and skills is an ARRAY. The optional fields A2A 1.0.0 asks for --
+  preferredTransport, defaultInputModes and defaultOutputModes -- are all present.
+deviations:
+  - field: protocolVersion
+    value: '0.3'
+    note: >-
+      Declares A2A protocol 0.3, not 1.0.0. The card is structurally conformant to
+      1.0.0 but self-identifies against the older protocol revision.
+  - field: url
+    value: https://docs.thehog.ai/
+    note: >-
+      The card's url and supportedInterfaces[0].url point at the documentation site
+      root, not at an A2A JSON-RPC agent endpoint. An A2A client cannot send a
+      message/send to https://docs.thehog.ai/ -- the card is discovery + skill
+      advertisement, not a callable A2A transport.
+  - field: skills[0].tags
+    value: []
+    note: Skill declares an empty tags array; no routing tags published.
+  - field: supportedInterfaces
+    note: >-
+      Advertises protocolBinding HTTP+JSON at the docs root. No JSONRPC or GRPC
+      binding is published.
+negative_probes:
+  - url: https://docs.thehog.ai/.well-known/agent.json
+    status: 404
+    note: Legacy pre-0.3 path not served; only the canonical agent-card.json path is live.
+  - url: https://thehog.ai/.well-known/agent-card.json
+    status: 404
+  - url: https://developer.thehog.ai/.well-known/agent-card.json
+    status: 404
+  - url: https://mcp.thehog.ai/.well-known/agent-card.json
+    status: 404
+  - url: https://api.thehog.ai/.well-known/agent-card.json
+    status: 404
+  - url: https://platform.thehog.ai/.well-known/agent-card.json
+    status: 200
+    note: >-
+      NOT A HIT. platform.thehog.ai is a Vite/React SPA whose catch-all answers 200
+      with the same index.html for EVERY /.well-known/* path probed (agent-card.json,
+      agent.json, security.txt, api-catalog, ai-plugin.json, openid-configuration all
+      returned 200 text/html "The Hog API developer console"). Recorded as a false
+      positive, not as an agent card.
+related:
+  mcp: mcp/the-hog-mcp.yml
+  skill: skills/the-hog-thehog-provider-skill.md
+note: >-
+  The card is Mintlify-generated docs-site metadata served from The Hog's own
+  documentation host. It is a genuine provider-served AgentCard document and is
+  recorded as one, but it advertises a documentation surface and an Agent Skill --
+  the callable agent surface The Hog actually ships is the MCP server at
+  https://mcp.thehog.ai/mcp (see mcp/the-hog-mcp.yml).

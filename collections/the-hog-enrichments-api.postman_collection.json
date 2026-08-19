@@ -1,0 +1,777 @@
+{
+  "item": [
+    {
+      "id": "e3b2b0cd-9201-4274-a6ff-a2ac63f78972",
+      "name": "Enrichments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "37b225c9-4f79-47fa-b015-6e509b91f0af",
+          "name": "Submit enrichment",
+          "request": {
+            "name": "Submit enrichment",
+            "description": {
+              "content": "Enrich one contact or a batch of contacts with requested fields such as verified email, phone, and signals. Small contact-only requests can complete immediately; larger requests return an operation to poll.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "enrichments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Prevents duplicate work if you retry the same request with the same key.",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "23ad014c-57b9-444d-a041-6b6f5fd3237e",
+              "name": "Enrichment completed immediately.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": \"string\",\n    \"key_1\": 8353,\n    \"key_2\": 7879\n  },\n  \"meta\": {\n    \"requestId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c405afa-44b1-481c-ab95-b6a6f34fc32e",
+              "name": "Enrichment accepted. Poll the returned URL for status and results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"operationId\": \"string\",\n  \"status\": \"queued\",\n  \"pollUrl\": \"string\",\n  \"meta\": {\n    \"requestId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5766ef4-98e0-4416-a3b5-4d7c37b76b2c",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2ad4cd9-43b3-46ad-be81-cd2904a265f5",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3b4985c-eebc-4803-b8ac-dbbd164140b8",
+              "name": "The organization does not have enough credits for this request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"error\": \"Payment Required\",\n  \"message\": \"Insufficient credits.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f23919c-a265-4173-aa27-cc7ddd9a3f6a",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fields\": [\n    \"contact.email\",\n    \"signals\"\n  ],\n  \"identifier\": {\n    \"linkedin_url\": \"<string>\",\n    \"email\": \"<string>\",\n    \"x_handle\": \"<string>\",\n    \"github_username\": \"<string>\"\n  },\n  \"identifiers\": [\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    },\n    {\n      \"linkedin_url\": \"<string>\",\n      \"email\": \"<string>\",\n      \"x_handle\": \"<string>\",\n      \"github_username\": \"<string>\"\n    }\n  ],\n  \"signals_config\": {\n    \"platforms\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"max_posts\": \"<object>\",\n    \"intent_signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"since_days\": \"<number>\",\n    \"handles\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee7762b7-4ae6-4aa3-9061-6ffd3a3c0583",
+          "name": "Get enrichment",
+          "request": {
+            "name": "Get enrichment",
+            "description": {
+              "content": "Check the status of an enrichment request and retrieve the result once it completes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "enrichments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Enrichment operation ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c9aaf03-ac20-47d7-90e6-d5fbc99da337",
+              "name": "Current enrichment status, progress, result, or error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Enrichment operation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"succeeded\",\n  \"progress\": 4518.966058142731,\n  \"result\": {\n    \"key_0\": 1532,\n    \"key_1\": 978.3134427737317\n  },\n  \"error\": {\n    \"key_0\": 9742.836070146004,\n    \"key_1\": 7544,\n    \"key_2\": 4721.310442237121,\n    \"key_3\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22cce773-7b88-4d42-af94-7dc928aec05b",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Enrichment operation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93834ae7-2245-467b-be5e-52965b4d4ef2",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Enrichment operation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Resource not found.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c56d5dfa-5065-4015-b83d-28f15a6ed7ab",
+              "name": "Too many requests. Slow down before retrying.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Enrichment operation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"error\": \"Too Many Requests\",\n  \"message\": \"Too many requests.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7577a7a-c4de-423d-b98a-b3d0aa40bf17",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "enrichments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Enrichment operation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.thehog.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "92ffd38b-97a7-4d1d-9a5b-c7acbe39908b",
+    "name": "The Hog Company Search Enrichments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API reference for The Hog.",
+      "type": "text/plain"
+    }
+  }
+}

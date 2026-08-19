@@ -1,0 +1,148 @@
+generated: '2026-08-14'
+method: searched
+source: https://thehog.ai/pricing
+docs: https://thehog.ai/pricing
+checked: '2026-08-14'
+http_status: 200
+
+model: usage-based
+model_note: >-
+  The Hog publishes no subscription tiers, no seats, and no feature gates. Every
+  endpoint is metered at a flat published rate, quoted per 1,000 calls (or per match
+  for enrichment). The pricing page states it plainly: "No tiers, no seats, no
+  feature gates. Every endpoint is metered at a flat rate."
+currency: USD
+
+plan_count: 2
+plan_count_note: >-
+  Two commercial arrangements exist -- the self-serve metered plan and a
+  contact-sales Enterprise arrangement. Neither is a feature tier; the metered rates
+  below apply to the self-serve plan.
+
+plans:
+  - name: Metered (self-serve)
+    price: 0
+    price_model: pay-per-call
+    currency: USD
+    billing_period: monthly
+    included_quota:
+      calls: 500
+      period: month
+      scope: all endpoints combined
+      note: >-
+        "Every account gets 500 calls each month across all endpoints, refreshed
+        each cycle -- no credit card required to start building."
+      rollover: false
+    overage: Metered at the published per-endpoint rates below.
+    limits:
+      spend_cap: >-
+        Customer-set hard monthly limit. "When you reach it we stop the meter, so a
+        runaway agent can never overspend."
+      volume_discount: >-
+        Applied automatically past 100,000 calls per month. No tier to negotiate and
+        no plan upgrade required.
+      rate_limits_ref: rate-limits/the-hog-rate-limits.yml
+    billing_unit: >-
+      One request to a metered endpoint is one call. The page states you only pay for
+      calls that return successfully.
+    signup: https://platform.thehog.ai/
+
+  - name: Enterprise
+    price: null
+    price_model: contact-sales
+    currency: USD
+    billing_period: committed-use
+    url: https://thehog.ai/enterprise
+    included_quota: null
+    overage: null
+    note: >-
+      "For teams with custom data, security, and volume needs." No numbers published.
+    includes:
+      - Custom data sources and dedicated capacity
+      - SSO / SAML and role-based access controls
+      - Security review, DPA, and compliance support
+      - Committed-use pricing with volume discounts
+      - Dedicated support and onboarding
+      - Uptime SLAs and priority routing
+
+usage_rates:
+  unit: USD per 1,000 calls unless otherwise stated
+  search:
+    - item: Company search
+      detail: Firmographics, tech stack, signals
+      per_1k: 5.18
+      rest: [searchCompanies]
+    - item: People search
+      detail: Role, seniority, company
+      per_1k: 6.57
+      rest: [searchPeople]
+    - item: Web search
+      per_1k: 3.29
+      rest: [searchWeb]
+    - item: Social search
+      detail: X, Reddit, TikTok
+      per_1k: 1.31
+      rest: [submitSearch]
+  enrichment:
+    - item: Verified email
+      pricing: pay per match
+      per_unit: 0.065
+      unit: email
+      rest: [submitEnrichment]
+    - item: Verified mobile
+      pricing: pay per match
+      per_unit: 0.39
+      unit: mobile
+      rest: [submitEnrichment]
+  scraping:
+    - item: Web scrape
+      per_1k: 0.66
+      rest: [scrapeWebPage, batchScrapeWebPages, crawlWebSite]
+    - item: LinkedIn profile & company
+      per_1k: 16.43
+      rest: [getLinkedInProfile, getLinkedInCompany]
+    - item: Social scrape
+      detail: Instagram, TikTok
+      per_1k: 0.99
+      rest: [getInstagramProfile, getTikTokProfile]
+    - item: Image deepfake detection
+      per_1k: 8.13
+      rest: [detectImageDeepfake]
+  research:
+    - item: Deep research
+      detail: Multi-hop research with LLM reasoning
+      pricing: metered
+      from: 0.08
+      unit: operation
+      rest: [startDeepResearch]
+  monitoring:
+    - item: Monitor run
+      per_1k: 1.31
+      unit_label: checks
+      rest: [runMonitorNow]
+
+onboarding:
+  self_serve: false
+  status: waitlist
+  observed: '2026-08-14'
+  evidence: >-
+    The pricing page and site header both carry "Our beta launch is full. Join the
+    waitlist" with a "Join the waitlist" call to action in place of a signup button.
+    The developer console at https://platform.thehog.ai/ remains reachable for
+    existing accounts, but new self-serve signup is closed as of this check.
+
+reconciliation:
+  credits_vs_calls: >-
+    The docs meter in "credits" (docs.thehog.ai/concepts/credits, and response fields
+    creditsCharged / estimatedMaxCredits / meta.cost), while the public pricing page
+    meters in "calls" at dollar rates. The Hog does not publish a credit-to-dollar
+    conversion, so the two units cannot be reconciled from public material.
+  ref: conventions/the-hog-conventions.yml
+
+free_operations:
+  - GET /api/health
+  - GET /api/operations/{id}
+free_operations_note: >-
+  From the docs credits page -- health checks and operation polling are not charged.
+  Docs also state re-attaching to an operation with get_operation consumes no extra
+  credits.

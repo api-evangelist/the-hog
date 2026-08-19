@@ -1,0 +1,405 @@
+{
+  "item": [
+    {
+      "id": "3401fe90-ae33-495a-af70-c407204ced5c",
+      "name": "Company Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6b61afd0-93ab-44fb-8363-2274cf6e16c7",
+          "name": "Search companies",
+          "request": {
+            "name": "Search companies",
+            "description": {
+              "content": "Async company discovery. Returns operationId; poll GET /api/operations/:id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "companies",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8f4ea263-c119-4375-afe9-4a82b3bcd4e5",
+              "name": "Company search accepted. Poll the returned URL for results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"B2B SaaS companies in Austin hiring engineers\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"operationId\": \"string\",\n  \"status\": \"queued\",\n  \"pollUrl\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9722ea30-b2f0-4e36-b47e-b68043a4c992",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"B2B SaaS companies in Austin hiring engineers\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bee0050-79d8-4459-bbce-5d6a44e51abd",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"B2B SaaS companies in Austin hiring engineers\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "119a9e1e-2a8e-40d7-b0f7-ecb138c65f12",
+              "name": "The organization does not have enough credits for this request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"B2B SaaS companies in Austin hiring engineers\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"error\": \"Payment Required\",\n  \"message\": \"Insufficient credits.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4194b527-b5c9-441e-965d-e94caa072f00",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "companies",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional. Reusing the same key for the same organization returns the existing queued operation.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"B2B SaaS companies in Austin hiring engineers\",\n  \"limit\": 25,\n  \"includeSignals\": false,\n  \"filters\": {\n    \"titles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"titleMatch\": \"<string>\",\n    \"locations\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"industries\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"employeeCount\": {\n      \"min\": \"<number>\",\n      \"max\": \"<number>\"\n    },\n    \"signals\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"company\": {\n      \"names\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"linkedinUrls\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"industries\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"employeeCount\": {\n        \"min\": \"<number>\",\n        \"max\": \"<number>\"\n      },\n      \"signals\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.thehog.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "76d342f6-465f-4f87-a122-20bc0f335298",
+    "name": "The Hog Company Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API reference for The Hog.",
+      "type": "text/plain"
+    }
+  }
+}

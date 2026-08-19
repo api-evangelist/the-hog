@@ -1,0 +1,330 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  https://docs.thehog.ai/reference/mcp-tools (published MCP tool list) bound to
+  openapi/_original/the-hog-openapi.json operationIds
+confidence_note: >-
+  The live MCP schema is auth-gated: POST https://mcp.thehog.ai/mcp with
+  {"jsonrpc":"2.0","id":1,"method":"tools/list"} returned HTTP 401
+  {"error":"Unauthorized"} on 2026-08-14. Tools are therefore mapped by published
+  name and documented semantics, not by fetched inputSchema. Bindings marked
+  confidence: high are exact name/semantic matches to a single REST operation;
+  composite workflow tools are marked medium or low. No tool or operation was
+  invented -- every tool name comes from the provider's own MCP tools reference and
+  every operationId comes from the captured OpenAPI.
+
+surfaces:
+  openapi:
+    file: openapi/_original/the-hog-openapi.json
+    servers:
+      - https://developer.thehog.ai
+    gated: false
+    operation_count: 52
+  mcp:
+    url: https://mcp.thehog.ai/mcp
+    transport: streamable-http
+    gated: true
+    gate: OAuth 2.0 (Clerk) -- anonymous tools/list returns 401
+    docs: https://docs.thehog.ai/reference/mcp-tools
+    local_alternative: npx -y @thehog/mcp@latest (stdio, X-Access-Key/X-Secret-Key)
+  graphql:
+    present: false
+    note: The Hog publishes no GraphQL surface.
+
+coverage:
+  rest_operations: 52
+  mcp_tools_published: 35
+  mcp_tools_mapped_to_rest: 27
+  mcp_tools_composite_only: 8
+  rest_operations_with_a_tool: 27
+  rest_operations_without_a_tool: 25
+  rest_coverage_pct: 52
+
+crosswalk:
+  # --- Companies and people ---
+  - tool: search_companies
+    category: companies_people
+    rest: [searchCompanies]
+    binding: 1:1
+    confidence: high
+  - tool: search_people
+    category: companies_people
+    rest: [searchPeople]
+    binding: 1:1
+    confidence: high
+
+  # --- Enrichment ---
+  - tool: enrich_contact
+    category: enrichment
+    rest: [submitEnrichment]
+    binding: 1:1
+    confidence: high
+    note: Single-identifier enrichment; POST /api/enrichments returns 200 sync or 202 async.
+  - tool: enrich_contacts
+    category: enrichment
+    rest: [submitEnrichment]
+    binding: n:1
+    confidence: medium
+    note: >-
+      Batch form of the same endpoint. There is no separate batch operation in the
+      OpenAPI, so both enrichment tools bind to submitEnrichment.
+  - tool: get_enrichment
+    category: enrichment
+    rest: [getEnrichment]
+    binding: 1:1
+    confidence: high
+
+  # --- Research and operations ---
+  - tool: start_deep_research
+    category: research_operations
+    rest: [startDeepResearch]
+    binding: 1:1
+    confidence: high
+  - tool: get_operation
+    category: research_operations
+    rest: [getOperation]
+    binding: 1:1
+    confidence: high
+    note: >-
+      The universal poll tool. Docs state re-attaching with get_operation does not
+      consume additional credits.
+
+  # --- Search ---
+  - tool: submit_search
+    category: search
+    rest: [submitSearch]
+    binding: 1:1
+    confidence: high
+  - tool: get_search_result
+    category: search
+    rest: [getSearchResult]
+    binding: 1:1
+    confidence: high
+  - tool: list_searches
+    category: search
+    rest: [listSearches]
+    binding: 1:1
+    confidence: high
+
+  # --- Web scraping ---
+  - tool: search_web
+    category: web_scraping
+    rest: [searchWeb]
+    binding: 1:1
+    confidence: high
+  - tool: crawl_website
+    category: web_scraping
+    rest: [crawlWebSite]
+    binding: 1:1
+    confidence: high
+  - tool: scrape_web_page
+    category: web_scraping
+    rest: [scrapeWebPage]
+    binding: 1:1
+    confidence: high
+
+  # --- Social scraping ---
+  - tool: get_instagram_profile
+    category: social_scraping
+    rest: [getInstagramProfile]
+    binding: 1:1
+    confidence: high
+  - tool: list_instagram_posts
+    category: social_scraping
+    rest: [listInstagramPosts]
+    binding: 1:1
+    confidence: high
+  - tool: get_instagram_post
+    category: social_scraping
+    rest: [getInstagramPost]
+    binding: 1:1
+    confidence: high
+  - tool: list_instagram_post_comments
+    category: social_scraping
+    rest: [listInstagramPostComments]
+    binding: 1:1
+    confidence: high
+  - tool: list_instagram_followers
+    category: social_scraping
+    rest: [listInstagramFollowers]
+    binding: 1:1
+    confidence: high
+  - tool: list_instagram_following
+    category: social_scraping
+    rest: [listInstagramFollowing]
+    binding: 1:1
+    confidence: high
+  - tool: get_tiktok_profile
+    category: social_scraping
+    rest: [getTikTokProfile]
+    binding: 1:1
+    confidence: high
+  - tool: list_linkedin_profile_posts
+    category: social_scraping
+    rest: [listLinkedInProfilePosts]
+    binding: 1:1
+    confidence: medium
+    note: >-
+      Not listed in the MCP tools reference table; named only in the prose of the
+      "Async results" section of https://docs.thehog.ai/reference/mcp-tools, which
+      says it queues work and returns an operation ID. Mapped by exact semantics to
+      POST /api/v1/platform/scrapers/linkedin/profile-posts.
+
+  # --- Monitors ---
+  - tool: create_monitor
+    category: monitors
+    rest: [createMonitor]
+    binding: 1:1
+    confidence: high
+  - tool: list_monitors
+    category: monitors
+    rest: [listMonitors]
+    binding: 1:1
+    confidence: high
+  - tool: get_monitor
+    category: monitors
+    rest: [getMonitor]
+    binding: 1:1
+    confidence: high
+  - tool: update_monitor
+    category: monitors
+    rest: [updateMonitor]
+    binding: 1:1
+    confidence: high
+  - tool: delete_monitor
+    category: monitors
+    rest: [deleteMonitor]
+    binding: 1:1
+    confidence: high
+  - tool: run_monitor_now
+    category: monitors
+    rest: [runMonitorNow]
+    binding: 1:1
+    confidence: high
+  - tool: list_monitor_events
+    category: monitors
+    rest: [listMonitorEvents]
+    binding: 1:1
+    confidence: high
+
+  # --- Workflow (composite) tools ---
+  - tool: build_prospect_list
+    category: workflow
+    rest: [searchCompanies, searchPeople, estimatePeopleSearch, submitEnrichment, getEnrichment, getOperation]
+    binding: composite
+    confidence: medium
+    note: Company search -> people search at those accounts -> optional contact enrichment, with polling.
+  - tool: find_people_at_target_accounts
+    category: workflow
+    rest: [searchPeople, getOperation]
+    binding: composite
+    confidence: medium
+    note: >-
+      Accepts company domains, names, or LinkedIn company URLs; result carries
+      targetAccountSearchMode, targetAccountOutcome and companyMatchEvidence fields
+      that are workflow-layer additions on top of the searchPeople result.
+  - tool: enrich_prospect_list
+    category: workflow
+    rest: [submitEnrichment, getEnrichment, getOperation]
+    binding: composite
+    confidence: medium
+  - tool: research_company
+    category: workflow
+    rest: [crawlWebSite, searchWeb, startDeepResearch, getOperation]
+    binding: composite
+    confidence: medium
+    note: Async-first -- returns an operation ID immediately (status queued).
+  - tool: research_person
+    category: workflow
+    rest: [searchPeople, startDeepResearch, getOperation]
+    binding: composite
+    confidence: low
+    note: >-
+      Docs describe a structured research dossier for a person; the exact REST steps
+      are not published. Mapped by stated semantics only.
+  - tool: monitor_topic
+    category: workflow
+    rest: [createMonitor, runMonitorNow, listMonitorEvents, getOperation]
+    binding: composite
+    confidence: medium
+  - tool: analyze_social_profile
+    category: workflow
+    rest: [getInstagramProfile, listInstagramPosts, getTikTokProfile]
+    binding: composite
+    confidence: medium
+    note: Docs scope this tool to "bounded public Instagram or TikTok profile data".
+  - tool: scrape_and_extract
+    category: workflow
+    rest: [scrapeWebPage, startDeepResearch, getOperation]
+    binding: composite
+    confidence: medium
+    note: Async-first because of the deep-research leg.
+
+mcp_only: []
+mcp_only_note: >-
+  Every published MCP tool resolves to at least one public REST operation. The eight
+  workflow tools are composites -- no single REST operation implements them -- but
+  each of their legs is a public operation, so none is recorded as mcp_only.
+
+rest_only:
+  - operationId: listOperations
+    reason: No MCP tool lists operations; only get_operation (single-operation poll) is exposed.
+  - operationId: estimatePeopleSearch
+    reason: Credit estimation is reachable inside build_prospect_list but has no standalone tool.
+  - operationId: getLinkedInProfile
+    reason: LinkedIn profile scraping has no MCP tool despite a REST operation.
+  - operationId: getLinkedInCompany
+    reason: No MCP tool.
+  - operationId: listLinkedInCompanyPosts
+    reason: No MCP tool.
+  - operationId: findLinkedInCompanies
+    reason: No MCP tool.
+  - operationId: searchLinkedInKeywordPosts
+    reason: No MCP tool.
+  - operationId: listLinkedInPostComments
+    reason: No MCP tool.
+  - operationId: listLinkedInPostReactions
+    reason: No MCP tool.
+  - operationId: listLinkedInProfileComments
+    reason: No MCP tool.
+  - operationId: listLinkedInProfileReactions
+    reason: No MCP tool.
+  - operationId: getXProfile
+    reason: X/Twitter scraping is entirely absent from the MCP tool surface.
+  - operationId: getXPost
+    reason: No MCP tool.
+  - operationId: getXConversation
+    reason: No MCP tool.
+  - operationId: searchXPosts
+    reason: No MCP tool.
+  - operationId: getFacebookPage
+    reason: Facebook scraping is entirely absent from the MCP tool surface.
+  - operationId: getFacebookPost
+    reason: No MCP tool.
+  - operationId: getYouTubeChannel
+    reason: YouTube scraping is entirely absent from the MCP tool surface.
+  - operationId: getYouTubeVideo
+    reason: No MCP tool.
+  - operationId: getSeoDomainOverview
+    reason: SEO intelligence is entirely absent from the MCP tool surface.
+  - operationId: getSeoKeywords
+    reason: No MCP tool.
+  - operationId: getSeoCompetingKeywords
+    reason: No MCP tool.
+  - operationId: detectImageDeepfake
+    reason: No MCP tool.
+  - operationId: batchScrapeWebPages
+    reason: No MCP tool; scrape_web_page is single-URL only.
+  - operationId: createWebScrapeJob
+    reason: No MCP tool.
+
+findings:
+  - >-
+    Roughly half the REST surface (25 of 52 operations) has no MCP tool. The gap is
+    concentrated in whole product families: X, Facebook, YouTube, SEO, deepfake
+    detection, and every LinkedIn scraper except profile-posts. An agent on the MCP
+    surface cannot reach capabilities The Hog sells over REST.
+  - >-
+    The reverse is not true -- no MCP tool exists without REST backing, so the MCP
+    server is a strict (and incomplete) projection of the API rather than a separate
+    product.

@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search Monitors API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List monitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/v1/monitors",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List monitors for your organization."
+        },
+        {
+          "info": {
+            "name": "Create monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/monitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a recurring monitor that runs on a schedule and stores matching events for later review."
+        },
+        {
+          "info": {
+            "name": "Get monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Monitor ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Update monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://developer.thehog.ai/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Monitor ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a monitor configuration, schedule, or status."
+        },
+        {
+          "info": {
+            "name": "Delete monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developer.thehog.ai/api/v1/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Monitor ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Run monitor now",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/monitors/:id/run-now",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Monitor ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Trigger a monitor run immediately instead of waiting for its next scheduled time."
+        },
+        {
+          "info": {
+            "name": "List monitor events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/v1/monitors/:id/events",
+            "params": [
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "ISO timestamp — only return events detected after this time"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Monitor ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List events found by a monitor."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

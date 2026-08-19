@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search Enrichments API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enrichments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/enrichments",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Enrich one contact or a batch of contacts with requested fields such as verified email, phone, and signals. Small contact-only requests can complete immediately; larger requests return an operation to poll."
+        },
+        {
+          "info": {
+            "name": "Get enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/enrichments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Enrichment operation ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check the status of an enrichment request and retrieve the result once it completes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

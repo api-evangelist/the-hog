@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search Operations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List recent operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/operations",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List your most-recent background operations, scoped to the active organization and the requesting user. Use this to recover an `operationId` you no longer have. Ordered newest-first; `limit` returns up to that many (default 20, max 100). Optional `status` filters to a single operation status."
+        },
+        {
+          "info": {
+            "name": "Get operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/operations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Operation ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check the status of a background operation and retrieve its result once it completes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

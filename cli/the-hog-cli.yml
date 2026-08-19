@@ -1,0 +1,229 @@
+generated: '2026-08-14'
+method: searched
+source: https://github.com/The-Hog/the-hog-cli
+checked: '2026-08-14'
+docs:
+  - https://github.com/The-Hog/the-hog-cli/blob/main/README.md
+  - https://github.com/The-Hog/the-hog-cli/blob/main/SKILL.md
+  - https://github.com/The-Hog/the-hog-cli/blob/main/AGENTS.md
+
+discovery_note: >-
+  Not linked from docs.thehog.ai or thehog.ai -- found by enumerating the GitHub
+  organization at https://api.github.com/orgs/The-Hog/repos. Two first-party CLIs
+  exist and neither is mentioned anywhere on the public documentation site.
+
+clis:
+  - name: thehog
+    label: The Hog CLI (standalone)
+    official: true
+    language: go
+    go_version_min: '1.26.3'
+    license: Apache-2.0
+    repo: https://github.com/The-Hog/the-hog-cli
+    version: v0.1.0-preview.1
+    released: '2026-06-02'
+    maturity: preview
+    generated_from: >-
+      The Hog's public OpenAPI contract, via CLI Printing Press
+      (https://github.com/mvanhorn/cli-printing-press). Regeneration is run from the
+      the-hog-core-api repo, not by hand-editing generated output.
+    binaries:
+      - name: thehog
+        purpose: terminal CLI for humans and shell-based agents
+      - name: thehog-mcp
+        purpose: local stdio MCP companion exposing the same generated surface
+    install:
+      - method: github-release
+        detail: >-
+          Download the platform archive from
+          https://github.com/The-Hog/the-hog-cli/releases, extract, chmod +x, and move
+          thehog / thehog-mcp onto PATH. Windows ships .zip archives.
+        build: GoReleaser via GitHub Actions on a version tag
+      - method: source
+        detail: >-
+          git clone https://github.com/The-Hog/the-hog-cli.git && go build -o ./thehog
+          ./cmd/thehog
+    auth:
+      env:
+        - THE_HOG_ACCESS_KEY
+        - THE_HOG_SECRET_KEY
+      config_file: ~/.config/thehog/config.toml
+      setup_command: thehog auth setup
+      verify_command: thehog doctor --json
+      base_url_default: https://developer.thehog.ai
+      base_url_override_env: THEHOG_BASE_URL
+
+  - name: the-hog
+    label: Lightweight CLI bundled with the TypeScript SDK
+    official: true
+    language: typescript
+    license: MIT
+    repo: https://github.com/The-Hog/the-hog-sdk-js
+    version: 0.1.0
+    maturity: unreleased
+    install: npx the-hog --help
+    note: >-
+      Shipped as the "bin" entry of the @the-hog/sdk package, which is not yet
+      published to npm (see packages/the-hog-packages.yml). Distinct from and much
+      thinner than the Go CLI above.
+
+command_surface:
+  source: https://github.com/The-Hog/the-hog-cli/blob/main/SKILL.md
+  groups:
+    - group: companies
+      commands:
+        - command: thehog companies search
+          rest: searchCompanies
+          note: Async; returns operationId, poll GET /api/operations/:id.
+    - group: people
+      commands:
+        - command: thehog people search
+          rest: searchPeople
+          note: Async; returns operationId.
+    - group: deep-research
+      commands:
+        - command: thehog deep-research
+          rest: startDeepResearch
+    - group: enrichments
+      commands:
+        - command: thehog enrichments submit
+          rest: submitEnrichment
+        - command: thehog enrichments get
+          rest: getEnrichment
+    - group: monitors
+      commands:
+        - command: thehog monitors create
+          rest: createMonitor
+        - command: thehog monitors list
+          rest: listMonitors
+        - command: thehog monitors get
+          rest: getMonitor
+        - command: thehog monitors update
+          rest: updateMonitor
+        - command: thehog monitors delete
+          rest: deleteMonitor
+    - group: monitor-events
+      commands:
+        - command: thehog monitor-events <id>
+          rest: listMonitorEvents
+    - group: operations
+      commands:
+        - command: thehog operations <id>
+          rest: getOperation
+    - group: search-resource
+      commands:
+        - command: thehog search-resource submit-search
+          rest: submitSearch
+        - command: thehog search-resource get-search-result
+          rest: getSearchResult
+        - command: thehog search-resource list-searches
+          rest: listSearches
+    - group: platform
+      note: The scraper surface; 21 commands.
+      commands:
+        - command: thehog platform search-web
+          rest: searchWeb
+        - command: thehog platform scrape-web-page
+          rest: scrapeWebPage
+        - command: thehog platform crawl-web-site
+          rest: crawlWebSite
+        - command: thehog platform batch-scrape-web-pages
+          rest: batchScrapeWebPages
+        - command: thehog platform get-linked-in-profile
+          rest: getLinkedInProfile
+        - command: thehog platform get-linked-in-company
+          rest: getLinkedInCompany
+        - command: thehog platform find-linked-in-companies
+          rest: findLinkedInCompanies
+        - command: thehog platform list-linked-in-company-posts
+          rest: listLinkedInCompanyPosts
+        - command: thehog platform list-linked-in-profile-posts
+          rest: listLinkedInProfilePosts
+        - command: thehog platform list-linked-in-profile-comments
+          rest: listLinkedInProfileComments
+        - command: thehog platform list-linked-in-profile-reactions
+          rest: listLinkedInProfileReactions
+        - command: thehog platform list-linked-in-post-comments
+          rest: listLinkedInPostComments
+        - command: thehog platform list-linked-in-post-reactions
+          rest: listLinkedInPostReactions
+        - command: thehog platform search-linked-in-keyword-posts
+          rest: searchLinkedInKeywordPosts
+        - command: thehog platform get-instagram-profile
+          rest: getInstagramProfile
+        - command: thehog platform get-instagram-post
+          rest: getInstagramPost
+        - command: thehog platform list-instagram-posts
+          rest: listInstagramPosts
+        - command: thehog platform list-instagram-post-comments
+          rest: listInstagramPostComments
+        - command: thehog platform list-instagram-followers
+          rest: listInstagramFollowers
+        - command: thehog platform list-instagram-following
+          rest: listInstagramFollowing
+        - command: thehog platform get-tik-tok-profile
+          rest: getTikTokProfile
+  discovery_command:
+    command: thehog which "<capability in your own words>"
+    behavior: >-
+      Resolves a natural-language capability query against a curated feature index.
+      Exit 0 = at least one match, exit 2 = no confident match.
+  coverage_note: >-
+    The Go CLI covers the LinkedIn scrapers that the MCP tool surface omits, but it
+    too has no commands for X, Facebook, YouTube, SEO or deepfake detection -- so
+    those six REST families are reachable only over raw HTTP.
+
+agent_affordances:
+  agent_mode:
+    flag: --agent
+    expands_to: [--json, --compact, --no-input, --no-color, --yes]
+  field_selection:
+    flag: --select
+    detail: Dotted paths descend into nested structures; arrays traverse element-wise.
+  dry_run:
+    flag: --dry-run
+    detail: Shows the request without sending it -- preview an async search before spending credits.
+  async_flags:
+    - flag: --wait
+      detail: Block until the job reaches a terminal status.
+    - flag: --wait-timeout
+      default: 10m
+    - flag: --wait-interval
+      default: 2s
+      detail: Exponential backoff up to 30s.
+  idempotency_flags:
+    - flag: --idempotent
+      detail: Treat an already-existing create as success.
+    - flag: --ignore-missing
+      detail: Treat a missing delete target as success.
+  response_envelope:
+    shape: '{ meta: { source: live|local, synced_at, reason }, results: <data> }'
+    detail: >-
+      meta.source declares whether the data came from the API or the local SQLite
+      store. Human summary goes to stderr only when stdout is a terminal and no
+      machine-format flag is set.
+  delivery_sinks:
+    flag: --deliver <sink>
+    sinks:
+      - stdout
+      - 'file:<path> (atomic tmp + rename)'
+      - 'webhook:<url> (POST application/json, or application/x-ndjson with --compact)'
+    note: >-
+      This is CLI output routing, not an API webhook surface -- The Hog's API itself
+      publishes no webhooks.
+  profiles:
+    commands: [thehog profile save, thehog profile list, thehog profile show, thehog profile delete]
+    precedence: explicit flags > profile values > defaults
+    discovery: agent-context lists available_profiles at runtime
+  feedback:
+    command: thehog feedback "<observation>"
+    storage: ~/.local/share/thehog/feedback.jsonl
+    transmission: >-
+      Local-only by default; POSTed only when THEHOG_FEEDBACK_ENDPOINT is set AND
+      --send is passed or THEHOG_FEEDBACK_AUTO_SEND=true.
+  offline: sync/search commands can read a local SQLite store when available
+
+related:
+  packages: packages/the-hog-packages.yml
+  mcp: mcp/the-hog-mcp.yml
+  skills: skills/_index.yml

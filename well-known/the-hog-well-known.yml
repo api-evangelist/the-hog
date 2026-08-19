@@ -1,35 +1,206 @@
-generated: '2026-07-21'
-method: searched
-source: live /.well-known/ probes of The Hog hosts
+generated: '2026-08-14'
+method: probed
+source: live /.well-known/ probes of every The Hog host
+checked: '2026-08-14'
+probe_matrix: >-
+  Six /.well-known paths (security.txt, openid-configuration,
+  oauth-authorization-server, api-catalog, ai-plugin.json, agent-card.json /
+  agent.json) probed against seven hosts on 2026-08-14: thehog.ai, www.thehog.ai,
+  developer.thehog.ai, docs.thehog.ai, platform.thehog.ai, mcp.thehog.ai and
+  api.thehog.ai.
+
 hosts:
   - host: https://mcp.thehog.ai
+    role: hosted MCP server
     documents:
       - path: /.well-known/oauth-authorization-server
         status: 200
+        content_type: application/json
         file: the-hog-oauth-authorization-server.json
-        note: RFC 8414 OAuth 2.0 Authorization Server Metadata (Clerk-backed issuer clerk.thehog.ai).
+        real_document: true
+        note: >-
+          RFC 8414 OAuth 2.0 Authorization Server Metadata (Clerk-backed issuer
+          clerk.thehog.ai). Re-fetched 2026-08-14 and byte-identical to the copy
+          captured 2026-07-21.
       - path: /.well-known/oauth-protected-resource
         status: 200
+        content_type: application/json
         file: the-hog-oauth-protected-resource.json
+        real_document: true
         note: RFC 9728 OAuth 2.0 Protected Resource Metadata for the hosted MCP server.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+
+  - host: https://docs.thehog.ai
+    role: documentation (Mintlify)
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: application/json
+        file: ../a2a/the-hog-agent-card.json
+        real_document: true
+        note: >-
+          A2A AgentCard, protocolVersion 0.3, structurally conformant to A2A 1.0.0.
+          Graded in a2a/the-hog-a2a.yml. Advertises an Agent Skill at
+          /.well-known/agent-skills/thehog/skill.md.
+      - path: /.well-known/agent-skills/thehog/skill.md
+        status: 200
+        content_type: text/markdown
+        bytes: 14527
+        file: ../skills/the-hog-thehog-provider-skill.md
+        real_document: true
+        note: >-
+          Provider-published Agent Skill, discovered from the agent card's skills[0].url.
+      - path: /.well-known/agent.json
+        status: 404
+        note: Legacy pre-0.3 path not served.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+
+  - host: https://clerk.thehog.ai
+    role: OAuth authorization server (Clerk tenant)
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        real_document: true
+        note: The issuer's own copy of the same RFC 8414 metadata; not saved separately.
+      - path: /.well-known/jwks.json
+        status: not-probed
+        note: Referenced as jwks_uri by both OAuth documents.
+
   - host: https://developer.thehog.ai
+    role: REST API host
     documents:
       - path: /.well-known/security.txt
         status: 404
       - path: /.well-known/oauth-authorization-server
         status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+    note: >-
+      Every unmatched path on this host returns a NestJS-style
+      {"statusCode":404,"message":"Not Found"} JSON body, so 404s here are genuine
+      routing misses, not an SPA shell.
+
   - host: https://thehog.ai
+    role: marketing site
     documents:
       - path: /.well-known/security.txt
         status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+
+  - host: https://api.thehog.ai
+    role: named in marketing copy only
+    documents:
+      - path: /
+        status: 404
+        body: '{"error":"requested path is invalid"}'
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+    note: >-
+      The pricing page shows a marketing snippet `curl -X POST
+      "https://api.thehog.ai/search"`, but this host serves no API. The real base is
+      https://developer.thehog.ai -- confirmed by the OpenAPI servers[] block, the
+      provider's own Agent Skill ("All requests go to https://developer.thehog.ai/api")
+      and both the SDK and CLI defaults.
+
+  - host: https://platform.thehog.ai
+    role: developer console (Vite/React SPA)
+    false_positive: true
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        real_document: false
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        real_document: false
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        real_document: false
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        real_document: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        real_document: false
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        real_document: false
+    note: >-
+      NOT HITS. The SPA catch-all answers 200 with the identical index.html
+      ("The Hog API developer console") for every /.well-known/* path probed. Recorded
+      so a future round does not re-credit these as served documents.
+
+  - host: https://www.thehog.ai
+    role: unresolved
+    documents:
+      - path: /.well-known/security.txt
+        status: 000
+        note: Host does not resolve; the apex thehog.ai is the only web host.
+
+summary:
+  real_documents: 5
+  false_positive_200s: 6
+  security_txt: absent
+  security_txt_note: >-
+    No security.txt on any host. No SecurityTxt pointer is emitted. See
+    security/the-hog-domain-security.yml.
+  openid_configuration: absent-at-provider-hosts
+  api_catalog: absent
+  ai_plugin: absent
+
 oauth_summary:
   issuer: https://clerk.thehog.ai
   authorization_endpoint: https://clerk.thehog.ai/oauth/authorize
   token_endpoint: https://clerk.thehog.ai/oauth/token
+  revocation_endpoint: https://clerk.thehog.ai/oauth/token/revoke
   registration_endpoint: https://clerk.thehog.ai/oauth/register
   grant_types_supported: [authorization_code, refresh_token]
   code_challenge_methods_supported: [S256]
   scopes_supported: [openid, profile, email, public_metadata, private_metadata, offline_access, "user:org:read"]
   note: >-
-    These are Clerk identity scopes governing the hosted MCP OAuth flow, not The Hog REST
-    API authorization scopes (the REST API uses the X-Access-Key/X-Secret-Key key pair).
+    These are Clerk identity scopes governing the hosted MCP OAuth flow, not The Hog
+    REST API authorization scopes (the REST API uses the X-Access-Key/X-Secret-Key key
+    pair). Broken out in scopes/the-hog-scopes.yml.

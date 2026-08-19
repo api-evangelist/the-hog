@@ -1,0 +1,92 @@
+generated: '2026-08-14'
+method: probed
+source: https://mcp.thehog.ai/.well-known/oauth-authorization-server
+checked: '2026-08-14'
+http_status: 200
+docs: https://docs.thehog.ai/guides/use-mcp
+
+scope_count: 7
+scope_model: oauth2-authorization-code-pkce
+applies_to: hosted MCP server (https://mcp.thehog.ai/mcp)
+
+important: >-
+  These are NOT REST API authorization scopes. The Hog's REST API at
+  https://developer.thehog.ai is authorized with a static dual API-key header pair
+  (X-Access-Key / X-Secret-Key) and declares NO oauth2 securityScheme in its
+  OpenAPI -- there is no scope model on the REST surface at all, so an agent cannot
+  request least-privilege access to the API itself. The scopes below govern only the
+  OAuth handshake that fronts the hosted MCP server, and they are Clerk identity
+  scopes (the authorization server is a Clerk tenant at clerk.thehog.ai, whose own
+  service_documentation points at clerk.com/docs/oauth/scoped-access). None of them
+  narrows what a connected agent may DO with The Hog data once the token is issued.
+
+authorization_server:
+  issuer: https://clerk.thehog.ai
+  authorization_endpoint: https://clerk.thehog.ai/oauth/authorize
+  token_endpoint: https://clerk.thehog.ai/oauth/token
+  revocation_endpoint: https://clerk.thehog.ai/oauth/token/revoke
+  registration_endpoint: https://clerk.thehog.ai/oauth/register
+  registration_note: >-
+    RFC 7591 dynamic client registration is open, which is what lets an MCP client
+    connect without a pre-provisioned client_id.
+  grant_types_supported: [authorization_code, refresh_token]
+  response_types_supported: [code]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [client_secret_basic, client_secret_post, none]
+  id_token_signing_alg_values_supported: [RS256]
+  jwks_uri: https://clerk.thehog.ai/.well-known/jwks.json
+  claims_supported: [sub, iss, aud, exp, iat, email, name, org_id]
+
+protected_resource:
+  resource: https://mcp.thehog.ai/
+  authorization_servers: [https://clerk.thehog.ai]
+  authorization_data_types_supported: [oauth_scope]
+  authorization_data_locations_supported: [header, body]
+  source: https://mcp.thehog.ai/.well-known/oauth-protected-resource
+
+scopes:
+  - name: openid
+    kind: identity
+    description: OpenID Connect base scope; requests an ID token for the signed-in user.
+  - name: profile
+    kind: identity
+    description: Basic profile claims for the signed-in user (name).
+  - name: email
+    kind: identity
+    description: The signed-in user's email address claim.
+  - name: public_metadata
+    kind: identity
+    description: Clerk public user metadata attached to the account.
+  - name: private_metadata
+    kind: identity
+    description: Clerk private user metadata attached to the account.
+  - name: offline_access
+    kind: session
+    description: >-
+      Issues a refresh token so the MCP client can keep the connection alive without
+      re-prompting the user.
+  - name: user:org:read
+    kind: organization
+    description: >-
+      Read the organizations the user belongs to. This is the scope that lets the MCP
+      connect flow present the organization picker -- The Hog bills and rate-limits
+      per organization-and-user, so the selected org determines which balance the
+      agent's calls are charged against.
+
+gaps:
+  - >-
+    No resource scopes. Nothing in scopes_supported distinguishes read from write,
+    search from enrichment, or monitors from scrapers. An agent granted MCP access
+    holds the full published tool surface for the selected organization.
+  - >-
+    No scope model on the REST API. The OpenAPI declares only apiKey schemes, so REST
+    consumers get all-or-nothing credentials with no per-capability narrowing.
+  - >-
+    Spend, not scope, is the control. The published cost boundary is the customer-set
+    spend cap on the pricing page, not an authorization boundary.
+
+refs:
+  authentication: authentication/the-hog-authentication.yml
+  well_known: well-known/the-hog-well-known.yml
+  mcp: mcp/the-hog-mcp.yml
+  plans: plans/the-hog-plans-pricing.yml

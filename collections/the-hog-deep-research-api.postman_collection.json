@@ -1,0 +1,393 @@
+{
+  "item": [
+    {
+      "id": "baae08df-b38b-4d5b-a497-96de07e24b1c",
+      "name": "Deep Research",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d50f8c65-ec1f-495b-9389-f5e701551ad1",
+          "name": "Start deep research",
+          "request": {
+            "name": "Start deep research",
+            "description": {
+              "content": "Start a deep research job with a prompt and JSON Schema. The response includes an operation ID and poll URL for retrieving the structured result.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "deep-research"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Prevents duplicate work if you retry the same request with the same key.",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"schema\": {\n    \"key_0\": \"string\",\n    \"key_1\": 8229.367394290884\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": true,\n      \"key_1\": 7091.9461179753225\n    },\n    {\n      \"key_0\": 8867.258776791536\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6f66a57f-7f33-451f-824f-7a9a0827fb0f",
+              "name": "Research job accepted. Poll the returned URL for status and results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deep-research"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Research AI CRM competitors\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"competitors\": {\n        \"type\": \"array\"\n      }\n    }\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 9086\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"operationId\": \"string\",\n  \"status\": \"queued\",\n  \"pollUrl\": \"string\",\n  \"meta\": {\n    \"schemaContract\": {\n      \"key_0\": false,\n      \"key_1\": 6354.1817778867235\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75b7996d-1bb5-43f4-aa58-520951a26ab0",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deep-research"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Research AI CRM competitors\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"competitors\": {\n        \"type\": \"array\"\n      }\n    }\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 9086\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f6ce3d3-b9b0-4169-8559-6e51caef4d69",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deep-research"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Research AI CRM competitors\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"competitors\": {\n        \"type\": \"array\"\n      }\n    }\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 9086\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "703c21fa-4d63-46d7-9276-b281569fba2a",
+              "name": "The organization does not have enough credits for this request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deep-research"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Research AI CRM competitors\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"competitors\": {\n        \"type\": \"array\"\n      }\n    }\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 9086\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"error\": \"Payment Required\",\n  \"message\": \"Insufficient credits.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7c9501e-925c-46af-b1c5-e1f67bce3da3",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deep-research"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Research AI CRM competitors\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"competitors\": {\n        \"type\": \"array\"\n      }\n    }\n  },\n  \"model\": \"<string>\",\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"inputAnchors\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": 9086\n    }\n  ],\n  \"maxCredits\": \"<integer>\",\n  \"budget\": {\n    \"maxCredits\": \"<integer>\"\n  },\n  \"enrich\": \"<boolean>\",\n  \"confirm\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.thehog.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ec87b9cb-f759-4f17-8f80-423ad3cbfc35",
+    "name": "The Hog Company Search Deep Research API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API reference for The Hog.",
+      "type": "text/plain"
+    }
+  }
+}

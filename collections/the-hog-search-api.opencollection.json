@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Hog Company Search API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List searches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/v1/search",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by search type"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size (max 200)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor (created_at ISO)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List previous searches for your organization."
+        },
+        {
+          "info": {
+            "name": "Submit search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developer.thehog.ai/api/v1/search",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sync",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to wait briefly for a completed result instead of immediately returning an operation to poll."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Run a search across supported web and social sources. The default response returns an operation to poll; add sync=true only when you want to wait briefly for an immediate result."
+        },
+        {
+          "info": {
+            "name": "Get search result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developer.thehog.ai/api/v1/search/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Search ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Access-Key",
+              "value": "{{X-Access-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Check the status of a search and retrieve the result once it completes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

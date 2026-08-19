@@ -1,11 +1,43 @@
-generated: '2026-07-21'
+generated: '2026-08-14'
 method: derived
-source: openapi/the-hog-openapi.json + https://docs.thehog.ai/
+source: openapi/the-hog-openapi.json + https://docs.thehog.ai/ + live /.well-known/ probes
+checked: '2026-08-14'
 note: >-
-  Cross-cutting standards this API conforms to, derived from the OpenAPI and docs.
-  No published compliance certifications (SOC 2 / ISO 27001 / etc.) were found, so no
-  Compliance pointer is emitted.
+  Cross-cutting standards this API conforms to, derived from the OpenAPI, the docs,
+  and probed /.well-known/ documents. No published compliance certifications
+  (SOC 2 / ISO 27001 / PCI / HIPAA / FedRAMP) were found on any host and no trust
+  center exists, so no Compliance pointer is emitted. The pricing page offers
+  "Security review, DPA, and compliance support" only as an Enterprise sales motion,
+  which is a promise of process, not a published certification.
+compliance_probes:
+  - url: https://thehog.ai/security
+    status: 404
+  - url: https://thehog.ai/trust
+    status: 404
+  - url: https://thehog.ai/.well-known/security.txt
+    status: 404
+  - tool: 0-working/probe-security-programs.py
+    result: 'vdp=none trust=none'
 standards:
+  - id: a2a-1.0
+    conforms: true
+    evidence: >-
+      AgentCard served at https://docs.thehog.ai/.well-known/agent-card.json (HTTP 200,
+      application/json). Passes all three A2A 1.0.0 hard checks -- capabilities is an
+      object, protocolVersion is present, skills is an array -- while self-declaring
+      protocolVersion 0.3. Graded conformant in a2a/the-hog-a2a.yml.
+  - id: agent-skills
+    conforms: true
+    evidence: >-
+      Two provider-published Agent Skill documents with valid frontmatter: the
+      Mintlify skill at /.well-known/agent-skills/thehog/skill.md advertised by the
+      agent card, and SKILL.md in The-Hog/the-hog-cli.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Hosted streamable-http MCP server at https://mcp.thehog.ai/mcp (401 anonymous,
+      OAuth-gated) plus two local stdio servers (@thehog/mcp on npm, thehog-mcp in the
+      CLI release).
   - id: openapi-3.0
     conforms: true
     evidence: Published OpenAPI 3.0.0 document at docs.thehog.ai/api-reference/openapi.json.

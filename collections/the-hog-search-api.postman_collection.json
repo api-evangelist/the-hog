@@ -1,0 +1,1101 @@
+{
+  "item": [
+    {
+      "id": "90cd684f-92a5-46d7-8ba3-8f9d812e9e09",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee82c122-ad18-4f21-9f26-214f6a1cd779",
+          "name": "Submit search",
+          "request": {
+            "name": "Submit search",
+            "description": {
+              "content": "Run a search across supported web and social sources. The default response returns an operation to poll; add sync=true only when you want to wait briefly for an immediate result.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sync",
+                  "value": "<boolean>",
+                  "description": "Set to true to wait briefly for a completed result instead of immediately returning an operation to poll."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Prevents duplicate work if you retry the same request with the same key.",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"query\": \"<string>\",\n  \"match_any\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"match_all\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"<string>\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"<string>\",\n  \"subreddit\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "272b4bdd-f518-45d5-9da7-1882f47f0a69",
+              "name": "Search completed immediately.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"queued\",\n  \"type\": \"linkedin_keyword\",\n  \"query\": \"string\",\n  \"created_at\": \"string\",\n  \"poll_url\": \"string\",\n  \"results\": [\n    {\n      \"url\": \"string\",\n      \"title\": \"string\",\n      \"content\": \"string\",\n      \"published_at\": \"string\",\n      \"author_name\": \"string\",\n      \"author_headline\": \"string\",\n      \"id\": \"string\",\n      \"platform_video_id\": \"string\",\n      \"post_url\": \"string\",\n      \"author_username\": \"string\"\n    },\n    {\n      \"url\": \"string\",\n      \"title\": \"string\",\n      \"content\": \"string\",\n      \"published_at\": \"string\",\n      \"author_name\": \"string\",\n      \"author_headline\": \"string\",\n      \"id\": \"string\",\n      \"platform_video_id\": \"string\",\n      \"post_url\": \"string\",\n      \"author_username\": \"string\"\n    }\n  ],\n  \"total_results\": 4575.845568834025,\n  \"error\": {\n    \"message\": \"string\",\n    \"retryable\": false\n  },\n  \"completed_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a57acbc-e776-426b-bacd-1a83329b7427",
+              "name": "Search accepted. Poll the returned URL for status and results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"queued\",\n  \"poll_url\": \"string\",\n  \"meta\": {\n    \"request_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62ffea67-fac6-4d7a-bebd-bfd9c5f80aa2",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9d62ff8-ec2a-480e-960f-f15c9c248046",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a61acb5-3422-4897-b276-0238d69254d3",
+              "name": "The organization does not have enough credits for this request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"error\": \"Payment Required\",\n  \"message\": \"Insufficient credits.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88b521f1-e3b5-4e1c-b5c0-fb71be54496c",
+              "name": "The request body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"error\": \"Unprocessable Entity\",\n  \"message\": \"Validation failed\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\",\n  \"errors\": [\n    {\n      \"property\": \"body.query\",\n      \"message\": \"query must be a string\",\n      \"constraints\": {\n        \"isString\": \"query must be a string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dccf14f1-cb1d-49a8-ab6b-29e58ba05db8",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sync",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Prevents duplicate work if you retry the same request with the same key.",
+                    "key": "Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"web_search\",\n  \"query\": \"AI startup funding 2026\",\n  \"match_any\": [\n    \"AI startup\",\n    \"machine learning funding\"\n  ],\n  \"match_all\": [\n    \"Series A\",\n    \"2026\"\n  ],\n  \"exclude\": [\n    \"crypto\",\n    \"blockchain\"\n  ],\n  \"max_results\": 10,\n  \"site\": \"techcrunch.com\",\n  \"include_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"relevance\",\n  \"match_mode\": \"exact\",\n  \"date_filter\": \"<string>\",\n  \"hashtag\": \"productanalytics\",\n  \"subreddit\": \"startups\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ec06970-9eb3-4654-b97d-7471196b1fec",
+          "name": "List searches",
+          "request": {
+            "name": "List searches",
+            "description": {
+              "content": "List previous searches for your organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Page size (max 200)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3a30a232-84a3-4e3b-ab31-9323a50ef865",
+              "name": "Searches with pagination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"succeeded\",\n      \"type\": \"x_keyword\",\n      \"query\": \"string\",\n      \"created_at\": \"string\",\n      \"poll_url\": \"string\",\n      \"results\": [\n        {\n          \"url\": \"string\",\n          \"title\": \"string\",\n          \"content\": \"string\",\n          \"published_at\": \"string\",\n          \"author_name\": \"string\",\n          \"author_headline\": \"string\",\n          \"id\": \"string\",\n          \"platform_video_id\": \"string\",\n          \"post_url\": \"string\",\n          \"author_username\": \"string\"\n        },\n        {\n          \"url\": \"string\",\n          \"title\": \"string\",\n          \"content\": \"string\",\n          \"published_at\": \"string\",\n          \"author_name\": \"string\",\n          \"author_headline\": \"string\",\n          \"id\": \"string\",\n          \"platform_video_id\": \"string\",\n          \"post_url\": \"string\",\n          \"author_username\": \"string\"\n        }\n      ],\n      \"total_results\": 9031.99457402645,\n      \"error\": {\n        \"message\": \"string\",\n        \"retryable\": true\n      },\n      \"completed_at\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"succeeded\",\n      \"type\": \"web_search\",\n      \"query\": \"string\",\n      \"created_at\": \"string\",\n      \"poll_url\": \"string\",\n      \"results\": [\n        {\n          \"url\": \"string\",\n          \"title\": \"string\",\n          \"content\": \"string\",\n          \"published_at\": \"string\",\n          \"author_name\": \"string\",\n          \"author_headline\": \"string\",\n          \"id\": \"string\",\n          \"platform_video_id\": \"string\",\n          \"post_url\": \"string\",\n          \"author_username\": \"string\"\n        },\n        {\n          \"url\": \"string\",\n          \"title\": \"string\",\n          \"content\": \"string\",\n          \"published_at\": \"string\",\n          \"author_name\": \"string\",\n          \"author_headline\": \"string\",\n          \"id\": \"string\",\n          \"platform_video_id\": \"string\",\n          \"post_url\": \"string\",\n          \"author_username\": \"string\"\n        }\n      ],\n      \"total_results\": 2915.100198687807,\n      \"error\": {\n        \"message\": \"string\",\n        \"retryable\": true\n      },\n      \"completed_at\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3260ca2-aac1-4b64-a813-4f961131d6fe",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fda86859-f032-4ece-a80c-68ae6765f377",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfddb64a-fe8d-4cb2-9e08-0aa2f9bef024",
+          "name": "Get search result",
+          "request": {
+            "name": "Get search result",
+            "description": {
+              "content": "Check the status of a search and retrieve the result once it completes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "search",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Search ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Access-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c2dfc4dd-7f3e-4799-a047-6ba6e25b3f2e",
+              "name": "Current search status, progress, result, or error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Search ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"queued\",\n  \"type\": \"tiktok_hashtag\",\n  \"query\": \"string\",\n  \"created_at\": \"string\",\n  \"poll_url\": \"string\",\n  \"results\": [\n    {\n      \"url\": \"string\",\n      \"title\": \"string\",\n      \"content\": \"string\",\n      \"published_at\": \"string\",\n      \"author_name\": \"string\",\n      \"author_headline\": \"string\",\n      \"id\": \"string\",\n      \"platform_video_id\": \"string\",\n      \"post_url\": \"string\",\n      \"author_username\": \"string\"\n    },\n    {\n      \"url\": \"string\",\n      \"title\": \"string\",\n      \"content\": \"string\",\n      \"published_at\": \"string\",\n      \"author_name\": \"string\",\n      \"author_headline\": \"string\",\n      \"id\": \"string\",\n      \"platform_video_id\": \"string\",\n      \"post_url\": \"string\",\n      \"author_username\": \"string\"\n    }\n  ],\n  \"total_results\": 4127.047728031217,\n  \"error\": {\n    \"message\": \"string\",\n    \"retryable\": true\n  },\n  \"completed_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b458b0e1-1291-4c44-8738-728f2bb695a6",
+              "name": "Authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Search ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Authentication is required.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2869cafa-c4b2-4b4b-ab64-7c1f6fe3e835",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Search ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Resource not found.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8c8bcd6-62e7-499b-b5d3-6ddd0c8168f5",
+              "name": "Too many requests. Slow down before retrying.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Search ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 429,\n  \"error\": \"Too Many Requests\",\n  \"message\": \"Too many requests.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c71f1c62-3f6e-4e31-bc2f-0fbdcc2fbda7",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "search",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Search ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Access-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred.\",\n  \"path\": \"/api/v1/search\",\n  \"timestamp\": \"2026-05-21T09:08:10.000Z\",\n  \"requestId\": \"506af9b3-01a9-43be-9eb4-8458fe3e4f5b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developer.thehog.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "180fcd03-45ac-45fb-91ef-bd8fefe4f5b6",
+    "name": "The Hog Company Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API reference for The Hog.",
+      "type": "text/plain"
+    }
+  }
+}
