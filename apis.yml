@@ -100,7 +100,8 @@ apis:
   description: The Operations API from The Hog — 2 operation(s) for operations.
   humanURL: https://docs.thehog.ai/
   baseURL: https://developer.thehog.ai
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
