@@ -225,3 +225,5 @@ common:
   url: cli/the-hog-cli.yml
 - type: SDKs
   url: packages/the-hog-packages.yml
+- type: Support
+  url: mailto:support@thehog.ai
