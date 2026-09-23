@@ -1,14 +1,7 @@
 {
   "provider": "the-hog",
   "sources": [
-    "the-hog-company-search-api-openapi.yml",
-    "the-hog-deep-research-api-openapi.yml",
-    "the-hog-enrichments-api-openapi.yml",
-    "the-hog-monitors-api-openapi.yml",
-    "the-hog-operations-api-openapi.yml",
-    "the-hog-people-search-api-openapi.yml",
-    "the-hog-scrapers-api-openapi.yml",
-    "the-hog-search-api-openapi.yml"
+    "_original/the-hog-openapi.json"
   ],
   "outputs": [
     "the-hog-company-search-api-openapi.yml",
@@ -23,6 +16,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "the-hog-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "the-hog-openapi.json: declared missing tag: Company Search",
+    "the-hog-openapi.json: declared missing tag: Deep Research",
+    "the-hog-openapi.json: declared missing tag: Enrichments",
+    "the-hog-openapi.json: declared missing tag: Monitors",
+    "the-hog-openapi.json: declared missing tag: Operations",
+    "the-hog-openapi.json: declared missing tag: People Search",
+    "the-hog-openapi.json: declared missing tag: Scrapers",
+    "the-hog-openapi.json: declared missing tag: Search",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "the-hog-company-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-deep-research-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-enrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-monitors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-people-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-scrapers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-hog-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

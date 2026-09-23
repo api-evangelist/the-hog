@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: The Hog Company Search People Search API
+  title: Hog People Search API
   description: Public API reference for The Hog.
   version: '1.0'
   contact: {}
@@ -166,6 +166,24 @@ paths:
       - People Search
 components:
   schemas:
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
     EntityEmployeeCountFilterDto:
       type: object
       properties:
@@ -175,19 +193,18 @@ components:
         max:
           type: number
           minimum: 0
-    EntitySearchFiltersDto:
+    EntityCompanyNestedFilterDto:
       type: object
       properties:
-        titles:
+        names:
           type: array
           items:
             type: string
-        titleMatch:
-          type: string
-          enum:
-          - exact
-          - similar
-        locations:
+        domains:
+          type: array
+          items:
+            type: string
+        linkedinUrls:
           type: array
           items:
             type: string
@@ -201,8 +218,18 @@ components:
           type: array
           items:
             type: string
-        company:
-          $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
+    PeopleSearchEstimateAssumptionsDto:
+      type: object
+      properties:
+        mode:
+          type: string
+          example: conservative_preflight_ceiling
+        description:
+          type: string
+          description: Human-readable explanation of the conservative estimate assumptions.
+      required:
+      - mode
+      - description
     PeopleSearchEstimateContactBreakdownDto:
       type: object
       properties:
@@ -231,48 +258,19 @@ components:
       - maxPeople
       - contactAttemptsPerFieldPerPerson
       - estimatedCredits
-    PeopleSearchEstimateAssumptionsDto:
+    EntitySearchFiltersDto:
       type: object
       properties:
-        mode:
-          type: string
-          example: conservative_preflight_ceiling
-        description:
-          type: string
-          description: Human-readable explanation of the conservative estimate assumptions.
-      required:
-      - mode
-      - description
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    EntityCompanyNestedFilterDto:
-      type: object
-      properties:
-        names:
+        titles:
           type: array
           items:
             type: string
-        domains:
-          type: array
-          items:
-            type: string
-        linkedinUrls:
+        titleMatch:
+          type: string
+          enum:
+          - exact
+          - similar
+        locations:
           type: array
           items:
             type: string
@@ -286,44 +284,8 @@ components:
           type: array
           items:
             type: string
-    PeopleSearchEstimateBreakdownDto:
-      type: object
-      properties:
-        baseSearchCredits:
-          type: number
-          description: Conservative base estimate for the people discovery work.
-        contactEnrichment:
-          $ref: '#/components/schemas/PeopleSearchEstimateContactBreakdownDto'
-      required:
-      - baseSearchCredits
-      - contactEnrichment
-    PeopleSearchEstimateDto:
-      type: object
-      properties:
-        estimatedCredits:
-          type: number
-          description: Estimated credits to be consumed
-        likelySyncOrAsync:
-          type: string
-          enum:
-          - sync
-          - async
-          description: Whether the real request will return 200 or 202
-        expectedLatencyRange:
-          type: string
-          example: 30s-5m
-        withinPlanLimits:
-          type: boolean
-        breakdown:
-          $ref: '#/components/schemas/PeopleSearchEstimateBreakdownDto'
-        assumptions:
-          $ref: '#/components/schemas/PeopleSearchEstimateAssumptionsDto'
-      required:
-      - estimatedCredits
-      - likelySyncOrAsync
-      - withinPlanLimits
-      - breakdown
-      - assumptions
+        company:
+          $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
     PublicErrorResponseDto:
       type: object
       properties:
@@ -355,27 +317,17 @@ components:
       - message
       - path
       - timestamp
-    EntitySearchAcceptedDto:
+    PeopleSearchEstimateBreakdownDto:
       type: object
       properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          type: object
+        baseSearchCredits:
+          type: number
+          description: Conservative base estimate for the people discovery work.
+        contactEnrichment:
+          $ref: '#/components/schemas/PeopleSearchEstimateContactBreakdownDto'
       required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
+      - baseSearchCredits
+      - contactEnrichment
     PostPeopleSearchDto:
       type: object
       properties:
@@ -418,6 +370,54 @@ components:
           type: boolean
       required:
       - query
+    PeopleSearchEstimateDto:
+      type: object
+      properties:
+        estimatedCredits:
+          type: number
+          description: Estimated credits to be consumed
+        likelySyncOrAsync:
+          type: string
+          enum:
+          - sync
+          - async
+          description: Whether the real request will return 200 or 202
+        expectedLatencyRange:
+          type: string
+          example: 30s-5m
+        withinPlanLimits:
+          type: boolean
+        breakdown:
+          $ref: '#/components/schemas/PeopleSearchEstimateBreakdownDto'
+        assumptions:
+          $ref: '#/components/schemas/PeopleSearchEstimateAssumptionsDto'
+      required:
+      - estimatedCredits
+      - likelySyncOrAsync
+      - withinPlanLimits
+      - breakdown
+      - assumptions
+    EntitySearchAcceptedDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          type: object
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
   securitySchemes:
     AccessKey:
       type: apiKey

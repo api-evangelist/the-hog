@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: The Hog Company Search Scrapers API
+  title: Hog Scrapers API
   description: Public API reference for The Hog.
   version: '1.0'
   contact: {}
@@ -257,7 +257,6 @@ paths:
                 additionalProperties: false
                 properties:
                   data:
-                    nullable: true
                     allOf:
                     - $ref: '#/components/schemas/LinkedInProfileResponseDto'
                   meta:
@@ -362,7 +361,6 @@ paths:
                 additionalProperties: false
                 properties:
                   data:
-                    nullable: true
                     allOf:
                     - $ref: '#/components/schemas/LinkedInCompanyResponseDto'
                   meta:
@@ -1412,7 +1410,6 @@ paths:
                 additionalProperties: false
                 properties:
                   data:
-                    nullable: true
                     allOf:
                     - $ref: '#/components/schemas/XTweetResponseDto'
                   meta:
@@ -1622,7 +1619,6 @@ paths:
                 additionalProperties: false
                 properties:
                   data:
-                    nullable: true
                     allOf:
                     - $ref: '#/components/schemas/InstagramProfileResponseDto'
                   meta:
@@ -1832,7 +1828,6 @@ paths:
                 additionalProperties: false
                 properties:
                   data:
-                    nullable: true
                     allOf:
                     - $ref: '#/components/schemas/InstagramPostResponseDto'
                   meta:
@@ -3622,165 +3617,92 @@ paths:
       - Scrapers
 components:
   schemas:
-    XTweetResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          type: string
-        created_at:
-          type: string
-          nullable: true
-        source:
-          type: string
-          nullable: true
-        lang:
-          type: string
-          nullable: true
-        conversation_id:
-          type: string
-          nullable: true
-        view_count:
-          type: number
-          nullable: true
-        bookmark_count:
-          type: number
-          nullable: true
-        like_count:
-          type: number
-          nullable: true
-        retweet_count:
-          type: number
-          nullable: true
-        reply_count:
-          type: number
-          nullable: true
-        quote_count:
-          type: number
-          nullable: true
-        url:
-          type: string
-          nullable: true
-        is_retweet:
-          type: boolean
-        is_quote:
-          type: boolean
-          nullable: true
-        is_reply:
-          type: boolean
-          nullable: true
-        author_x_user_id:
-          type: string
-          nullable: true
-        author_username:
-          type: string
-          nullable: true
-        author_display_name:
-          type: string
-          nullable: true
-        retweet_tweet_id:
-          type: string
-          nullable: true
-        quote_tweet_id:
-          type: string
-          nullable: true
-      required:
-      - id
-      - text
-      - is_retweet
-    PlatformWebCrawlDto:
+    PlatformYouTubeVideoDto:
       type: object
       properties:
         url:
           type: string
-          description: Domain or URL to crawl
-          example: https://example.com
-        limit:
-          type: number
-          minimum: 1
-          maximum: 50
-          default: 5
-        maxPages:
-          type: number
-          description: Maximum number of pages to crawl. Overrides limit when set.
-          minimum: 1
-          maximum: 50
-          default: 5
-        maxDepth:
-          type: number
-          description: Maximum link depth from the starting URL.
-          minimum: 0
-          maximum: 5
-          default: 1
-        sameDomainOnly:
-          type: boolean
-          description: Restrict discovered links to the starting hostname.
-          default: true
-        instructions:
-          type: string
-          description: Instructions for content extraction
+          example: https://www.youtube.com/watch?v=dQw4w9WgXcQ
       required:
       - url
-    FacebookPageResponseDto:
+    PlatformInstagramFollowersDto:
       type: object
       properties:
-        url:
+        username:
           type: string
-        text:
-          type: string
-        statusCode:
+          example: instagram
+        maxFollowers:
           type: number
-          nullable: true
-        pageId:
-          type: string
-          nullable: true
-        pageName:
-          type: string
-          nullable: true
-        pageUrl:
-          type: string
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        likesCount:
-          type: number
-          nullable: true
-        followersCount:
-          type: number
-          nullable: true
-        websiteUrl:
-          type: string
-          nullable: true
-        category:
-          type: string
-          nullable: true
+          minimum: 1
+          maximum: 5000
+          description: Maximum followers to request. Unlimited is not exposed on v1.
       required:
-      - url
-      - text
-    ImageDeepfakeSignalsResponseDto:
+      - username
+    PlatformXSearchPostsDto:
       type: object
       properties:
-        fullImageGeneration:
-          $ref: '#/components/schemas/ImageDeepfakeSignalResponseDto'
-        faceManipulation:
-          $ref: '#/components/schemas/ImageDeepfakeFaceManipulationSignalResponseDto'
-      required:
-      - fullImageGeneration
-      - faceManipulation
-    PlatformXConversationDto:
-      type: object
-      properties:
-        postId:
+        query:
           type: string
-          example: '1234567890123456789'
+          example: typescript nestjs
         maxTweets:
           type: number
           minimum: 1
-          maximum: 500
+          maximum: 200
+        options:
+          $ref: '#/components/schemas/XSearchOptionsBodyDto'
       required:
-      - postId
+      - query
+    XAuthorResponseDto:
+      type: object
+      properties:
+        x_user_id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        profile_url:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        profile_picture_url:
+          type:
+          - string
+          - 'null'
+        followers_count:
+          type:
+          - number
+          - 'null'
+        following_count:
+          type:
+          - number
+          - 'null'
+        tweet_count:
+          type:
+          - number
+          - 'null'
+        is_verified:
+          type:
+          - boolean
+          - 'null'
+        is_blue_verified:
+          type:
+          - boolean
+          - 'null'
+        account_created_at:
+          type:
+          - string
+          - 'null'
     PlatformInstagramPostDetailsDto:
       type: object
       properties:
@@ -3789,222 +3711,6 @@ components:
           example: https://www.instagram.com/p/ABC123/
       required:
       - postUrl
-    PlatformWebScrapeBatchDto:
-      type: object
-      properties:
-        urls:
-          description: URLs to scrape using the top-level renderJs and cache freshness options.
-          type: array
-          items:
-            type: string
-        items:
-          description: Per-item scrape requests. Use either items or urls, not both.
-          type: array
-          items:
-            $ref: '#/components/schemas/PlatformWebScrapeBatchItemDto'
-        renderJs:
-          type: boolean
-          description: Render JavaScript before scraping for urls entries.
-          default: false
-        maxAgeMs:
-          type: number
-          minimum: 0
-          maximum: 2592000000
-          default: 0
-        maxAgeDays:
-          type: number
-          minimum: 0
-          maximum: 30
-          default: 0
-        maxConcurrency:
-          type: number
-          minimum: 1
-          maximum: 10
-          default: 3
-          description: Maximum number of batch items processed concurrently.
-    PlatformLinkedInCompanyPostsDto:
-      type: object
-      properties:
-        companySlug:
-          type: string
-          example: acme-inc
-        limit:
-          type: number
-          minimum: 1
-          maximum: 500
-          default: 20
-      required:
-      - companySlug
-    PlatformFacebookPageDto:
-      type: object
-      properties:
-        url:
-          type: string
-          example: https://www.facebook.com/openai
-      required:
-      - url
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    PlatformInstagramUsernameDto:
-      type: object
-      properties:
-        username:
-          type: string
-          example: instagram
-        maxPosts:
-          type: number
-          minimum: 1
-          maximum: 200
-      required:
-      - username
-    InstagramPostResponseDto:
-      type: object
-      properties:
-        shortcode:
-          type: string
-        post_url:
-          type: string
-          nullable: true
-        post_type:
-          type: string
-          nullable: true
-        caption:
-          type: string
-          nullable: true
-        hashtags:
-          nullable: true
-          type: array
-          items:
-            type: string
-        mentions:
-          nullable: true
-          type: array
-          items:
-            type: string
-        likes_count:
-          type: number
-          nullable: true
-        comments_count:
-          type: number
-          nullable: true
-        video_views_count:
-          type: number
-          nullable: true
-        display_url:
-          type: string
-          nullable: true
-        dimensions_height:
-          type: number
-          nullable: true
-        dimensions_width:
-          type: number
-          nullable: true
-        is_sponsored:
-          type: boolean
-          nullable: true
-        location_name:
-          type: string
-          nullable: true
-        location_id:
-          type: string
-          nullable: true
-        posted_at:
-          type: string
-          nullable: true
-        author_username:
-          type: string
-          nullable: true
-        owner_id:
-          type: string
-          nullable: true
-      required:
-      - shortcode
-    SearchIntelligenceKeywordsResponseDto:
-      type: object
-      properties:
-        domain:
-          type: string
-          nullable: true
-        seedKeyword:
-          type: string
-          nullable: true
-        includedDomains:
-          nullable: true
-          type: array
-          items:
-            type: string
-        excludedDomains:
-          nullable: true
-          type: array
-          items:
-            type: string
-        searchType:
-          type: string
-          nullable: true
-        intent:
-          type: string
-          enum:
-          - seo
-          - aeo
-          - geo
-          - ppc
-        resultCount:
-          type: number
-        totalMatchingResults:
-          type: number
-        keywords:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchIntelligenceKeywordRowResponseDto'
-      required:
-      - intent
-      - resultCount
-      - totalMatchingResults
-      - keywords
-    LinkedInPostReactionResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        reactionType:
-          type: string
-        postId:
-          type: string
-        actor:
-          $ref: '#/components/schemas/LinkedInReactionActorResponseDto'
-      required:
-      - id
-      - reactionType
-      - postId
-      - actor
-    PlatformImageDeepfakeDetectionDto:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Public http(s) image URL to analyze. Provide either url or multipart image, not both.
-          example: https://example.com/image.jpg
-          maxLength: 4096
-        image:
-          type: string
-          format: binary
-          description: Multipart image file to analyze. Provide either image or url, not both.
     PlatformWebScrapeJobDto:
       type: object
       properties:
@@ -4077,222 +3783,7 @@ components:
           default: 25
       required:
       - url
-    LinkedInRepostedByResponseDto:
-      type: object
-      properties:
-        name:
-          type: string
-        publicIdentifier:
-          type: string
-      required:
-      - name
-      - publicIdentifier
-    InstagramProfileResponseDto:
-      type: object
-      properties:
-        instagram_user_id:
-          type: string
-          nullable: true
-        username:
-          type: string
-        display_name:
-          type: string
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-        profile_url:
-          type: string
-          nullable: true
-        profile_picture_url:
-          type: string
-          nullable: true
-        website_url:
-          type: string
-          nullable: true
-        followers_count:
-          type: number
-          nullable: true
-        following_count:
-          type: number
-          nullable: true
-        posts_count:
-          type: number
-          nullable: true
-        is_verified:
-          type: boolean
-          nullable: true
-        is_business_account:
-          type: boolean
-          nullable: true
-        is_private:
-          type: boolean
-          nullable: true
-      required:
-      - username
-    WebScrapeMetadataResponseDto:
-      type: object
-      properties:
-        title:
-          type: string
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        canonicalUrl:
-          type: string
-          nullable: true
-        finalUrl:
-          type: string
-          nullable: true
-        contentType:
-          type: string
-          nullable: true
-        statusCode:
-          type: number
-          nullable: true
-        textLength:
-          type: number
-          nullable: true
-        responseBytes:
-          type: number
-          nullable: true
-        capture:
-          $ref: '#/components/schemas/WebScrapeCaptureMetadataResponseDto'
-    PlatformFacebookPostDto:
-      type: object
-      properties:
-        url:
-          type: string
-          example: https://www.facebook.com/openai/posts/1234567890
-      required:
-      - url
-    YouTubeVideoResponseDto:
-      type: object
-      properties:
-        url:
-          type: string
-        text:
-          type: string
-        statusCode:
-          type: number
-          nullable: true
-        videoId:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        channelId:
-          type: string
-          nullable: true
-        channelName:
-          type: string
-          nullable: true
-        channelUrl:
-          type: string
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        publishedAt:
-          type: string
-          nullable: true
-        durationSeconds:
-          type: number
-          nullable: true
-        viewCount:
-          type: number
-          nullable: true
-        likeCount:
-          type: number
-          nullable: true
-        commentCount:
-          type: number
-          nullable: true
-        thumbnailUrl:
-          type: string
-          nullable: true
-        transcriptText:
-          type: string
-          nullable: true
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/YouTubeVideoCommentResponseDto'
-      required:
-      - url
-      - text
-    TikTokProfileScrapeResponseDto:
-      type: object
-      properties:
-        profile:
-          nullable: true
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
-        videos:
-          type: array
-          items:
-            $ref: '#/components/schemas/TikTokVideoResponseDto'
-        relatedVideos:
-          type: array
-          items:
-            $ref: '#/components/schemas/TikTokRelatedVideoResponseDto'
-      required:
-      - profile
-      - videos
-      - relatedVideos
-    LinkedInReactionActorResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        linkedinUrl:
-          type: string
-        position:
-          type: string
-        pictureUrl:
-          type: string
-          nullable: true
-        sourceActorIdKind:
-          type: string
-          enum:
-          - linkedin_member_id
-          - source_row_id
-          - unknown
-        profileUrlKind:
-          type: string
-          enum:
-          - vanity_slug
-          - opaque_member_id
-          - company
-          - unknown
-        universalName:
-          type: string
-          nullable: true
-        canonicalPersonId:
-          type: string
-          nullable: true
-        resolutionStatus:
-          type: string
-          enum:
-          - resolved
-          - unresolved
-          - not_attempted
-      required:
-      - id
-      - name
-      - linkedinUrl
-      - position
-      - sourceActorIdKind
-      - profileUrlKind
-      - universalName
-      - canonicalPersonId
-      - resolutionStatus
-    WebCrawlAcceptedResponseDto:
+    WebScrapeJobAcceptedResponseDto:
       type: object
       properties:
         id:
@@ -4303,11 +3794,6 @@ components:
           type: string
           enum:
           - queued
-          - processing
-          - succeeded
-          - failed
-          - partial_success
-          - cancelled
         pollUrl:
           type: string
       required:
@@ -4315,96 +3801,572 @@ components:
       - operationId
       - status
       - pollUrl
-    InstagramFollowScrapeResponseDto:
+    SearchIntelligenceKeywordsResponseDto:
+      type: object
+      properties:
+        domain:
+          type:
+          - string
+          - 'null'
+        seedKeyword:
+          type:
+          - string
+          - 'null'
+        includedDomains:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        excludedDomains:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        searchType:
+          type:
+          - string
+          - 'null'
+        intent:
+          type: string
+          enum:
+          - seo
+          - aeo
+          - geo
+          - ppc
+        resultCount:
+          type: number
+        totalMatchingResults:
+          type: number
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchIntelligenceKeywordRowResponseDto'
+      required:
+      - intent
+      - resultCount
+      - totalMatchingResults
+      - keywords
+    PlatformYouTubeChannelDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.youtube.com/@OpenAI
+      required:
+      - url
+    PlatformWebScrapeDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to scrape
+          example: https://example.com/page
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping
+          default: false
+        formats:
+          type: array
+          description: Output formats to return. Defaults to ["text"]. Request "json" only with jsonSchema.
+          default:
+          - text
+          items:
+            type: string
+            enum:
+            - text
+            - markdown
+            - html
+            - links
+            - metadata
+            - json
+        jsonSchema:
+          type: object
+          description: JSON Schema used for schema-guided extraction when formats includes "json".
+          additionalProperties: true
+        instructions:
+          type: string
+          description: Additional extraction instructions used only when formats includes "json".
+          maxLength: 8000
+        maxAgeMs:
+          type: number
+          description: Maximum accepted cache age in milliseconds. Use 0 or omit to force a fresh scrape.
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          description: Maximum accepted cache age in days. Use 0 or omit to force a fresh scrape. Ignored when maxAgeMs is provided.
+          minimum: 0
+          maximum: 30
+          default: 0
+      required:
+      - url
+    PlatformFacebookPageDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.facebook.com/openai
+      required:
+      - url
+    PlatformLinkedInCompanyPostsDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+          example: acme-inc
+        limit:
+          type: number
+          minimum: 1
+          maximum: 500
+          default: 20
+      required:
+      - companySlug
+    TikTokProfileSeedResponseDto:
       type: object
       properties:
         username:
           type: string
+        tiktok_user_id:
+          type:
+          - string
+          - 'null'
+        display_name:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        follower_count:
+          type:
+          - number
+          - 'null'
+        following_count:
+          type:
+          - number
+          - 'null'
+        verified:
+          type:
+          - boolean
+          - 'null'
+        avatar_url:
+          type:
+          - string
+          - 'null'
+      required:
+      - username
+    XTweetResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        created_at:
+          type:
+          - string
+          - 'null'
+        source:
+          type:
+          - string
+          - 'null'
+        lang:
+          type:
+          - string
+          - 'null'
+        conversation_id:
+          type:
+          - string
+          - 'null'
+        view_count:
+          type:
+          - number
+          - 'null'
+        bookmark_count:
+          type:
+          - number
+          - 'null'
+        like_count:
+          type:
+          - number
+          - 'null'
+        retweet_count:
+          type:
+          - number
+          - 'null'
+        reply_count:
+          type:
+          - number
+          - 'null'
+        quote_count:
+          type:
+          - number
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+        is_retweet:
+          type: boolean
+        is_quote:
+          type:
+          - boolean
+          - 'null'
+        is_reply:
+          type:
+          - boolean
+          - 'null'
+        author_x_user_id:
+          type:
+          - string
+          - 'null'
+        author_username:
+          type:
+          - string
+          - 'null'
+        author_display_name:
+          type:
+          - string
+          - 'null'
+        retweet_tweet_id:
+          type:
+          - string
+          - 'null'
+        quote_tweet_id:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - text
+      - is_retweet
+    ImageDeepfakeFaceManipulationSignalResponseDto:
+      type: object
+      properties:
+        score:
+          type:
+          - number
+          - 'null'
+        facesAnalyzed:
+          type: number
+      required:
+      - score
+      - facesAnalyzed
+    PlatformWebSearchDto:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search query
+          example: best CRM software 2025
+        maxResults:
+          type: number
+          minimum: 1
+          maximum: 50
+          default: 10
+        searchDepth:
+          type: string
+          enum:
+          - basic
+          - advanced
+          default: basic
+        topic:
+          type: string
+          enum:
+          - general
+          - news
+          default: general
+        days:
+          type: number
+          description: Limit results to last N days (news only)
+        includeDomains:
+          description: Only include results from these domains
+          type: array
+          items:
+            type: string
+        excludeDomains:
+          description: Exclude results from these domains
+          type: array
+          items:
+            type: string
+      required:
+      - query
+    PlatformSeoDomainDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: acme.com
+          description: Domain or http(s) URL to look up SEO and paid search signals for.
+      required:
+      - domain
+    ImageDeepfakeDetectionResponseDto:
+      type: object
+      properties:
+        verdict:
+          type: string
+          enum:
+          - likely_real
+          - uncertain
+          - likely_deepfake
+        score:
+          type: number
+        status:
+          type: string
+          enum:
+          - complete
+          - inconclusive
+        signals:
+          $ref: '#/components/schemas/ImageDeepfakeSignalsResponseDto'
+      required:
+      - verdict
+      - score
+      - status
+      - signals
+    InstagramFollowEdgeResponseDto:
+      type: object
+      properties:
         relation_type:
           type: string
           enum:
           - followers
           - following
-        edges:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstagramFollowEdgeResponseDto'
-        requested_limit:
-          type: number
-          nullable: true
-        returned_count:
-          type: number
+        seed_username:
+          type: string
+        follower:
+          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
+        following:
+          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
       required:
-      - username
       - relation_type
-      - edges
-      - returned_count
-    LinkedInProfileActivityActorResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        type:
-          type: string
-          enum:
-          - profile
-          - company
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        linkedinUrl:
-          type: string
-          nullable: true
-        position:
-          type: string
-          nullable: true
-        universalName:
-          type: string
-          nullable: true
-        pictureUrl:
-          type: string
-          nullable: true
-    PlatformLinkedInKeywordPostsDto:
-      type: object
-      properties:
-        keyword:
-          type: string
-          example: b2b saas
-        config:
-          $ref: '#/components/schemas/LinkedInKeywordPostsConfigBodyDto'
-      required:
-      - keyword
-    PlatformLinkedInProfilePostsDto:
+      - seed_username
+      - follower
+      - following
+    PlatformXProfileDto:
       type: object
       properties:
         username:
           type: string
-          example: some-public-id
-        maxPosts:
+          example: elonmusk
+        maxTweets:
           type: number
           minimum: 1
           maximum: 200
-          default: 20
       required:
       - username
-    PlatformLinkedInPostUrlsDto:
+    PlatformInstagramPostCommentsDto:
       type: object
       properties:
-        postUrls:
-          example:
-          - https://www.linkedin.com/feed/update/urn:li:activity:123
-          type: array
-          items:
-            type: string
-        maxItems:
+        postUrl:
+          type: string
+          example: https://www.instagram.com/p/ABC123/
+        maxComments:
           type: number
           minimum: 1
-          maximum: 500
-          default: 10
+          maximum: 200
+        includeNested:
+          type: boolean
+          description: When true, requests nested reply threads from the comment actor (more items / cost).
       required:
-      - postUrls
+      - postUrl
+    WebScrapeMetadataResponseDto:
+      type: object
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        canonicalUrl:
+          type:
+          - string
+          - 'null'
+        finalUrl:
+          type:
+          - string
+          - 'null'
+        contentType:
+          type:
+          - string
+          - 'null'
+        statusCode:
+          type:
+          - number
+          - 'null'
+        textLength:
+          type:
+          - number
+          - 'null'
+        responseBytes:
+          type:
+          - number
+          - 'null'
+        capture:
+          $ref: '#/components/schemas/WebScrapeCaptureMetadataResponseDto'
+    ImageDeepfakeSignalsResponseDto:
+      type: object
+      properties:
+        fullImageGeneration:
+          $ref: '#/components/schemas/ImageDeepfakeSignalResponseDto'
+        faceManipulation:
+          $ref: '#/components/schemas/ImageDeepfakeFaceManipulationSignalResponseDto'
+      required:
+      - fullImageGeneration
+      - faceManipulation
+    PublicResponseMetaDto:
+      type: object
+      properties:
+        requestId:
+          type: string
+      required:
+      - requestId
+    LinkedInProfileActivityPostResponseDto:
+      type: object
+      properties:
+        postId:
+          type:
+          - string
+          - 'null'
+        postUrl:
+          type:
+          - string
+          - 'null'
+        text:
+          type:
+          - string
+          - 'null'
+        authorName:
+          type:
+          - string
+          - 'null'
+        authorProfileUrl:
+          type:
+          - string
+          - 'null'
+        authorCompanyUrl:
+          type:
+          - string
+          - 'null'
+        postedAt:
+          type:
+          - string
+          - 'null'
+        reactionCount:
+          type:
+          - number
+          - 'null'
+        commentCount:
+          type:
+          - number
+          - 'null'
+        repostCount:
+          type:
+          - number
+          - 'null'
+    TikTokVideoResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        platform_video_id:
+          type: string
+        tiktok_profile_id:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        post_url:
+          type:
+          - string
+          - 'null'
+        author_username:
+          type:
+          - string
+          - 'null'
+        author_display_name:
+          type:
+          - string
+          - 'null'
+        author_profile_url:
+          type:
+          - string
+          - 'null'
+        play_count:
+          type:
+          - number
+          - 'null'
+        like_count:
+          type:
+          - number
+          - 'null'
+        comment_count:
+          type:
+          - number
+          - 'null'
+        share_count:
+          type:
+          - number
+          - 'null'
+        hashtags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        cdn_url:
+          type:
+          - string
+          - 'null'
+        s3_key:
+          type:
+          - string
+          - 'null'
+        thumbnail_s3_key:
+          type:
+          - string
+          - 'null'
+        duration_secs:
+          type:
+          - number
+          - 'null'
+        posted_at:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+      required:
+      - id
+      - platform_video_id
+      - created_at
+    PlatformXPostDto:
+      type: object
+      properties:
+        postUrl:
+          type: string
+          example: https://x.com/elonmusk/status/123456789
+      required:
+      - postUrl
+    LinkedInRepostedByResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+        publicIdentifier:
+          type: string
+      required:
+      - name
+      - publicIdentifier
     LinkedInCommentEngagementResponseDto:
       type: object
       properties:
@@ -4442,8 +4404,9 @@ components:
         actor:
           $ref: '#/components/schemas/LinkedInCommentActorResponseDto'
         replies:
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/LinkedInPostCommentResponseDto'
       required:
@@ -4457,53 +4420,436 @@ components:
       - pinned
       - edited
       - actor
-    InstagramFollowEdgeResponseDto:
+    LinkedInKeywordPostsConfigBodyDto:
       type: object
       properties:
-        relation_type:
+        limit:
+          type: number
+          minimum: 1
+          maximum: 500
+        sortBy:
           type: string
           enum:
-          - followers
-          - following
-        seed_username:
+          - relevance
+          - recent
+        dateFilter:
           type: string
-        follower:
-          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
-        following:
-          $ref: '#/components/schemas/InstagramFollowProfileResponseDto'
-      required:
-      - relation_type
-      - seed_username
-      - follower
-      - following
-    PlatformSeoDomainDto:
+          enum:
+          - past-24h
+          - past-week
+          - past-month
+        matchMode:
+          type: string
+          enum:
+          - exact
+          - broad
+          default: exact
+          description: Use exact to search the keyword as a quoted phrase, or broad to let LinkedIn match related terms.
+    PlatformImageDeepfakeDetectionDto:
       type: object
       properties:
-        domain:
+        url:
           type: string
-          example: acme.com
-          description: Domain or http(s) URL to look up SEO and paid search signals for.
-      required:
-      - domain
-    PlatformInstagramFollowingDto:
+          description: Public http(s) image URL to analyze. Provide either url or multipart image, not both.
+          example: https://example.com/image.jpg
+          maxLength: 4096
+        image:
+          type: string
+          format: binary
+          description: Multipart image file to analyze. Provide either image or url, not both.
+    PlatformInstagramUsernameDto:
       type: object
       properties:
         username:
           type: string
           example: instagram
-        maxFollowing:
+        maxPosts:
           type: number
           minimum: 1
-          maximum: 5000
-          description: Requested following limit. The upstream source may return more than requested. Unlimited is not exposed on v1.
+          maximum: 200
+      required:
+      - username
+    InstagramFollowScrapeResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        relation_type:
+          type: string
+          enum:
+          - followers
+          - following
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstagramFollowEdgeResponseDto'
+        requested_limit:
+          type:
+          - number
+          - 'null'
+        returned_count:
+          type: number
+      required:
+      - username
+      - relation_type
+      - edges
+      - returned_count
+    PlatformXConversationDto:
+      type: object
+      properties:
+        postId:
+          type: string
+          example: '1234567890123456789'
+        maxTweets:
+          type: number
+          minimum: 1
+          maximum: 500
+      required:
+      - postId
+    PlatformLinkedInProfileActivityDto:
+      type: object
+      properties:
+        profiles:
+          description: LinkedIn profile URLs or public profile usernames.
+          example:
+          - https://www.linkedin.com/in/satyanadella
+          - some-public-id
+          type: array
+          items:
+            type: string
+        maxItems:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 10
+        postedLimit:
+          type: string
+          enum:
+          - any
+          - 24h
+          - week
+          - month
+          - 3months
+          - 6months
+          - year
+          default: any
+          description: Fetch posts no older than this time window.
+      required:
+      - profiles
+    PlatformWebCrawlDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Domain or URL to crawl
+          example: https://example.com
+        limit:
+          type: number
+          minimum: 1
+          maximum: 50
+          default: 5
+        maxPages:
+          type: number
+          description: Maximum number of pages to crawl. Overrides limit when set.
+          minimum: 1
+          maximum: 50
+          default: 5
+        maxDepth:
+          type: number
+          description: Maximum link depth from the starting URL.
+          minimum: 0
+          maximum: 5
+          default: 1
+        sameDomainOnly:
+          type: boolean
+          description: Restrict discovered links to the starting hostname.
+          default: true
+        instructions:
+          type: string
+          description: Instructions for content extraction
+      required:
+      - url
+    LinkedInCompanyPostsResponseDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkedInPostResponseDto'
+        description:
+          type:
+          - string
+          - 'null'
+      required:
+      - companySlug
+      - posts
+    PlatformFacebookPostDto:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://www.facebook.com/openai/posts/1234567890
+      required:
+      - url
+    SearchIntelligenceKeywordRowResponseDto:
+      type: object
+      properties:
+        keyword:
+          type: string
+        searchVolume:
+          type:
+          - number
+          - 'null'
+        rank:
+          type:
+          - number
+          - 'null'
+        rankingDifficulty:
+          type:
+          - number
+          - 'null'
+        totalMonthlyClicks:
+          type:
+          - number
+          - 'null'
+        percentOrganicClicks:
+          type:
+          - number
+          - 'null'
+        broadCostPerClick:
+          type:
+          - number
+          - 'null'
+        isQuestion:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - keyword
+    InstagramCommentResponseDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        text:
+          type: string
+        owner_username:
+          type:
+          - string
+          - 'null'
+        owner_id:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+        likes_count:
+          type:
+          - number
+          - 'null'
+        replies_count:
+          type:
+          - number
+          - 'null'
+        replies:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/InstagramCommentResponseDto'
+      required:
+      - text
+    PlatformLinkedInCompanyDto:
+      type: object
+      properties:
+        identifier:
+          type: string
+          example: acme-inc
+      required:
+      - identifier
+    PlatformWebScrapeBatchDto:
+      type: object
+      properties:
+        urls:
+          description: URLs to scrape using the top-level renderJs and cache freshness options.
+          type: array
+          items:
+            type: string
+        items:
+          description: Per-item scrape requests. Use either items or urls, not both.
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformWebScrapeBatchItemDto'
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping for urls entries.
+          default: false
+        maxAgeMs:
+          type: number
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          minimum: 0
+          maximum: 30
+          default: 0
+        maxConcurrency:
+          type: number
+          minimum: 1
+          maximum: 10
+          default: 3
+          description: Maximum number of batch items processed concurrently.
+    WebSearchResultItemResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+        publishedDate:
+          type:
+          - string
+          - 'null'
+        position:
+          type:
+          - number
+          - 'null'
+      required:
+      - url
+      - title
+    TikTokRelatedVideoResponseDto:
+      type: object
+      properties:
+        relationship:
+          type: string
+          enum:
+          - collaboration
+        matched_username:
+          type: string
+        video:
+          $ref: '#/components/schemas/TikTokVideoResponseDto'
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
+      required:
+      - relationship
+      - matched_username
+      - video
+      - collaborators
+    WebScrapeCaptureMetadataResponseDto:
+      type: object
+      properties:
+        mode:
+          type: string
+        completionReason:
+          type: string
+        scrollsCompleted:
+          type: number
+        maxScrolls:
+          type: number
+        expansionClicks:
+          type: number
+        maxExpansionClicks:
+          type: number
+        durationMs:
+          type: number
+      required:
+      - mode
+      - completionReason
+      - scrollsCompleted
+      - maxScrolls
+      - expansionClicks
+      - maxExpansionClicks
+      - durationMs
+    InstagramProfileResponseDto:
+      type: object
+      properties:
+        instagram_user_id:
+          type:
+          - string
+          - 'null'
+        username:
+          type: string
+        display_name:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        profile_url:
+          type:
+          - string
+          - 'null'
+        profile_picture_url:
+          type:
+          - string
+          - 'null'
+        website_url:
+          type:
+          - string
+          - 'null'
+        followers_count:
+          type:
+          - number
+          - 'null'
+        following_count:
+          type:
+          - number
+          - 'null'
+        posts_count:
+          type:
+          - number
+          - 'null'
+        is_verified:
+          type:
+          - boolean
+          - 'null'
+        is_business_account:
+          type:
+          - boolean
+          - 'null'
+        is_private:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - username
+    PlatformLinkedInProfilePostsDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: some-public-id
+        maxPosts:
+          type: number
+          minimum: 1
+          maximum: 200
+          default: 20
       required:
       - username
     LinkedInCommentActorResponseDto:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         type:
           type: string
           enum:
@@ -4516,193 +4862,694 @@ components:
         position:
           type: string
         universalName:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         pictureUrl:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - id
       - type
       - name
       - linkedinUrl
       - position
-    PlatformInstagramFollowersDto:
+    PlatformSearchIntelligenceCompetingDto:
       type: object
       properties:
-        username:
-          type: string
-          example: instagram
-        maxFollowers:
+        includedDomains:
+          example:
+          - acme.com
+          - competitor.com
+          description: Domains to compare for shared keywords.
+          type: array
+          items:
+            type: string
+        excludedDomains:
+          example:
+          - excluded.com
+          description: Domains to exclude from the comparison.
+          type: array
+          items:
+            type: string
+        pageSize:
           type: number
           minimum: 1
-          maximum: 5000
-          description: Maximum followers to request. Unlimited is not exposed on v1.
+          maximum: 100
+          default: 25
       required:
-      - username
-    LinkedInLocationResponseDto:
+      - includedDomains
+    LinkedInPostResponseDto:
       type: object
       properties:
-        country:
+        activityId:
           type: string
-          nullable: true
-        city:
+        postUrl:
+          type:
+          - string
+          - 'null'
+        text:
           type: string
-          nullable: true
-        full:
+        postedAt:
+          type:
+          - string
+          - 'null'
+        authorName:
+          type:
+          - string
+          - 'null'
+        authorHeadline:
+          type:
+          - string
+          - 'null'
+        authorProfileUrl:
+          type:
+          - string
+          - 'null'
+        authorProfileUsername:
+          type:
+          - string
+          - 'null'
+        totalReactions:
+          type:
+          - number
+          - 'null'
+        commentsCount:
+          type:
+          - number
+          - 'null'
+        repostsCount:
+          type:
+          - number
+          - 'null'
+        isReshare:
+          type:
+          - boolean
+          - 'null'
+        repostedBy:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/LinkedInRepostedByResponseDto'
+        contentType:
+          type:
+          - string
+          - 'null'
+        contentData:
+          type: object
+          additionalProperties: true
+        hashtags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - activityId
+      - text
+    PlatformLinkedInFinderDto:
+      type: object
+      properties:
+        domains:
+          description: Website domains or URLs to look up.
+          example:
+          - https://example.com
+          maxItems: 50
+          type: array
+          items:
+            type: string
+      required:
+      - domains
+    YouTubeVideoResponseDto:
+      type: object
+      properties:
+        url:
           type: string
-          nullable: true
+        text:
+          type: string
+        statusCode:
+          type:
+          - number
+          - 'null'
+        videoId:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        channelId:
+          type:
+          - string
+          - 'null'
+        channelName:
+          type:
+          - string
+          - 'null'
+        channelUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        publishedAt:
+          type:
+          - string
+          - 'null'
+        durationSeconds:
+          type:
+          - number
+          - 'null'
+        viewCount:
+          type:
+          - number
+          - 'null'
+        likeCount:
+          type:
+          - number
+          - 'null'
+        commentCount:
+          type:
+          - number
+          - 'null'
+        thumbnailUrl:
+          type:
+          - string
+          - 'null'
+        transcriptText:
+          type:
+          - string
+          - 'null'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/YouTubeVideoCommentResponseDto'
+      required:
+      - url
+      - text
+    FacebookPostResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type:
+          - number
+          - 'null'
+        postId:
+          type:
+          - string
+          - 'null'
+        authorName:
+          type:
+          - string
+          - 'null'
+        authorUrl:
+          type:
+          - string
+          - 'null'
+        postedAt:
+          type:
+          - string
+          - 'null'
+        likeCount:
+          type:
+          - number
+          - 'null'
+        commentCount:
+          type:
+          - number
+          - 'null'
+        shareCount:
+          type:
+          - number
+          - 'null'
+        viewCount:
+          type:
+          - number
+          - 'null'
+      required:
+      - url
+      - text
+    SeoDomainResponseDto:
+      type: object
+      properties:
+        hasData:
+          type: boolean
+        organicKeywordsCount:
+          type:
+          - number
+          - 'null'
+        paidKeywordsCount:
+          type:
+          - number
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        keyword_category:
+          type:
+          - string
+          - 'null'
+        tech_stack:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        match_score:
+          type:
+          - number
+          - 'null'
+      required:
+      - hasData
     LinkedInCompanyResponseDto:
       type: object
       properties:
         identifier:
           type: string
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         website:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         industry:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         company_size:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         headquarters:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         founded:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         specialties:
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
         logo_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         follower_count:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         employee_count:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         linkedin_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - identifier
-    XProfileResponseDto:
+    XSearchOptionsBodyDto:
       type: object
       properties:
-        username:
+        dateFrom:
           type: string
-        tweets:
-          type: array
-          items:
-            $ref: '#/components/schemas/XTweetResponseDto'
-        referencedTweets:
-          type: array
-          items:
-            $ref: '#/components/schemas/XTweetResponseDto'
-        authors:
-          type: array
-          items:
-            $ref: '#/components/schemas/XAuthorResponseDto'
-        bio:
+        dateTo:
           type: string
-          nullable: true
+        lang:
+          type: string
+        geocode:
+          type: string
+    WebCrawlAcceptedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        pollUrl:
+          type: string
       required:
-      - username
-      - tweets
-      - referencedTweets
-      - authors
+      - id
+      - operationId
+      - status
+      - pollUrl
+    YouTubeVideoCommentResponseDto:
+      type: object
+      properties:
+        authorName:
+          type:
+          - string
+          - 'null'
+        authorUrl:
+          type:
+          - string
+          - 'null'
+        text:
+          type: string
+        publishedAt:
+          type:
+          - string
+          - 'null'
+        likeCount:
+          type:
+          - number
+          - 'null'
+        replyCount:
+          type:
+          - number
+          - 'null'
+      required:
+      - text
+    PlatformWebScrapeBatchItemDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to scrape
+          example: https://example.com/page
+        renderJs:
+          type: boolean
+          description: Render JavaScript before scraping
+          default: false
+        maxAgeMs:
+          type: number
+          minimum: 0
+          maximum: 2592000000
+          default: 0
+        maxAgeDays:
+          type: number
+          minimum: 0
+          maximum: 30
+          default: 0
+      required:
+      - url
+    PlatformSeoKeywordsDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: acme.com
+          description: Domain to analyze organic search keywords for.
+        searchType:
+          type: string
+          enum:
+          - GainedClicks
+          - LostClicks
+          - GainedRanks
+          - LostRanks
+          - MostValuable
+          - NewlyRanked
+          - JustMadeIt
+          - JustFellOff
+          example: MostValuable
+        pageSize:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 25
+        searchVolumeMin:
+          type: number
+          minimum: 0
+        searchVolumeMax:
+          type: number
+          minimum: 0
+        rankMin:
+          type: number
+          minimum: 1
+        rankMax:
+          type: number
+          minimum: 1
+        includeTerms:
+          type: string
+          description: Comma-separated terms that must appear in keywords.
+        excludeTerms:
+          type: string
+          description: Comma-separated terms to exclude from keywords.
+      required:
+      - domain
+      - searchType
     ImageDeepfakeSignalResponseDto:
       type: object
       properties:
         score:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
       required:
       - score
+    LinkedInProfileActivityActorResponseDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - profile
+          - company
+        name:
+          type:
+          - string
+          - 'null'
+        linkedinUrl:
+          type:
+          - string
+          - 'null'
+        position:
+          type:
+          - string
+          - 'null'
+        universalName:
+          type:
+          - string
+          - 'null'
+        pictureUrl:
+          type:
+          - string
+          - 'null'
+    LinkedInLocationResponseDto:
+      type: object
+      properties:
+        country:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        full:
+          type:
+          - string
+          - 'null'
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    InstagramFollowProfileResponseDto:
+      type: object
+      properties:
+        instagram_user_id:
+          type:
+          - string
+          - 'null'
+        username:
+          type: string
+        display_name:
+          type:
+          - string
+          - 'null'
+        profile_url:
+          type:
+          - string
+          - 'null'
+        profile_picture_url:
+          type:
+          - string
+          - 'null'
+        is_private:
+          type:
+          - boolean
+          - 'null'
+        is_verified:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - username
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
     LinkedInProfileResponseDto:
       type: object
       properties:
         username:
           type: string
         full_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         first_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         last_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         headline:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         about:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         profile_picture_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         location:
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/LinkedInLocationResponseDto'
         follower_count:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         connection_count:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         current_company:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         current_company_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         background_picture_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         linkedin_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         profile_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         open_to_work:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_premium:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_creator:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_influencer:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_top_voice:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_verified:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         is_hiring:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         top_skills:
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
         experience:
@@ -4782,414 +5629,200 @@ components:
             additionalProperties: true
       required:
       - username
-    TikTokRelatedVideoResponseDto:
-      type: object
-      properties:
-        relationship:
-          type: string
-          enum:
-          - collaboration
-        matched_username:
-          type: string
-        video:
-          $ref: '#/components/schemas/TikTokVideoResponseDto'
-        collaborators:
-          type: array
-          items:
-            $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
-      required:
-      - relationship
-      - matched_username
-      - video
-      - collaborators
-    YouTubeChannelResponseDto:
-      type: object
-      properties:
-        url:
-          type: string
-        text:
-          type: string
-        statusCode:
-          type: number
-          nullable: true
-        channelId:
-          type: string
-          nullable: true
-        handle:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        subscriberCount:
-          type: number
-          nullable: true
-        videoCount:
-          type: number
-          nullable: true
-        viewCount:
-          type: number
-          nullable: true
-        thumbnailUrl:
-          type: string
-          nullable: true
-      required:
-      - url
-      - text
-    PlatformYouTubeChannelDto:
-      type: object
-      properties:
-        url:
-          type: string
-          example: https://www.youtube.com/@OpenAI
-      required:
-      - url
-    LinkedInPostResponseDto:
-      type: object
-      properties:
-        activityId:
-          type: string
-        postUrl:
-          type: string
-          nullable: true
-        text:
-          type: string
-        postedAt:
-          type: string
-          nullable: true
-        authorName:
-          type: string
-          nullable: true
-        authorHeadline:
-          type: string
-          nullable: true
-        authorProfileUrl:
-          type: string
-          nullable: true
-        authorProfileUsername:
-          type: string
-          nullable: true
-        totalReactions:
-          type: number
-          nullable: true
-        commentsCount:
-          type: number
-          nullable: true
-        repostsCount:
-          type: number
-          nullable: true
-        isReshare:
-          type: boolean
-          nullable: true
-        repostedBy:
-          nullable: true
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/LinkedInRepostedByResponseDto'
-        contentType:
-          type: string
-          nullable: true
-        contentData:
-          type: object
-          additionalProperties: true
-        hashtags:
-          nullable: true
-          type: array
-          items:
-            type: string
-      required:
-      - activityId
-      - text
-    PlatformSeoKeywordsDto:
-      type: object
-      properties:
-        domain:
-          type: string
-          example: acme.com
-          description: Domain to analyze organic search keywords for.
-        searchType:
-          type: string
-          enum:
-          - GainedClicks
-          - LostClicks
-          - GainedRanks
-          - LostRanks
-          - MostValuable
-          - NewlyRanked
-          - JustMadeIt
-          - JustFellOff
-          example: MostValuable
-        pageSize:
-          type: number
-          minimum: 1
-          maximum: 100
-          default: 25
-        searchVolumeMin:
-          type: number
-          minimum: 0
-        searchVolumeMax:
-          type: number
-          minimum: 0
-        rankMin:
-          type: number
-          minimum: 1
-        rankMax:
-          type: number
-          minimum: 1
-        includeTerms:
-          type: string
-          description: Comma-separated terms that must appear in keywords.
-        excludeTerms:
-          type: string
-          description: Comma-separated terms to exclude from keywords.
-      required:
-      - domain
-      - searchType
-    ImageDeepfakeDetectionResponseDto:
-      type: object
-      properties:
-        verdict:
-          type: string
-          enum:
-          - likely_real
-          - uncertain
-          - likely_deepfake
-        score:
-          type: number
-        status:
-          type: string
-          enum:
-          - complete
-          - inconclusive
-        signals:
-          $ref: '#/components/schemas/ImageDeepfakeSignalsResponseDto'
-      required:
-      - verdict
-      - score
-      - status
-      - signals
-    InstagramCommentResponseDto:
+    LinkedInProfileCommentResponseDto:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
-        text:
-          type: string
-        owner_username:
-          type: string
-          nullable: true
-        owner_id:
-          type: string
-          nullable: true
-        timestamp:
-          type: string
-          nullable: true
-        likes_count:
-          type: number
-          nullable: true
-        replies_count:
-          type: number
-          nullable: true
-        replies:
-          nullable: true
-          type: array
-          items:
-            $ref: '#/components/schemas/InstagramCommentResponseDto'
-      required:
-      - text
-    LinkedInFinderResponseDto:
-      type: object
-      properties:
-        linkedin_url:
-          type: string
-          nullable: true
-        domain:
-          type: string
-          nullable: true
-        company_name:
-          type: string
-          nullable: true
-    PlatformInstagramPostCommentsDto:
-      type: object
-      properties:
-        postUrl:
-          type: string
-          example: https://www.instagram.com/p/ABC123/
-        maxComments:
-          type: number
-          minimum: 1
-          maximum: 200
-        includeNested:
-          type: boolean
-          description: When true, requests nested reply threads from the comment actor (more items / cost).
-      required:
-      - postUrl
-    PlatformXSearchPostsDto:
-      type: object
-      properties:
-        query:
-          type: string
-          example: typescript nestjs
-        maxTweets:
-          type: number
-          minimum: 1
-          maximum: 200
-        options:
-          $ref: '#/components/schemas/XSearchOptionsBodyDto'
-      required:
-      - query
-    PlatformWebSearchDto:
-      type: object
-      properties:
-        query:
-          type: string
-          description: Search query
-          example: best CRM software 2025
-        maxResults:
-          type: number
-          minimum: 1
-          maximum: 50
-          default: 10
-        searchDepth:
-          type: string
-          enum:
-          - basic
-          - advanced
-          default: basic
-        topic:
-          type: string
-          enum:
-          - general
-          - news
-          default: general
-        days:
-          type: number
-          description: Limit results to last N days (news only)
-        includeDomains:
-          description: Only include results from these domains
-          type: array
-          items:
-            type: string
-        excludeDomains:
-          description: Exclude results from these domains
-          type: array
-          items:
-            type: string
-      required:
-      - query
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    PlatformWebScrapeBatchItemDto:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL to scrape
-          example: https://example.com/page
-        renderJs:
-          type: boolean
-          description: Render JavaScript before scraping
-          default: false
-        maxAgeMs:
-          type: number
-          minimum: 0
-          maximum: 2592000000
-          default: 0
-        maxAgeDays:
-          type: number
-          minimum: 0
-          maximum: 30
-          default: 0
-      required:
-      - url
-    LinkedInProfileReactionResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         profileUrl:
           type: string
         profileUsername:
           type: string
-        reactionType:
+        commentText:
           type: string
-        reactedAt:
-          type: string
-          nullable: true
+        commentedAt:
+          type:
+          - string
+          - 'null'
         sourceUrl:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         post:
           $ref: '#/components/schemas/LinkedInProfileActivityPostResponseDto'
         actor:
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/LinkedInProfileActivityActorResponseDto'
       required:
       - profileUrl
       - profileUsername
-      - reactionType
+      - commentText
       - post
-    PlatformSearchIntelligenceCompetingDto:
+    InstagramPostResponseDto:
       type: object
       properties:
-        includedDomains:
-          example:
-          - acme.com
-          - competitor.com
-          description: Domains to compare for shared keywords.
-          type: array
+        shortcode:
+          type: string
+        post_url:
+          type:
+          - string
+          - 'null'
+        post_type:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        hashtags:
+          type:
+          - array
+          - 'null'
           items:
             type: string
-        excludedDomains:
-          example:
-          - excluded.com
-          description: Domains to exclude from the comparison.
-          type: array
+        mentions:
+          type:
+          - array
+          - 'null'
           items:
             type: string
-        pageSize:
-          type: number
-          minimum: 1
-          maximum: 100
-          default: 25
+        likes_count:
+          type:
+          - number
+          - 'null'
+        comments_count:
+          type:
+          - number
+          - 'null'
+        video_views_count:
+          type:
+          - number
+          - 'null'
+        display_url:
+          type:
+          - string
+          - 'null'
+        dimensions_height:
+          type:
+          - number
+          - 'null'
+        dimensions_width:
+          type:
+          - number
+          - 'null'
+        is_sponsored:
+          type:
+          - boolean
+          - 'null'
+        location_name:
+          type:
+          - string
+          - 'null'
+        location_id:
+          type:
+          - string
+          - 'null'
+        posted_at:
+          type:
+          - string
+          - 'null'
+        author_username:
+          type:
+          - string
+          - 'null'
+        owner_id:
+          type:
+          - string
+          - 'null'
       required:
-      - includedDomains
+      - shortcode
+    PlatformLinkedInProfileDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: some-public-id
+      required:
+      - username
+    LinkedInPostReactionResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        reactionType:
+          type: string
+        postId:
+          type: string
+        actor:
+          $ref: '#/components/schemas/LinkedInReactionActorResponseDto'
+      required:
+      - id
+      - reactionType
+      - postId
+      - actor
+    WebScrapeResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+        text:
+          type: string
+        statusCode:
+          type:
+          - number
+          - 'null'
+        markdown:
+          type:
+          - string
+          - 'null'
+        html:
+          type:
+          - string
+          - 'null'
+        links:
+          type: array
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/WebScrapeMetadataResponseDto'
+        json:
+          type: object
+          additionalProperties: true
+      required:
+      - url
+      - text
+    XProfileResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+        tweets:
+          type: array
+          items:
+            $ref: '#/components/schemas/XTweetResponseDto'
+        referencedTweets:
+          type: array
+          items:
+            $ref: '#/components/schemas/XTweetResponseDto'
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/XAuthorResponseDto'
+        bio:
+          type:
+          - string
+          - 'null'
+      required:
+      - username
+      - tweets
+      - referencedTweets
+      - authors
     PlatformTikTokUsernameDto:
       type: object
       properties:
@@ -5202,434 +5835,6 @@ components:
           maximum: 500
       required:
       - username
-    PublicResponseMetaDto:
-      type: object
-      properties:
-        requestId:
-          type: string
-      required:
-      - requestId
-    TikTokVideoResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        platform_video_id:
-          type: string
-        tiktok_profile_id:
-          type: string
-          nullable: true
-        caption:
-          type: string
-          nullable: true
-        post_url:
-          type: string
-          nullable: true
-        author_username:
-          type: string
-          nullable: true
-        author_display_name:
-          type: string
-          nullable: true
-        author_profile_url:
-          type: string
-          nullable: true
-        play_count:
-          type: number
-          nullable: true
-        like_count:
-          type: number
-          nullable: true
-        comment_count:
-          type: number
-          nullable: true
-        share_count:
-          type: number
-          nullable: true
-        hashtags:
-          nullable: true
-          type: array
-          items:
-            type: string
-        cdn_url:
-          type: string
-          nullable: true
-        s3_key:
-          type: string
-          nullable: true
-        thumbnail_s3_key:
-          type: string
-          nullable: true
-        duration_secs:
-          type: number
-          nullable: true
-        posted_at:
-          type: string
-          nullable: true
-        created_at:
-          type: string
-      required:
-      - id
-      - platform_video_id
-      - created_at
-    PlatformWebScrapeDto:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL to scrape
-          example: https://example.com/page
-        renderJs:
-          type: boolean
-          description: Render JavaScript before scraping
-          default: false
-        formats:
-          type: array
-          description: Output formats to return. Defaults to ["text"]. Request "json" only with jsonSchema.
-          default:
-          - text
-          items:
-            type: string
-            enum:
-            - text
-            - markdown
-            - html
-            - links
-            - metadata
-            - json
-        jsonSchema:
-          type: object
-          description: JSON Schema used for schema-guided extraction when formats includes "json".
-          additionalProperties: true
-        instructions:
-          type: string
-          description: Additional extraction instructions used only when formats includes "json".
-          maxLength: 8000
-        maxAgeMs:
-          type: number
-          description: Maximum accepted cache age in milliseconds. Use 0 or omit to force a fresh scrape.
-          minimum: 0
-          maximum: 2592000000
-          default: 0
-        maxAgeDays:
-          type: number
-          description: Maximum accepted cache age in days. Use 0 or omit to force a fresh scrape. Ignored when maxAgeMs is provided.
-          minimum: 0
-          maximum: 30
-          default: 0
-      required:
-      - url
-    SeoDomainResponseDto:
-      type: object
-      properties:
-        hasData:
-          type: boolean
-        organicKeywordsCount:
-          type: number
-          nullable: true
-        paidKeywordsCount:
-          type: number
-          nullable: true
-        summary:
-          type: string
-          nullable: true
-        keyword_category:
-          type: string
-          nullable: true
-        tech_stack:
-          nullable: true
-          type: array
-          items:
-            type: string
-        match_score:
-          type: number
-          nullable: true
-      required:
-      - hasData
-    LinkedInProfileActivityPostResponseDto:
-      type: object
-      properties:
-        postId:
-          type: string
-          nullable: true
-        postUrl:
-          type: string
-          nullable: true
-        text:
-          type: string
-          nullable: true
-        authorName:
-          type: string
-          nullable: true
-        authorProfileUrl:
-          type: string
-          nullable: true
-        authorCompanyUrl:
-          type: string
-          nullable: true
-        postedAt:
-          type: string
-          nullable: true
-        reactionCount:
-          type: number
-          nullable: true
-        commentCount:
-          type: number
-          nullable: true
-        repostCount:
-          type: number
-          nullable: true
-    PlatformLinkedInCompanyDto:
-      type: object
-      properties:
-        identifier:
-          type: string
-          example: acme-inc
-      required:
-      - identifier
-    WebSearchResponseDto:
-      type: object
-      properties:
-        query:
-          type: string
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebSearchResultItemResponseDto'
-        totalResults:
-          type: number
-          nullable: true
-      required:
-      - query
-      - results
-    WebScrapeCaptureMetadataResponseDto:
-      type: object
-      properties:
-        mode:
-          type: string
-        completionReason:
-          type: string
-        scrollsCompleted:
-          type: number
-        maxScrolls:
-          type: number
-        expansionClicks:
-          type: number
-        maxExpansionClicks:
-          type: number
-        durationMs:
-          type: number
-      required:
-      - mode
-      - completionReason
-      - scrollsCompleted
-      - maxScrolls
-      - expansionClicks
-      - maxExpansionClicks
-      - durationMs
-    InstagramFollowProfileResponseDto:
-      type: object
-      properties:
-        instagram_user_id:
-          type: string
-          nullable: true
-        username:
-          type: string
-        display_name:
-          type: string
-          nullable: true
-        profile_url:
-          type: string
-          nullable: true
-        profile_picture_url:
-          type: string
-          nullable: true
-        is_private:
-          type: boolean
-          nullable: true
-        is_verified:
-          type: boolean
-          nullable: true
-      required:
-      - username
-    XAuthorResponseDto:
-      type: object
-      properties:
-        x_user_id:
-          type: string
-          nullable: true
-        username:
-          type: string
-          nullable: true
-        display_name:
-          type: string
-          nullable: true
-        profile_url:
-          type: string
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-        profile_picture_url:
-          type: string
-          nullable: true
-        followers_count:
-          type: number
-          nullable: true
-        following_count:
-          type: number
-          nullable: true
-        tweet_count:
-          type: number
-          nullable: true
-        is_verified:
-          type: boolean
-          nullable: true
-        is_blue_verified:
-          type: boolean
-          nullable: true
-        account_created_at:
-          type: string
-          nullable: true
-    SearchIntelligenceKeywordRowResponseDto:
-      type: object
-      properties:
-        keyword:
-          type: string
-        searchVolume:
-          type: number
-          nullable: true
-        rank:
-          type: number
-          nullable: true
-        rankingDifficulty:
-          type: number
-          nullable: true
-        totalMonthlyClicks:
-          type: number
-          nullable: true
-        percentOrganicClicks:
-          type: number
-          nullable: true
-        broadCostPerClick:
-          type: number
-          nullable: true
-        isQuestion:
-          type: boolean
-          nullable: true
-      required:
-      - keyword
-    LinkedInKeywordPostsConfigBodyDto:
-      type: object
-      properties:
-        limit:
-          type: number
-          minimum: 1
-          maximum: 500
-        sortBy:
-          type: string
-          enum:
-          - relevance
-          - recent
-        dateFilter:
-          type: string
-          enum:
-          - past-24h
-          - past-week
-          - past-month
-        matchMode:
-          type: string
-          enum:
-          - exact
-          - broad
-          default: exact
-          description: Use exact to search the keyword as a quoted phrase, or broad to let LinkedIn match related terms.
-    YouTubeVideoCommentResponseDto:
-      type: object
-      properties:
-        authorName:
-          type: string
-          nullable: true
-        authorUrl:
-          type: string
-          nullable: true
-        text:
-          type: string
-        publishedAt:
-          type: string
-          nullable: true
-        likeCount:
-          type: number
-          nullable: true
-        replyCount:
-          type: number
-          nullable: true
-      required:
-      - text
-    PlatformLinkedInProfileDto:
-      type: object
-      properties:
-        username:
-          type: string
-          example: some-public-id
-      required:
-      - username
-    LinkedInProfileCommentResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-        profileUrl:
-          type: string
-        profileUsername:
-          type: string
-        commentText:
-          type: string
-        commentedAt:
-          type: string
-          nullable: true
-        sourceUrl:
-          type: string
-          nullable: true
-        post:
-          $ref: '#/components/schemas/LinkedInProfileActivityPostResponseDto'
-        actor:
-          nullable: true
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/LinkedInProfileActivityActorResponseDto'
-      required:
-      - profileUrl
-      - profileUsername
-      - commentText
-      - post
-    WebScrapeJobAcceptedResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-    PlatformYouTubeVideoDto:
-      type: object
-      properties:
-        url:
-          type: string
-          example: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-      required:
-      - url
     WebScrapeBatchAcceptedResponseDto:
       type: object
       properties:
@@ -5648,51 +5853,7 @@ components:
       - operationId
       - status
       - pollUrl
-    XSearchOptionsBodyDto:
-      type: object
-      properties:
-        dateFrom:
-          type: string
-        dateTo:
-          type: string
-        lang:
-          type: string
-        geocode:
-          type: string
-    PlatformXProfileDto:
-      type: object
-      properties:
-        username:
-          type: string
-          example: elonmusk
-        maxTweets:
-          type: number
-          minimum: 1
-          maximum: 200
-      required:
-      - username
-    PlatformXPostDto:
-      type: object
-      properties:
-        postUrl:
-          type: string
-          example: https://x.com/elonmusk/status/123456789
-      required:
-      - postUrl
-    PlatformLinkedInFinderDto:
-      type: object
-      properties:
-        domains:
-          description: Website domains or URLs to look up.
-          example:
-          - https://example.com
-          maxItems: 50
-          type: array
-          items:
-            type: string
-      required:
-      - domains
-    WebScrapeResponseDto:
+    FacebookPageResponseDto:
       type: object
       properties:
         url:
@@ -5700,27 +5861,122 @@ components:
         text:
           type: string
         statusCode:
-          type: number
-          nullable: true
-        markdown:
-          type: string
-          nullable: true
-        html:
-          type: string
-          nullable: true
-        links:
-          type: array
-          items:
-            type: string
-        metadata:
-          $ref: '#/components/schemas/WebScrapeMetadataResponseDto'
-        json:
-          type: object
-          additionalProperties: true
+          type:
+          - number
+          - 'null'
+        pageId:
+          type:
+          - string
+          - 'null'
+        pageName:
+          type:
+          - string
+          - 'null'
+        pageUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        likesCount:
+          type:
+          - number
+          - 'null'
+        followersCount:
+          type:
+          - number
+          - 'null'
+        websiteUrl:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
       required:
       - url
       - text
-    FacebookPostResponseDto:
+    PlatformLinkedInKeywordPostsDto:
+      type: object
+      properties:
+        keyword:
+          type: string
+          example: b2b saas
+        config:
+          $ref: '#/components/schemas/LinkedInKeywordPostsConfigBodyDto'
+      required:
+      - keyword
+    LinkedInFinderResponseDto:
+      type: object
+      properties:
+        linkedin_url:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        company_name:
+          type:
+          - string
+          - 'null'
+    LinkedInReactionActorResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        linkedinUrl:
+          type: string
+        position:
+          type: string
+        pictureUrl:
+          type:
+          - string
+          - 'null'
+        sourceActorIdKind:
+          type: string
+          enum:
+          - linkedin_member_id
+          - source_row_id
+          - unknown
+        profileUrlKind:
+          type: string
+          enum:
+          - vanity_slug
+          - opaque_member_id
+          - company
+          - unknown
+        universalName:
+          type:
+          - string
+          - 'null'
+        canonicalPersonId:
+          type:
+          - string
+          - 'null'
+        resolutionStatus:
+          type: string
+          enum:
+          - resolved
+          - unresolved
+          - not_attempted
+      required:
+      - id
+      - name
+      - linkedinUrl
+      - position
+      - sourceActorIdKind
+      - profileUrlKind
+      - universalName
+      - canonicalPersonId
+      - resolutionStatus
+    YouTubeChannelResponseDto:
       type: object
       properties:
         url:
@@ -5728,139 +5984,144 @@ components:
         text:
           type: string
         statusCode:
-          type: number
-          nullable: true
-        postId:
-          type: string
-          nullable: true
-        authorName:
-          type: string
-          nullable: true
-        authorUrl:
-          type: string
-          nullable: true
-        postedAt:
-          type: string
-          nullable: true
-        likeCount:
-          type: number
-          nullable: true
-        commentCount:
-          type: number
-          nullable: true
-        shareCount:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
+        channelId:
+          type:
+          - string
+          - 'null'
+        handle:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        subscriberCount:
+          type:
+          - number
+          - 'null'
+        videoCount:
+          type:
+          - number
+          - 'null'
         viewCount:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
+        thumbnailUrl:
+          type:
+          - string
+          - 'null'
       required:
       - url
       - text
-    TikTokProfileSeedResponseDto:
+    PlatformLinkedInPostUrlsDto:
       type: object
       properties:
-        username:
-          type: string
-        tiktok_user_id:
-          type: string
-          nullable: true
-        display_name:
-          type: string
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-        follower_count:
-          type: number
-          nullable: true
-        following_count:
-          type: number
-          nullable: true
-        verified:
-          type: boolean
-          nullable: true
-        avatar_url:
-          type: string
-          nullable: true
-      required:
-      - username
-    ImageDeepfakeFaceManipulationSignalResponseDto:
-      type: object
-      properties:
-        score:
-          type: number
-          nullable: true
-        facesAnalyzed:
-          type: number
-      required:
-      - score
-      - facesAnalyzed
-    PlatformLinkedInProfileActivityDto:
-      type: object
-      properties:
-        profiles:
-          description: LinkedIn profile URLs or public profile usernames.
+        postUrls:
           example:
-          - https://www.linkedin.com/in/satyanadella
-          - some-public-id
+          - https://www.linkedin.com/feed/update/urn:li:activity:123
           type: array
           items:
             type: string
         maxItems:
           type: number
           minimum: 1
-          maximum: 100
+          maximum: 500
           default: 10
-        postedLimit:
-          type: string
-          enum:
-          - any
-          - 24h
-          - week
-          - month
-          - 3months
-          - 6months
-          - year
-          default: any
-          description: Fetch posts no older than this time window.
       required:
-      - profiles
-    WebSearchResultItemResponseDto:
+      - postUrls
+    TikTokProfileScrapeResponseDto:
       type: object
       properties:
-        url:
-          type: string
-        title:
-          type: string
-          nullable: true
-        content:
-          type: string
-          nullable: true
-        publishedDate:
-          type: string
-          nullable: true
-        position:
-          type: number
-          nullable: true
-      required:
-      - url
-      - title
-    LinkedInCompanyPostsResponseDto:
-      type: object
-      properties:
-        companySlug:
-          type: string
-        posts:
+        profile:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/TikTokProfileSeedResponseDto'
+        videos:
           type: array
           items:
-            $ref: '#/components/schemas/LinkedInPostResponseDto'
-        description:
-          type: string
-          nullable: true
+            $ref: '#/components/schemas/TikTokVideoResponseDto'
+        relatedVideos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TikTokRelatedVideoResponseDto'
       required:
-      - companySlug
-      - posts
+      - profile
+      - videos
+      - relatedVideos
+    WebSearchResponseDto:
+      type: object
+      properties:
+        query:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebSearchResultItemResponseDto'
+        totalResults:
+          type:
+          - number
+          - 'null'
+      required:
+      - query
+      - results
+    LinkedInProfileReactionResponseDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        profileUrl:
+          type: string
+        profileUsername:
+          type: string
+        reactionType:
+          type: string
+        reactedAt:
+          type:
+          - string
+          - 'null'
+        sourceUrl:
+          type:
+          - string
+          - 'null'
+        post:
+          $ref: '#/components/schemas/LinkedInProfileActivityPostResponseDto'
+        actor:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/LinkedInProfileActivityActorResponseDto'
+      required:
+      - profileUrl
+      - profileUsername
+      - reactionType
+      - post
+    PlatformInstagramFollowingDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: instagram
+        maxFollowing:
+          type: number
+          minimum: 1
+          maximum: 5000
+          description: Requested following limit. The upstream source may return more than requested. Unlimited is not exposed on v1.
+      required:
+      - username
   securitySchemes:
     AccessKey:
       type: apiKey

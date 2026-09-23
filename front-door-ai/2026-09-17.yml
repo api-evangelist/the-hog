@@ -1,0 +1,29 @@
+# Front Door AI Index — the-hog — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: the-hog
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: thehog.ai
+  final_host: thehog.ai
+  ownership: own
+  owner: the-hog
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 15
+  host_score: 15
+  density: 16.59
+  words: 904
+  tiers:
+    agentic: 4
+    core: 11
+    model: 0
+  ambiguous: 23
+  top_terms:
+    agent: 18
+    AI: 10
+    intelligence: 5
+    AI agent: 4
+    LLMs: 1

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: The Hog Company Search Enrichments API
+  title: Hog Enrichments API
   description: Public API reference for The Hog.
   version: '1.0'
   contact: {}
@@ -198,6 +198,13 @@ components:
       required:
       - property
       - message
+    PublicResponseMetaDto:
+      type: object
+      properties:
+        requestId:
+          type: string
+      required:
+      - requestId
     PostEnrichmentDto:
       type: object
       properties:
@@ -232,27 +239,37 @@ components:
           type: string
         github_username:
           type: string
-    EnrichmentQueuedResponseDto:
+    OperationResponseDto:
       type: object
       properties:
         id:
-          type: string
-        operationId:
           type: string
         status:
           type: string
           enum:
           - queued
-        pollUrl:
-          type: string
-        meta:
-          $ref: '#/components/schemas/PublicResponseMetaDto'
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        progress:
+          type:
+          - number
+          - 'null'
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        error:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
       required:
       - id
-      - operationId
       - status
-      - pollUrl
-      - meta
     SignalsConfigDto:
       type: object
       properties:
@@ -271,41 +288,6 @@ components:
           type: number
         handles:
           type: object
-    PublicResponseMetaDto:
-      type: object
-      properties:
-        requestId:
-          type: string
-      required:
-      - requestId
-    OperationResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-          - processing
-          - succeeded
-          - failed
-          - partial_success
-          - cancelled
-        progress:
-          type: number
-          nullable: true
-        result:
-          type: object
-          nullable: true
-          additionalProperties: true
-        error:
-          type: object
-          nullable: true
-          additionalProperties: true
-      required:
-      - id
-      - status
     PublicErrorResponseDto:
       type: object
       properties:
@@ -337,6 +319,27 @@ components:
       - message
       - path
       - timestamp
+    EnrichmentQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
     EnrichmentSyncResponseDto:
       type: object
       properties:

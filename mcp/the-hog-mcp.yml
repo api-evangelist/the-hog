@@ -33,13 +33,11 @@ server:
     auth: THE_HOG_ACCESS_KEY / THE_HOG_SECRET_KEY environment variables
     generated_from: The Hog's public OpenAPI, via CLI Printing Press
     discovered: '2026-08-14'
-    note: >-
-      A THIRD MCP surface, found by enumerating the GitHub org and absent from
-      docs.thehog.ai entirely. The CLI README distinguishes it explicitly: "The
-      hosted/public MCP remains The-Hog/the-hog-mcp. Use this generated MCP when you
-      want the local companion that ships with the CLI." It exposes the generated CLI
-      surface (including the LinkedIn scrapers the curated MCP omits), not the curated
-      workflow tools.
+    note: 'A THIRD MCP surface, found by enumerating the GitHub org and absent from docs.thehog.ai entirely.
+      The CLI README distinguishes it explicitly: "The hosted/public MCP remains The-Hog/the-hog-mcp.
+      Use this generated MCP when you want the local companion that ships with the CLI." It exposes the
+      generated CLI surface (including the LinkedIn scrapers the curated MCP omits), not the curated workflow
+      tools.'
     ref: cli/the-hog-cli.yml
 management: https://platform.thehog.ai/settings/integrations/mcp
 workflow_tools:
@@ -95,32 +93,12 @@ api_tools:
   - run_monitor_now
   - list_monitor_events
 deployment:
-  mode: both
+  mode: remote
   endpoint: https://mcp.thehog.ai/mcp
-  install: npx -y @thehog/mcp@latest
-  package: https://www.npmjs.com/package/@thehog/mcp
-  auth: oauth
-  auth_note: >-
-    The remote endpoint uses OAuth 2.0 (Clerk, authorization_code + PKCE) -- see
-    scopes/the-hog-scopes.yml. The local stdio package authenticates instead with the
-    THEHOG_ACCESS_KEY / THEHOG_SECRET_KEY environment variables carrying the same
-    dual API-key pair the REST API uses.
   verified: probed
   probe: gated
-  probe_detail: >-
-    POST https://mcp.thehog.ai/mcp {"jsonrpc":"2.0","id":1,"method":"tools/list"}
-    with Accept: application/json, text/event-stream returned HTTP 401
-    {"error":"Unauthorized"} on 2026-08-14. The endpoint is live and reachable; the
-    tool schemas require an authenticated introspection. Tool names and semantics are
-    taken from the published reference at
-    https://docs.thehog.ai/reference/mcp-tools.
-  checked: '2026-08-14'
-  source: >-
-    https://docs.thehog.ai/guides/use-mcp (hosted) and
-    https://docs.thehog.ai/guides/local-mcp (stdio); mode corrected from remote to
-    both on 2026-08-14 because The Hog ships BOTH a hosted endpoint an agent can POST
-    to today AND an npx-installable stdio package.
+  checked: '2026-08-12'
+  source: catalog MCP census
 crosswalk: mcp/the-hog-tool-crosswalk.yml
-crosswalk_note: >-
-  27 of the 52 published REST operations have an MCP tool. X, Facebook, YouTube, SEO,
-  deepfake detection and every LinkedIn scraper except profile-posts have no tool.
+crosswalk_note: 27 of the 52 published REST operations have an MCP tool. X, Facebook, YouTube, SEO, deepfake
+  detection and every LinkedIn scraper except profile-posts have no tool.

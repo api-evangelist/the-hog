@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: The Hog Company Search Monitors API
+  title: Hog Monitors API
   description: Public API reference for The Hog.
   version: '1.0'
   contact: {}
@@ -532,65 +532,6 @@ paths:
       - Monitors
 components:
   schemas:
-    MonitorResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - linkedin_keyword
-          - linkedin_profile
-          - linkedin_company
-          - linkedin_post
-          - instagram_profile
-          - instagram_post
-          - x_profile
-          - x_keyword
-          - reddit_keyword
-          - reddit_subreddit
-          - tiktok_keyword
-          - tiktok_hashtag
-          - web_search
-          - site_search
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          - disabled
-        config:
-          type: object
-          additionalProperties: true
-        cadence_minutes:
-          type: number
-        last_run_at:
-          type: string
-          nullable: true
-        next_run_at:
-          type: string
-          nullable: true
-        consecutive_failures:
-          type: number
-        created_at:
-          type: string
-        updated_at:
-          type: string
-      required:
-      - id
-      - name
-      - type
-      - status
-      - config
-      - cadence_minutes
-      - last_run_at
-      - next_run_at
-      - consecutive_failures
-      - created_at
-      - updated_at
     PublicValidationErrorItemDto:
       type: object
       properties:
@@ -609,12 +550,39 @@ components:
       required:
       - property
       - message
-    RunNowBodyDto:
+    MonitorEventDto:
       type: object
       properties:
-        force_fresh:
-          type: boolean
-          description: Force a fresh scrape for this run, bypassing cache
+        id:
+          type: string
+        monitor_id:
+          type: string
+        dedup_key:
+          type: string
+        event_type:
+          type: string
+        event_json:
+          type: object
+          additionalProperties: true
+        canonical_person_id:
+          type:
+          - string
+          - 'null'
+        canonical_company_id:
+          type:
+          - string
+          - 'null'
+        detected_at:
+          type: string
+      required:
+      - id
+      - monitor_id
+      - dedup_key
+      - event_type
+      - event_json
+      - canonical_person_id
+      - canonical_company_id
+      - detected_at
     MonitorEventListResponseDto:
       type: object
       properties:
@@ -623,42 +591,9 @@ components:
           items:
             $ref: '#/components/schemas/MonitorEventDto'
         next_cursor:
-          type: string
-          nullable: true
-      required:
-      - data
-      - next_cursor
-    UpdateMonitorDto:
-      type: object
-      properties:
-        name:
-          type: string
-        config:
-          type: object
-        cadence_minutes:
-          type: number
-        max_results:
-          type: number
-        force_fresh:
-          type: boolean
-        cache_ttl_days:
-          type: number
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          description: Only active and paused are user-settable
-    MonitorListResponseDto:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorResponseDto'
-        next_cursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - data
       - next_cursor
@@ -716,6 +651,41 @@ components:
       - name
       - type
       - config
+    UpdateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+        config:
+          type: object
+        cadence_minutes:
+          type: number
+        max_results:
+          type: number
+        force_fresh:
+          type: boolean
+        cache_ttl_days:
+          type: number
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          description: Only active and paused are user-settable
+    MonitorListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorResponseDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
     PublicErrorResponseDto:
       type: object
       properties:
@@ -747,37 +717,73 @@ components:
       - message
       - path
       - timestamp
-    MonitorEventDto:
+    RunNowBodyDto:
+      type: object
+      properties:
+        force_fresh:
+          type: boolean
+          description: Force a fresh scrape for this run, bypassing cache
+    MonitorResponseDto:
       type: object
       properties:
         id:
           type: string
-        monitor_id:
+        name:
           type: string
-        dedup_key:
+        type:
           type: string
-        event_type:
+          enum:
+          - linkedin_keyword
+          - linkedin_profile
+          - linkedin_company
+          - linkedin_post
+          - instagram_profile
+          - instagram_post
+          - x_profile
+          - x_keyword
+          - reddit_keyword
+          - reddit_subreddit
+          - tiktok_keyword
+          - tiktok_hashtag
+          - web_search
+          - site_search
+        status:
           type: string
-        event_json:
+          enum:
+          - active
+          - paused
+          - disabled
+        config:
           type: object
           additionalProperties: true
-        canonical_person_id:
+        cadence_minutes:
+          type: number
+        last_run_at:
+          type:
+          - string
+          - 'null'
+        next_run_at:
+          type:
+          - string
+          - 'null'
+        consecutive_failures:
+          type: number
+        created_at:
           type: string
-          nullable: true
-        canonical_company_id:
-          type: string
-          nullable: true
-        detected_at:
+        updated_at:
           type: string
       required:
       - id
-      - monitor_id
-      - dedup_key
-      - event_type
-      - event_json
-      - canonical_person_id
-      - canonical_company_id
-      - detected_at
+      - name
+      - type
+      - status
+      - config
+      - cadence_minutes
+      - last_run_at
+      - next_run_at
+      - consecutive_failures
+      - created_at
+      - updated_at
   securitySchemes:
     AccessKey:
       type: apiKey
