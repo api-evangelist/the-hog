@@ -98,67 +98,6 @@ paths:
       - Company Search
 components:
   schemas:
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    EntityCompanyNestedFilterDto:
-      type: object
-      properties:
-        names:
-          type: array
-          items:
-            type: string
-        domains:
-          type: array
-          items:
-            type: string
-        linkedinUrls:
-          type: array
-          items:
-            type: string
-        industries:
-          type: array
-          items:
-            type: string
-        employeeCount:
-          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
-        signals:
-          type: array
-          items:
-            type: string
-    EntitySearchAcceptedPublicDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
     EntitySearchFiltersDto:
       type: object
       properties:
@@ -187,6 +126,61 @@ components:
             type: string
         company:
           $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
+    PostCompanySearchDto:
+      type: object
+      properties:
+        query:
+          type: string
+          example: B2B SaaS companies in Austin hiring engineers
+          maxLength: 500
+        limit:
+          type: number
+          default: 25
+          minimum: 1
+          maximum: 100
+        includeSignals:
+          type: boolean
+          default: false
+        filters:
+          $ref: '#/components/schemas/EntitySearchFiltersDto'
+        confirm:
+          type: boolean
+      required:
+      - query
+    EntityCompanyNestedFilterDto:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            type: string
+        linkedinUrls:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+    EntityEmployeeCountFilterDto:
+      type: object
+      properties:
+        min:
+          type: number
+          minimum: 0
+        max:
+          type: number
+          minimum: 0
     PublicErrorResponseDto:
       type: object
       properties:
@@ -218,36 +212,42 @@ components:
       - message
       - path
       - timestamp
-    PostCompanySearchDto:
+    EntitySearchAcceptedPublicDto:
       type: object
       properties:
-        query:
+        id:
           type: string
-          example: B2B SaaS companies in Austin hiring engineers
-          maxLength: 500
-        limit:
-          type: number
-          default: 25
-          minimum: 1
-          maximum: 100
-        includeSignals:
-          type: boolean
-          default: false
-        filters:
-          $ref: '#/components/schemas/EntitySearchFiltersDto'
-        confirm:
-          type: boolean
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
       required:
-      - query
-    EntityEmployeeCountFilterDto:
+      - id
+      - operationId
+      - status
+      - pollUrl
+    PublicValidationErrorItemDto:
       type: object
       properties:
-        min:
-          type: number
-          minimum: 0
-        max:
-          type: number
-          minimum: 0
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
   securitySchemes:
     AccessKey:
       type: apiKey

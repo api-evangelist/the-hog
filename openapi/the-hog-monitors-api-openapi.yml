@@ -532,24 +532,67 @@ paths:
       - Monitors
 components:
   schemas:
-    PublicValidationErrorItemDto:
+    MonitorResponseDto:
       type: object
       properties:
-        property:
+        id:
           type: string
-          example: body.query
-        message:
+        name:
           type: string
-          example: query must be a string
-        constraints:
+        type:
+          type: string
+          enum:
+          - linkedin_keyword
+          - linkedin_profile
+          - linkedin_company
+          - linkedin_post
+          - instagram_profile
+          - instagram_post
+          - x_profile
+          - x_keyword
+          - reddit_keyword
+          - reddit_subreddit
+          - tiktok_keyword
+          - tiktok_hashtag
+          - web_search
+          - site_search
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          - disabled
+        config:
           type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
+          additionalProperties: true
+        cadence_minutes:
+          type: number
+        last_run_at:
+          type:
+          - string
+          - 'null'
+        next_run_at:
+          type:
+          - string
+          - 'null'
+        consecutive_failures:
+          type: number
+        created_at:
+          type: string
+        updated_at:
+          type: string
       required:
-      - property
-      - message
+      - id
+      - name
+      - type
+      - status
+      - config
+      - cadence_minutes
+      - last_run_at
+      - next_run_at
+      - consecutive_failures
+      - created_at
+      - updated_at
     MonitorEventDto:
       type: object
       properties:
@@ -590,6 +633,57 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MonitorEventDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    RunNowBodyDto:
+      type: object
+      properties:
+        force_fresh:
+          type: boolean
+          description: Force a fresh scrape for this run, bypassing cache
+    MonitorListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorResponseDto'
         next_cursor:
           type:
           - string
@@ -672,118 +766,24 @@ components:
           - active
           - paused
           description: Only active and paused are user-settable
-    MonitorListResponseDto:
+    PublicValidationErrorItemDto:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorResponseDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      required:
-      - data
-      - next_cursor
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
+        property:
           type: string
-          example: Bad Request
+          example: body.query
         message:
           type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    RunNowBodyDto:
-      type: object
-      properties:
-        force_fresh:
-          type: boolean
-          description: Force a fresh scrape for this run, bypassing cache
-    MonitorResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - linkedin_keyword
-          - linkedin_profile
-          - linkedin_company
-          - linkedin_post
-          - instagram_profile
-          - instagram_post
-          - x_profile
-          - x_keyword
-          - reddit_keyword
-          - reddit_subreddit
-          - tiktok_keyword
-          - tiktok_hashtag
-          - web_search
-          - site_search
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          - disabled
-        config:
+          example: query must be a string
+        constraints:
           type: object
-          additionalProperties: true
-        cadence_minutes:
-          type: number
-        last_run_at:
-          type:
-          - string
-          - 'null'
-        next_run_at:
-          type:
-          - string
-          - 'null'
-        consecutive_failures:
-          type: number
-        created_at:
-          type: string
-        updated_at:
-          type: string
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
       required:
-      - id
-      - name
-      - type
-      - status
-      - config
-      - cadence_minutes
-      - last_run_at
-      - next_run_at
-      - consecutive_failures
-      - created_at
-      - updated_at
+      - property
+      - message
   securitySchemes:
     AccessKey:
       type: apiKey

@@ -166,98 +166,6 @@ paths:
       - People Search
 components:
   schemas:
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    EntityEmployeeCountFilterDto:
-      type: object
-      properties:
-        min:
-          type: number
-          minimum: 0
-        max:
-          type: number
-          minimum: 0
-    EntityCompanyNestedFilterDto:
-      type: object
-      properties:
-        names:
-          type: array
-          items:
-            type: string
-        domains:
-          type: array
-          items:
-            type: string
-        linkedinUrls:
-          type: array
-          items:
-            type: string
-        industries:
-          type: array
-          items:
-            type: string
-        employeeCount:
-          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
-        signals:
-          type: array
-          items:
-            type: string
-    PeopleSearchEstimateAssumptionsDto:
-      type: object
-      properties:
-        mode:
-          type: string
-          example: conservative_preflight_ceiling
-        description:
-          type: string
-          description: Human-readable explanation of the conservative estimate assumptions.
-      required:
-      - mode
-      - description
-    PeopleSearchEstimateContactBreakdownDto:
-      type: object
-      properties:
-        includeContacts:
-          type: boolean
-        fields:
-          type: array
-          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
-          items:
-            type: string
-            enum:
-            - email
-            - phone
-        maxPeople:
-          type: number
-          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
-        contactAttemptsPerFieldPerPerson:
-          type: number
-          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
-        estimatedCredits:
-          type: number
-          description: Estimated contact enrichment credits included in estimatedCredits.
-      required:
-      - includeContacts
-      - fields
-      - maxPeople
-      - contactAttemptsPerFieldPerPerson
-      - estimatedCredits
     EntitySearchFiltersDto:
       type: object
       properties:
@@ -286,6 +194,52 @@ components:
             type: string
         company:
           $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
+    PeopleSearchEstimateAssumptionsDto:
+      type: object
+      properties:
+        mode:
+          type: string
+          example: conservative_preflight_ceiling
+        description:
+          type: string
+          description: Human-readable explanation of the conservative estimate assumptions.
+      required:
+      - mode
+      - description
+    EntityCompanyNestedFilterDto:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            type: string
+        linkedinUrls:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+    EntityEmployeeCountFilterDto:
+      type: object
+      properties:
+        min:
+          type: number
+          minimum: 0
+        max:
+          type: number
+          minimum: 0
     PublicErrorResponseDto:
       type: object
       properties:
@@ -317,17 +271,27 @@ components:
       - message
       - path
       - timestamp
-    PeopleSearchEstimateBreakdownDto:
+    EntitySearchAcceptedDto:
       type: object
       properties:
-        baseSearchCredits:
-          type: number
-          description: Conservative base estimate for the people discovery work.
-        contactEnrichment:
-          $ref: '#/components/schemas/PeopleSearchEstimateContactBreakdownDto'
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          type: object
       required:
-      - baseSearchCredits
-      - contactEnrichment
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
     PostPeopleSearchDto:
       type: object
       properties:
@@ -370,6 +334,34 @@ components:
           type: boolean
       required:
       - query
+    PeopleSearchEstimateContactBreakdownDto:
+      type: object
+      properties:
+        includeContacts:
+          type: boolean
+        fields:
+          type: array
+          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+        maxPeople:
+          type: number
+          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
+        contactAttemptsPerFieldPerPerson:
+          type: number
+          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
+        estimatedCredits:
+          type: number
+          description: Estimated contact enrichment credits included in estimatedCredits.
+      required:
+      - includeContacts
+      - fields
+      - maxPeople
+      - contactAttemptsPerFieldPerPerson
+      - estimatedCredits
     PeopleSearchEstimateDto:
       type: object
       properties:
@@ -397,27 +389,35 @@ components:
       - withinPlanLimits
       - breakdown
       - assumptions
-    EntitySearchAcceptedDto:
+    PeopleSearchEstimateBreakdownDto:
       type: object
       properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          type: object
+        baseSearchCredits:
+          type: number
+          description: Conservative base estimate for the people discovery work.
+        contactEnrichment:
+          $ref: '#/components/schemas/PeopleSearchEstimateContactBreakdownDto'
       required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
+      - baseSearchCredits
+      - contactEnrichment
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
   securitySchemes:
     AccessKey:
       type: apiKey

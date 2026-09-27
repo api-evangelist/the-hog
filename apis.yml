@@ -66,6 +66,7 @@ tags:
 - MCP
 - AI Agents
 - Y Combinator
+- A2A
 apis:
 - aid: the-hog:the-hog-company-search-api
   name: The Hog Company Search API
@@ -227,3 +228,10 @@ common:
   url: packages/the-hog-packages.yml
 - type: Support
   url: mailto:support@thehog.ai
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.thehog.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

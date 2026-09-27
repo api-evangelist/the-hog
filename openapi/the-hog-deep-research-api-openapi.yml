@@ -98,24 +98,26 @@ paths:
       - Deep Research
 components:
   schemas:
-    PublicValidationErrorItemDto:
+    DeepResearchQueuedResponseDto:
       type: object
       properties:
-        property:
+        id:
           type: string
-          example: body.query
-        message:
+        operationId:
           type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/DeepResearchAcceptedMetaDto'
       required:
-      - property
-      - message
+      - id
+      - operationId
+      - status
+      - pollUrl
     PublicErrorResponseDto:
       type: object
       properties:
@@ -147,6 +149,12 @@ components:
       - message
       - path
       - timestamp
+    DeepResearchAcceptedMetaDto:
+      type: object
+      properties:
+        schemaContract:
+          type: object
+          additionalProperties: true
     DeepResearchBudgetRequestDto:
       type: object
       properties:
@@ -154,32 +162,6 @@ components:
           type: integer
           format: int32
           description: Maximum credits to spend on this research run.
-    DeepResearchQueuedResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          $ref: '#/components/schemas/DeepResearchAcceptedMetaDto'
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-    DeepResearchAcceptedMetaDto:
-      type: object
-      properties:
-        schemaContract:
-          type: object
-          additionalProperties: true
     DeepResearchRequestDto:
       type: object
       properties:
@@ -231,6 +213,24 @@ components:
       required:
       - prompt
       - schema
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
   securitySchemes:
     AccessKey:
       type: apiKey
