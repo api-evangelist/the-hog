@@ -532,6 +532,143 @@ paths:
       - Monitors
 components:
   schemas:
+    MonitorEventListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorEventDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    UpdateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+        config:
+          type: object
+        cadence_minutes:
+          type: number
+        max_results:
+          type: number
+        force_fresh:
+          type: boolean
+        cache_ttl_days:
+          type: number
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          description: Only active and paused are user-settable
+    MonitorEventDto:
+      type: object
+      properties:
+        id:
+          type: string
+        monitor_id:
+          type: string
+        dedup_key:
+          type: string
+        event_type:
+          type: string
+        event_json:
+          type: object
+          additionalProperties: true
+        canonical_person_id:
+          type:
+          - string
+          - 'null'
+        canonical_company_id:
+          type:
+          - string
+          - 'null'
+        detected_at:
+          type: string
+      required:
+      - id
+      - monitor_id
+      - dedup_key
+      - event_type
+      - event_json
+      - canonical_person_id
+      - canonical_company_id
+      - detected_at
+    RunNowBodyDto:
+      type: object
+      properties:
+        force_fresh:
+          type: boolean
+          description: Force a fresh scrape for this run, bypassing cache
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    MonitorListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorResponseDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
     MonitorResponseDto:
       type: object
       properties:
@@ -593,104 +730,6 @@ components:
       - consecutive_failures
       - created_at
       - updated_at
-    MonitorEventDto:
-      type: object
-      properties:
-        id:
-          type: string
-        monitor_id:
-          type: string
-        dedup_key:
-          type: string
-        event_type:
-          type: string
-        event_json:
-          type: object
-          additionalProperties: true
-        canonical_person_id:
-          type:
-          - string
-          - 'null'
-        canonical_company_id:
-          type:
-          - string
-          - 'null'
-        detected_at:
-          type: string
-      required:
-      - id
-      - monitor_id
-      - dedup_key
-      - event_type
-      - event_json
-      - canonical_person_id
-      - canonical_company_id
-      - detected_at
-    MonitorEventListResponseDto:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorEventDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      required:
-      - data
-      - next_cursor
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    RunNowBodyDto:
-      type: object
-      properties:
-        force_fresh:
-          type: boolean
-          description: Force a fresh scrape for this run, bypassing cache
-    MonitorListResponseDto:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorResponseDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      required:
-      - data
-      - next_cursor
     CreateMonitorDto:
       type: object
       properties:
@@ -745,45 +784,6 @@ components:
       - name
       - type
       - config
-    UpdateMonitorDto:
-      type: object
-      properties:
-        name:
-          type: string
-        config:
-          type: object
-        cadence_minutes:
-          type: number
-        max_results:
-          type: number
-        force_fresh:
-          type: boolean
-        cache_ttl_days:
-          type: number
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          description: Only active and paused are user-settable
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
   securitySchemes:
     AccessKey:
       type: apiKey

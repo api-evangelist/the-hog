@@ -98,6 +98,31 @@ paths:
       - Deep Research
 components:
   schemas:
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    DeepResearchBudgetRequestDto:
+      type: object
+      properties:
+        maxCredits:
+          type: integer
+          format: int32
+          description: Maximum credits to spend on this research run.
     DeepResearchQueuedResponseDto:
       type: object
       properties:
@@ -118,50 +143,6 @@ components:
       - operationId
       - status
       - pollUrl
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    DeepResearchAcceptedMetaDto:
-      type: object
-      properties:
-        schemaContract:
-          type: object
-          additionalProperties: true
-    DeepResearchBudgetRequestDto:
-      type: object
-      properties:
-        maxCredits:
-          type: integer
-          format: int32
-          description: Maximum credits to spend on this research run.
     DeepResearchRequestDto:
       type: object
       properties:
@@ -213,24 +194,43 @@ components:
       required:
       - prompt
       - schema
-    PublicValidationErrorItemDto:
+    PublicErrorResponseDto:
       type: object
       properties:
-        property:
+        statusCode:
+          type: number
+          example: 400
+        error:
           type: string
-          example: body.query
+          example: Bad Request
         message:
           type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
       required:
-      - property
+      - statusCode
+      - error
       - message
+      - path
+      - timestamp
+    DeepResearchAcceptedMetaDto:
+      type: object
+      properties:
+        schemaContract:
+          type: object
+          additionalProperties: true
   securitySchemes:
     AccessKey:
       type: apiKey

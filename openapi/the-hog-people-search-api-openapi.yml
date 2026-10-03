@@ -166,6 +166,24 @@ paths:
       - People Search
 components:
   schemas:
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
     EntitySearchFiltersDto:
       type: object
       properties:
@@ -194,18 +212,6 @@ components:
             type: string
         company:
           $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
-    PeopleSearchEstimateAssumptionsDto:
-      type: object
-      properties:
-        mode:
-          type: string
-          example: conservative_preflight_ceiling
-        description:
-          type: string
-          description: Human-readable explanation of the conservative estimate assumptions.
-      required:
-      - mode
-      - description
     EntityCompanyNestedFilterDto:
       type: object
       properties:
@@ -240,100 +246,6 @@ components:
         max:
           type: number
           minimum: 0
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    EntitySearchAcceptedDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          type: object
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
-    PostPeopleSearchDto:
-      type: object
-      properties:
-        query:
-          type: string
-          example: VP Engineering at hiring B2B SaaS companies in SF
-          maxLength: 500
-        limit:
-          type: number
-          default: 25
-          minimum: 1
-          maximum: 100
-        includeSignals:
-          type: boolean
-          default: false
-        includeContacts:
-          type: boolean
-          default: false
-        contactFields:
-          type: array
-          minItems: 1
-          maxItems: 2
-          uniqueItems: true
-          description: Contact fields to enrich when includeContacts is true. Omit to preserve legacy includeContacts=true behavior, which requests both email and phone.
-          example:
-          - email
-          items:
-            type: string
-            enum:
-            - email
-            - phone
-        maxCredits:
-          type: number
-          minimum: 0
-          description: Maximum credits the people search operation may charge. When omitted, normal account limits apply.
-          example: 2500
-        filters:
-          $ref: '#/components/schemas/EntitySearchFiltersDto'
-        confirm:
-          type: boolean
-      required:
-      - query
     PeopleSearchEstimateContactBreakdownDto:
       type: object
       properties:
@@ -389,6 +301,58 @@ components:
       - withinPlanLimits
       - breakdown
       - assumptions
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    EntitySearchAcceptedDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          type: object
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
     PeopleSearchEstimateBreakdownDto:
       type: object
       properties:
@@ -400,24 +364,60 @@ components:
       required:
       - baseSearchCredits
       - contactEnrichment
-    PublicValidationErrorItemDto:
+    PostPeopleSearchDto:
       type: object
       properties:
-        property:
+        query:
           type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
+          example: VP Engineering at hiring B2B SaaS companies in SF
+          maxLength: 500
+        limit:
+          type: number
+          default: 25
+          minimum: 1
+          maximum: 100
+        includeSignals:
+          type: boolean
+          default: false
+        includeContacts:
+          type: boolean
+          default: false
+        contactFields:
+          type: array
+          minItems: 1
+          maxItems: 2
+          uniqueItems: true
+          description: Contact fields to enrich when includeContacts is true. Omit to preserve legacy includeContacts=true behavior, which requests both email and phone.
           example:
-            isString: query must be a string
+          - email
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+        maxCredits:
+          type: number
+          minimum: 0
+          description: Maximum credits the people search operation may charge. When omitted, normal account limits apply.
+          example: 2500
+        filters:
+          $ref: '#/components/schemas/EntitySearchFiltersDto'
+        confirm:
+          type: boolean
       required:
-      - property
-      - message
+      - query
+    PeopleSearchEstimateAssumptionsDto:
+      type: object
+      properties:
+        mode:
+          type: string
+          example: conservative_preflight_ceiling
+        description:
+          type: string
+          description: Human-readable explanation of the conservative estimate assumptions.
+      required:
+      - mode
+      - description
   securitySchemes:
     AccessKey:
       type: apiKey

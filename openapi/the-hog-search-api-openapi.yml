@@ -263,45 +263,108 @@ paths:
       - Search
 components:
   schemas:
-    SearchAcceptedMetaDto:
+    PublicValidationErrorItemDto:
       type: object
       properties:
-        request_id:
+        property:
           type: string
-          description: Request ID for support and tracing
-      required:
-      - request_id
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
+          example: body.query
         message:
           type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
       required:
-      - statusCode
-      - error
+      - property
       - message
-      - path
-      - timestamp
+    SearchErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Safe error message
+        retryable:
+          type: boolean
+          description: Whether retrying the search may succeed
+      required:
+      - message
+      - retryable
+    SearchAcceptedDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Search operation ID
+        status:
+          type: string
+          enum:
+          - queued
+        poll_url:
+          type: string
+          description: URL to poll for result
+        meta:
+          $ref: '#/components/schemas/SearchAcceptedMetaDto'
+      required:
+      - id
+      - status
+      - poll_url
+      - meta
+    SearchResultItemDto:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Result URL
+        title:
+          type: string
+          description: Result title
+        content:
+          type:
+          - string
+          - 'null'
+          description: Content snippet or post text
+        published_at:
+          type:
+          - string
+          - 'null'
+          description: Published date (ISO)
+        author_name:
+          type:
+          - string
+          - 'null'
+          description: Author name (LinkedIn)
+        author_headline:
+          type:
+          - string
+          - 'null'
+          description: Author headline (LinkedIn)
+        id:
+          type:
+          - string
+          - 'null'
+          description: Source-native stable entity ID, when available
+        platform_video_id:
+          type:
+          - string
+          - 'null'
+          description: Source-native stable post/video/activity ID, when available
+        post_url:
+          type:
+          - string
+          - 'null'
+          description: Source-native canonical post URL, when available
+        author_username:
+          type:
+          - string
+          - 'null'
+          description: Author handle or username, when available
+      required:
+      - url
+      - title
     SearchResultDto:
       type: object
       properties:
@@ -366,19 +429,37 @@ components:
       - type
       - query
       - created_at
-    SearchListResponseDto:
+    PublicErrorResponseDto:
       type: object
       properties:
-        data:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResultDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
       required:
-      - data
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
     PostSearchDto:
       type: object
       properties:
@@ -467,108 +548,27 @@ components:
           example: startups
       required:
       - type
-    SearchErrorDto:
+    SearchListResponseDto:
       type: object
       properties:
-        message:
-          type: string
-          description: Safe error message
-        retryable:
-          type: boolean
-          description: Whether retrying the search may succeed
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
       required:
-      - message
-      - retryable
-    SearchAcceptedDto:
+      - data
+    SearchAcceptedMetaDto:
       type: object
       properties:
-        id:
+        request_id:
           type: string
-          description: Search operation ID
-        status:
-          type: string
-          enum:
-          - queued
-        poll_url:
-          type: string
-          description: URL to poll for result
-        meta:
-          $ref: '#/components/schemas/SearchAcceptedMetaDto'
+          description: Request ID for support and tracing
       required:
-      - id
-      - status
-      - poll_url
-      - meta
-    SearchResultItemDto:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Result URL
-        title:
-          type: string
-          description: Result title
-        content:
-          type:
-          - string
-          - 'null'
-          description: Content snippet or post text
-        published_at:
-          type:
-          - string
-          - 'null'
-          description: Published date (ISO)
-        author_name:
-          type:
-          - string
-          - 'null'
-          description: Author name (LinkedIn)
-        author_headline:
-          type:
-          - string
-          - 'null'
-          description: Author headline (LinkedIn)
-        id:
-          type:
-          - string
-          - 'null'
-          description: Source-native stable entity ID, when available
-        platform_video_id:
-          type:
-          - string
-          - 'null'
-          description: Source-native stable post/video/activity ID, when available
-        post_url:
-          type:
-          - string
-          - 'null'
-          description: Source-native canonical post URL, when available
-        author_username:
-          type:
-          - string
-          - 'null'
-          description: Author handle or username, when available
-      required:
-      - url
-      - title
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
+      - request_id
   securitySchemes:
     AccessKey:
       type: apiKey

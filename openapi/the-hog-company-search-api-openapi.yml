@@ -98,6 +98,24 @@ paths:
       - Company Search
 components:
   schemas:
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
     EntitySearchFiltersDto:
       type: object
       properties:
@@ -126,27 +144,6 @@ components:
             type: string
         company:
           $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
-    PostCompanySearchDto:
-      type: object
-      properties:
-        query:
-          type: string
-          example: B2B SaaS companies in Austin hiring engineers
-          maxLength: 500
-        limit:
-          type: number
-          default: 25
-          minimum: 1
-          maximum: 100
-        includeSignals:
-          type: boolean
-          default: false
-        filters:
-          $ref: '#/components/schemas/EntitySearchFiltersDto'
-        confirm:
-          type: boolean
-      required:
-      - query
     EntityCompanyNestedFilterDto:
       type: object
       properties:
@@ -230,24 +227,27 @@ components:
       - operationId
       - status
       - pollUrl
-    PublicValidationErrorItemDto:
+    PostCompanySearchDto:
       type: object
       properties:
-        property:
+        query:
           type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
+          example: B2B SaaS companies in Austin hiring engineers
+          maxLength: 500
+        limit:
+          type: number
+          default: 25
+          minimum: 1
+          maximum: 100
+        includeSignals:
+          type: boolean
+          default: false
+        filters:
+          $ref: '#/components/schemas/EntitySearchFiltersDto'
+        confirm:
+          type: boolean
       required:
-      - property
-      - message
+      - query
   securitySchemes:
     AccessKey:
       type: apiKey

@@ -180,6 +180,17 @@ paths:
       - Enrichments
 components:
   schemas:
+    PersonIdentifierRecordDto:
+      type: object
+      properties:
+        linkedin_url:
+          type: string
+        email:
+          type: string
+        x_handle:
+          type: string
+        github_username:
+          type: string
     PublicResponseMetaDto:
       type: object
       properties:
@@ -205,71 +216,6 @@ components:
       required:
       - property
       - message
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    PostEnrichmentDto:
-      type: object
-      properties:
-        identifier:
-          description: Single person (mutually exclusive with identifiers)
-          allOf:
-          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        identifiers:
-          description: Batch (max 100); mutually exclusive with identifier
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        fields:
-          example:
-          - contact.email
-          - signals
-          type: array
-          items:
-            type: string
-        signals_config:
-          $ref: '#/components/schemas/SignalsConfigDto'
-      required:
-      - fields
-    PersonIdentifierRecordDto:
-      type: object
-      properties:
-        linkedin_url:
-          type: string
-        email:
-          type: string
-        x_handle:
-          type: string
-        github_username:
-          type: string
     OperationResponseDto:
       type: object
       properties:
@@ -319,6 +265,71 @@ components:
           type: number
         handles:
           type: object
+    PostEnrichmentDto:
+      type: object
+      properties:
+        identifier:
+          description: Single person (mutually exclusive with identifiers)
+          allOf:
+          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        identifiers:
+          description: Batch (max 100); mutually exclusive with identifier
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        fields:
+          example:
+          - contact.email
+          - signals
+          type: array
+          items:
+            type: string
+        signals_config:
+          $ref: '#/components/schemas/SignalsConfigDto'
+      required:
+      - fields
+    EnrichmentSyncResponseDto:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - data
+      - meta
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
     EnrichmentQueuedResponseDto:
       type: object
       properties:
@@ -339,17 +350,6 @@ components:
       - operationId
       - status
       - pollUrl
-      - meta
-    EnrichmentSyncResponseDto:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-        meta:
-          $ref: '#/components/schemas/PublicResponseMetaDto'
-      required:
-      - data
       - meta
   securitySchemes:
     AccessKey:
