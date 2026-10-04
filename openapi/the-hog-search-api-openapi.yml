@@ -281,38 +281,6 @@ components:
       required:
       - property
       - message
-    SearchErrorDto:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Safe error message
-        retryable:
-          type: boolean
-          description: Whether retrying the search may succeed
-      required:
-      - message
-      - retryable
-    SearchAcceptedDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Search operation ID
-        status:
-          type: string
-          enum:
-          - queued
-        poll_url:
-          type: string
-          description: URL to poll for result
-        meta:
-          $ref: '#/components/schemas/SearchAcceptedMetaDto'
-      required:
-      - id
-      - status
-      - poll_url
-      - meta
     SearchResultItemDto:
       type: object
       properties:
@@ -365,6 +333,18 @@ components:
       required:
       - url
       - title
+    SearchErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Safe error message
+        retryable:
+          type: boolean
+          description: Whether retrying the search may succeed
+      required:
+      - message
+      - retryable
     SearchResultDto:
       type: object
       properties:
@@ -429,6 +409,14 @@ components:
       - type
       - query
       - created_at
+    SearchAcceptedMetaDto:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Request ID for support and tracing
+      required:
+      - request_id
     PublicErrorResponseDto:
       type: object
       properties:
@@ -460,6 +448,26 @@ components:
       - message
       - path
       - timestamp
+    SearchAcceptedDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Search operation ID
+        status:
+          type: string
+          enum:
+          - queued
+        poll_url:
+          type: string
+          description: URL to poll for result
+        meta:
+          $ref: '#/components/schemas/SearchAcceptedMetaDto'
+      required:
+      - id
+      - status
+      - poll_url
+      - meta
     PostSearchDto:
       type: object
       properties:
@@ -561,14 +569,6 @@ components:
           - 'null'
       required:
       - data
-    SearchAcceptedMetaDto:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Request ID for support and tracing
-      required:
-      - request_id
   securitySchemes:
     AccessKey:
       type: apiKey

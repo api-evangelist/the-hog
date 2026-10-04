@@ -123,26 +123,6 @@ components:
           type: integer
           format: int32
           description: Maximum credits to spend on this research run.
-    DeepResearchQueuedResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          $ref: '#/components/schemas/DeepResearchAcceptedMetaDto'
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
     DeepResearchRequestDto:
       type: object
       properties:
@@ -231,6 +211,26 @@ components:
         schemaContract:
           type: object
           additionalProperties: true
+    DeepResearchQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/DeepResearchAcceptedMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
   securitySchemes:
     AccessKey:
       type: apiKey

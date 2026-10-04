@@ -166,6 +166,34 @@ paths:
       - People Search
 components:
   schemas:
+    PeopleSearchEstimateContactBreakdownDto:
+      type: object
+      properties:
+        includeContacts:
+          type: boolean
+        fields:
+          type: array
+          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+        maxPeople:
+          type: number
+          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
+        contactAttemptsPerFieldPerPerson:
+          type: number
+          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
+        estimatedCredits:
+          type: number
+          description: Estimated contact enrichment credits included in estimatedCredits.
+      required:
+      - includeContacts
+      - fields
+      - maxPeople
+      - contactAttemptsPerFieldPerPerson
+      - estimatedCredits
     PublicValidationErrorItemDto:
       type: object
       properties:
@@ -237,43 +265,6 @@ components:
           type: array
           items:
             type: string
-    EntityEmployeeCountFilterDto:
-      type: object
-      properties:
-        min:
-          type: number
-          minimum: 0
-        max:
-          type: number
-          minimum: 0
-    PeopleSearchEstimateContactBreakdownDto:
-      type: object
-      properties:
-        includeContacts:
-          type: boolean
-        fields:
-          type: array
-          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
-          items:
-            type: string
-            enum:
-            - email
-            - phone
-        maxPeople:
-          type: number
-          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
-        contactAttemptsPerFieldPerPerson:
-          type: number
-          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
-        estimatedCredits:
-          type: number
-          description: Estimated contact enrichment credits included in estimatedCredits.
-      required:
-      - includeContacts
-      - fields
-      - maxPeople
-      - contactAttemptsPerFieldPerPerson
-      - estimatedCredits
     PeopleSearchEstimateDto:
       type: object
       properties:
@@ -301,37 +292,6 @@ components:
       - withinPlanLimits
       - breakdown
       - assumptions
-    PublicErrorResponseDto:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
     EntitySearchAcceptedDto:
       type: object
       properties:
@@ -364,6 +324,46 @@ components:
       required:
       - baseSearchCredits
       - contactEnrichment
+    EntityEmployeeCountFilterDto:
+      type: object
+      properties:
+        min:
+          type: number
+          minimum: 0
+        max:
+          type: number
+          minimum: 0
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
     PostPeopleSearchDto:
       type: object
       properties:

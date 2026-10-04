@@ -180,24 +180,6 @@ paths:
       - Enrichments
 components:
   schemas:
-    PersonIdentifierRecordDto:
-      type: object
-      properties:
-        linkedin_url:
-          type: string
-        email:
-          type: string
-        x_handle:
-          type: string
-        github_username:
-          type: string
-    PublicResponseMetaDto:
-      type: object
-      properties:
-        requestId:
-          type: string
-      required:
-      - requestId
     PublicValidationErrorItemDto:
       type: object
       properties:
@@ -216,6 +198,79 @@ components:
       required:
       - property
       - message
+    PostEnrichmentDto:
+      type: object
+      properties:
+        identifier:
+          description: Single person (mutually exclusive with identifiers)
+          allOf:
+          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        identifiers:
+          description: Batch (max 100); mutually exclusive with identifier
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        fields:
+          example:
+          - contact.email
+          - signals
+          type: array
+          items:
+            type: string
+        signals_config:
+          $ref: '#/components/schemas/SignalsConfigDto'
+      required:
+      - fields
+    EnrichmentQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
+    SignalsConfigDto:
+      type: object
+      properties:
+        platforms:
+          description: Opt-in platforms; omit or empty = all
+          type: array
+          items:
+            type: string
+        max_posts:
+          type: object
+        intent_signals:
+          type: array
+          items:
+            type: string
+        since_days:
+          type: number
+        handles:
+          type: object
+    EnrichmentSyncResponseDto:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - data
+      - meta
     OperationResponseDto:
       type: object
       properties:
@@ -247,58 +302,17 @@ components:
       required:
       - id
       - status
-    SignalsConfigDto:
+    PersonIdentifierRecordDto:
       type: object
       properties:
-        platforms:
-          description: Opt-in platforms; omit or empty = all
-          type: array
-          items:
-            type: string
-        max_posts:
-          type: object
-        intent_signals:
-          type: array
-          items:
-            type: string
-        since_days:
-          type: number
-        handles:
-          type: object
-    PostEnrichmentDto:
-      type: object
-      properties:
-        identifier:
-          description: Single person (mutually exclusive with identifiers)
-          allOf:
-          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        identifiers:
-          description: Batch (max 100); mutually exclusive with identifier
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        fields:
-          example:
-          - contact.email
-          - signals
-          type: array
-          items:
-            type: string
-        signals_config:
-          $ref: '#/components/schemas/SignalsConfigDto'
-      required:
-      - fields
-    EnrichmentSyncResponseDto:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-        meta:
-          $ref: '#/components/schemas/PublicResponseMetaDto'
-      required:
-      - data
-      - meta
+        linkedin_url:
+          type: string
+        email:
+          type: string
+        x_handle:
+          type: string
+        github_username:
+          type: string
     PublicErrorResponseDto:
       type: object
       properties:
@@ -330,27 +344,13 @@ components:
       - message
       - path
       - timestamp
-    EnrichmentQueuedResponseDto:
+    PublicResponseMetaDto:
       type: object
       properties:
-        id:
+        requestId:
           type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          $ref: '#/components/schemas/PublicResponseMetaDto'
       required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
+      - requestId
   securitySchemes:
     AccessKey:
       type: apiKey
