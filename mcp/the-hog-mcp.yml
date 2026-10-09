@@ -102,3 +102,14 @@ deployment:
 crosswalk: mcp/the-hog-tool-crosswalk.yml
 crosswalk_note: 27 of the 52 published REST operations have an MCP tool. X, Facebook, YouTube, SEO, deepfake
   detection and every LinkedIn scraper except profile-posts have no tool.
+rfc9728:
+  endpoint: https://mcp.thehog.ai/mcp
+  metadata_url: https://mcp.thehog.ai/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.thehog.ai/mcp
+    authorization_servers:
+    - https://clerk.thehog.ai
