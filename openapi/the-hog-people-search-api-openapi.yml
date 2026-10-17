@@ -166,153 +166,6 @@ paths:
       - People Search
 components:
   schemas:
-    PeopleSearchEstimateContactBreakdownDto:
-      type: object
-      properties:
-        includeContacts:
-          type: boolean
-        fields:
-          type: array
-          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
-          items:
-            type: string
-            enum:
-            - email
-            - phone
-        maxPeople:
-          type: number
-          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
-        contactAttemptsPerFieldPerPerson:
-          type: number
-          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
-        estimatedCredits:
-          type: number
-          description: Estimated contact enrichment credits included in estimatedCredits.
-      required:
-      - includeContacts
-      - fields
-      - maxPeople
-      - contactAttemptsPerFieldPerPerson
-      - estimatedCredits
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    EntitySearchFiltersDto:
-      type: object
-      properties:
-        titles:
-          type: array
-          items:
-            type: string
-        titleMatch:
-          type: string
-          enum:
-          - exact
-          - similar
-        locations:
-          type: array
-          items:
-            type: string
-        industries:
-          type: array
-          items:
-            type: string
-        employeeCount:
-          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
-        signals:
-          type: array
-          items:
-            type: string
-        company:
-          $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
-    EntityCompanyNestedFilterDto:
-      type: object
-      properties:
-        names:
-          type: array
-          items:
-            type: string
-        domains:
-          type: array
-          items:
-            type: string
-        linkedinUrls:
-          type: array
-          items:
-            type: string
-        industries:
-          type: array
-          items:
-            type: string
-        employeeCount:
-          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
-        signals:
-          type: array
-          items:
-            type: string
-    PeopleSearchEstimateDto:
-      type: object
-      properties:
-        estimatedCredits:
-          type: number
-          description: Estimated credits to be consumed
-        likelySyncOrAsync:
-          type: string
-          enum:
-          - sync
-          - async
-          description: Whether the real request will return 200 or 202
-        expectedLatencyRange:
-          type: string
-          example: 30s-5m
-        withinPlanLimits:
-          type: boolean
-        breakdown:
-          $ref: '#/components/schemas/PeopleSearchEstimateBreakdownDto'
-        assumptions:
-          $ref: '#/components/schemas/PeopleSearchEstimateAssumptionsDto'
-      required:
-      - estimatedCredits
-      - likelySyncOrAsync
-      - withinPlanLimits
-      - breakdown
-      - assumptions
-    EntitySearchAcceptedDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          type: object
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
     PeopleSearchEstimateBreakdownDto:
       type: object
       properties:
@@ -324,15 +177,6 @@ components:
       required:
       - baseSearchCredits
       - contactEnrichment
-    EntityEmployeeCountFilterDto:
-      type: object
-      properties:
-        min:
-          type: number
-          minimum: 0
-        max:
-          type: number
-          minimum: 0
     PublicErrorResponseDto:
       type: object
       properties:
@@ -364,6 +208,153 @@ components:
       - message
       - path
       - timestamp
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    PeopleSearchEstimateContactBreakdownDto:
+      type: object
+      properties:
+        includeContacts:
+          type: boolean
+        fields:
+          type: array
+          description: Requested contact fields included in the estimate. Empty when includeContacts is false.
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+        maxPeople:
+          type: number
+          description: Maximum people count used for contact enrichment cost risk. This is the request limit after defaults are applied.
+        contactAttemptsPerFieldPerPerson:
+          type: number
+          description: Worst-case contact enrichment attempts assumed for each requested contact field on each returned person.
+        estimatedCredits:
+          type: number
+          description: Estimated contact enrichment credits included in estimatedCredits.
+      required:
+      - includeContacts
+      - fields
+      - maxPeople
+      - contactAttemptsPerFieldPerPerson
+      - estimatedCredits
+    EntityEmployeeCountFilterDto:
+      type: object
+      properties:
+        min:
+          type: number
+          minimum: 0
+        max:
+          type: number
+          minimum: 0
+    EntitySearchFiltersDto:
+      type: object
+      properties:
+        titles:
+          type: array
+          items:
+            type: string
+        titleMatch:
+          type: string
+          enum:
+          - exact
+          - similar
+        locations:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+        company:
+          $ref: '#/components/schemas/EntityCompanyNestedFilterDto'
+    PeopleSearchEstimateDto:
+      type: object
+      properties:
+        estimatedCredits:
+          type: number
+          description: Estimated credits to be consumed
+        likelySyncOrAsync:
+          type: string
+          enum:
+          - sync
+          - async
+          description: Whether the real request will return 200 or 202
+        expectedLatencyRange:
+          type: string
+          example: 30s-5m
+        withinPlanLimits:
+          type: boolean
+        breakdown:
+          $ref: '#/components/schemas/PeopleSearchEstimateBreakdownDto'
+        assumptions:
+          $ref: '#/components/schemas/PeopleSearchEstimateAssumptionsDto'
+      required:
+      - estimatedCredits
+      - likelySyncOrAsync
+      - withinPlanLimits
+      - breakdown
+      - assumptions
+    EntityCompanyNestedFilterDto:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            type: string
+        linkedinUrls:
+          type: array
+          items:
+            type: string
+        industries:
+          type: array
+          items:
+            type: string
+        employeeCount:
+          $ref: '#/components/schemas/EntityEmployeeCountFilterDto'
+        signals:
+          type: array
+          items:
+            type: string
+    PeopleSearchEstimateAssumptionsDto:
+      type: object
+      properties:
+        mode:
+          type: string
+          example: conservative_preflight_ceiling
+        description:
+          type: string
+          description: Human-readable explanation of the conservative estimate assumptions.
+      required:
+      - mode
+      - description
     PostPeopleSearchDto:
       type: object
       properties:
@@ -406,18 +397,27 @@ components:
           type: boolean
       required:
       - query
-    PeopleSearchEstimateAssumptionsDto:
+    EntitySearchAcceptedDto:
       type: object
       properties:
-        mode:
+        id:
           type: string
-          example: conservative_preflight_ceiling
-        description:
+        operationId:
           type: string
-          description: Human-readable explanation of the conservative estimate assumptions.
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          type: object
       required:
-      - mode
-      - description
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
   securitySchemes:
     AccessKey:
       type: apiKey

@@ -532,6 +532,72 @@ paths:
       - Monitors
 components:
   schemas:
+    UpdateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+        config:
+          type: object
+        cadence_minutes:
+          type: number
+        max_results:
+          type: number
+        force_fresh:
+          type: boolean
+        cache_ttl_days:
+          type: number
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          description: Only active and paused are user-settable
+    PublicErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Validation failed
+        path:
+          type: string
+          example: /api/v1/search
+        requestId:
+          type: string
+          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
+        timestamp:
+          type: string
+          example: '2026-05-21T09:08:10.000Z'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicValidationErrorItemDto'
+      required:
+      - statusCode
+      - error
+      - message
+      - path
+      - timestamp
+    MonitorListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorResponseDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
     PublicValidationErrorItemDto:
       type: object
       properties:
@@ -550,6 +616,74 @@ components:
       required:
       - property
       - message
+    CreateMonitorDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Human-readable name
+          example: Competitor mentions
+        type:
+          type: string
+          description: Monitor type
+          enum:
+          - linkedin_keyword
+          - linkedin_profile
+          - linkedin_company
+          - linkedin_post
+          - instagram_profile
+          - instagram_post
+          - x_profile
+          - x_keyword
+          - reddit_keyword
+          - reddit_subreddit
+          - tiktok_keyword
+          - tiktok_hashtag
+          - web_search
+          - site_search
+        config:
+          type: object
+          description: Type-specific configuration (query, filters, etc.)
+          example:
+            query: hiring engineers
+            max_results: 20
+        cadence_minutes:
+          type: number
+          description: 'Cadence in minutes (minimum 60 for scraper-based types: LinkedIn, Instagram, X, Reddit, TikTok; minimum 15 for web)'
+          default: 60
+        max_results:
+          type: number
+          description: Max results per run (1-100)
+          default: 10
+        force_fresh:
+          type: boolean
+          description: Force fresh scrape bypassing cache
+          default: false
+        cache_ttl_days:
+          type: number
+          description: Cache TTL in days for profile/company monitors (1-90)
+          default: 14
+        post_url:
+          type: string
+          description: LinkedIn post URL (required for linkedin_post type)
+      required:
+      - name
+      - type
+      - config
+    MonitorEventListResponseDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorEventDto'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - data
+      - next_cursor
     MonitorResponseDto:
       type: object
       properties:
@@ -611,26 +745,6 @@ components:
       - consecutive_failures
       - created_at
       - updated_at
-    MonitorEventListResponseDto:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorEventDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      required:
-      - data
-      - next_cursor
-    RunNowBodyDto:
-      type: object
-      properties:
-        force_fresh:
-          type: boolean
-          description: Force a fresh scrape for this run, bypassing cache
     MonitorEventDto:
       type: object
       properties:
@@ -664,126 +778,12 @@ components:
       - canonical_person_id
       - canonical_company_id
       - detected_at
-    PublicErrorResponseDto:
+    RunNowBodyDto:
       type: object
       properties:
-        statusCode:
-          type: number
-          example: 400
-        error:
-          type: string
-          example: Bad Request
-        message:
-          type: string
-          example: Validation failed
-        path:
-          type: string
-          example: /api/v1/search
-        requestId:
-          type: string
-          example: 506af9b3-01a9-43be-9eb4-8458fe3e4f5b
-        timestamp:
-          type: string
-          example: '2026-05-21T09:08:10.000Z'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicValidationErrorItemDto'
-      required:
-      - statusCode
-      - error
-      - message
-      - path
-      - timestamp
-    UpdateMonitorDto:
-      type: object
-      properties:
-        name:
-          type: string
-        config:
-          type: object
-        cadence_minutes:
-          type: number
-        max_results:
-          type: number
         force_fresh:
           type: boolean
-        cache_ttl_days:
-          type: number
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          description: Only active and paused are user-settable
-    MonitorListResponseDto:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorResponseDto'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-      required:
-      - data
-      - next_cursor
-    CreateMonitorDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Human-readable name
-          example: Competitor mentions
-        type:
-          type: string
-          description: Monitor type
-          enum:
-          - linkedin_keyword
-          - linkedin_profile
-          - linkedin_company
-          - linkedin_post
-          - instagram_profile
-          - instagram_post
-          - x_profile
-          - x_keyword
-          - reddit_keyword
-          - reddit_subreddit
-          - tiktok_keyword
-          - tiktok_hashtag
-          - web_search
-          - site_search
-        config:
-          type: object
-          description: Type-specific configuration (query, filters, etc.)
-          example:
-            query: hiring engineers
-            max_results: 20
-        cadence_minutes:
-          type: number
-          description: 'Cadence in minutes (minimum 60 for scraper-based types: LinkedIn, Instagram, X, Reddit, TikTok; minimum 15 for web)'
-          default: 60
-        max_results:
-          type: number
-          description: Max results per run (1-100)
-          default: 10
-        force_fresh:
-          type: boolean
-          description: Force fresh scrape bypassing cache
-          default: false
-        cache_ttl_days:
-          type: number
-          description: Cache TTL in days for profile/company monitors (1-90)
-          default: 14
-        post_url:
-          type: string
-          description: LinkedIn post URL (required for linkedin_post type)
-      required:
-      - name
-      - type
-      - config
+          description: Force a fresh scrape for this run, bypassing cache
   securitySchemes:
     AccessKey:
       type: apiKey

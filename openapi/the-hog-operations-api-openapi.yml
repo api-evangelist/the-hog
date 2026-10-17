@@ -164,24 +164,6 @@ paths:
       - Operations
 components:
   schemas:
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
     OperationResponseDto:
       type: object
       properties:
@@ -213,6 +195,24 @@ components:
       required:
       - id
       - status
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
     PublicErrorResponseDto:
       type: object
       properties:

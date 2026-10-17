@@ -263,24 +263,6 @@ paths:
       - Search
 components:
   schemas:
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
     SearchResultItemDto:
       type: object
       properties:
@@ -333,90 +315,6 @@ components:
       required:
       - url
       - title
-    SearchErrorDto:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Safe error message
-        retryable:
-          type: boolean
-          description: Whether retrying the search may succeed
-      required:
-      - message
-      - retryable
-    SearchResultDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique search result ID
-        status:
-          type: string
-          description: Current status
-          enum:
-          - queued
-          - processing
-          - succeeded
-          - failed
-        type:
-          type: string
-          description: Search type
-          enum:
-          - web_search
-          - site_search
-          - linkedin_keyword
-          - x_keyword
-          - reddit_search
-          - tiktok_keyword
-          - tiktok_hashtag
-        query:
-          type: string
-          description: Original query
-        poll_url:
-          type: string
-          description: URL to poll for result
-        results:
-          description: Search results array
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SearchResultItemDto'
-        total_results:
-          type:
-          - number
-          - 'null'
-          description: Total results found
-        error:
-          description: Error details when failed
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/SearchErrorDto'
-        created_at:
-          type: string
-          description: ISO timestamp of creation
-        completed_at:
-          type:
-          - string
-          - 'null'
-          description: ISO timestamp of completion
-      required:
-      - id
-      - status
-      - type
-      - query
-      - created_at
-    SearchAcceptedMetaDto:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Request ID for support and tracing
-      required:
-      - request_id
     PublicErrorResponseDto:
       type: object
       properties:
@@ -556,6 +454,108 @@ components:
           example: startups
       required:
       - type
+    SearchErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Safe error message
+        retryable:
+          type: boolean
+          description: Whether retrying the search may succeed
+      required:
+      - message
+      - retryable
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    SearchAcceptedMetaDto:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Request ID for support and tracing
+      required:
+      - request_id
+    SearchResultDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique search result ID
+        status:
+          type: string
+          description: Current status
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+        type:
+          type: string
+          description: Search type
+          enum:
+          - web_search
+          - site_search
+          - linkedin_keyword
+          - x_keyword
+          - reddit_search
+          - tiktok_keyword
+          - tiktok_hashtag
+        query:
+          type: string
+          description: Original query
+        poll_url:
+          type: string
+          description: URL to poll for result
+        results:
+          description: Search results array
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SearchResultItemDto'
+        total_results:
+          type:
+          - number
+          - 'null'
+          description: Total results found
+        error:
+          description: Error details when failed
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/SearchErrorDto'
+        created_at:
+          type: string
+          description: ISO timestamp of creation
+        completed_at:
+          type:
+          - string
+          - 'null'
+          description: ISO timestamp of completion
+      required:
+      - id
+      - status
+      - type
+      - query
+      - created_at
     SearchListResponseDto:
       type: object
       properties:

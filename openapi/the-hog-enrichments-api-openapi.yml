@@ -180,86 +180,6 @@ paths:
       - Enrichments
 components:
   schemas:
-    PublicValidationErrorItemDto:
-      type: object
-      properties:
-        property:
-          type: string
-          example: body.query
-        message:
-          type: string
-          example: query must be a string
-        constraints:
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            isString: query must be a string
-      required:
-      - property
-      - message
-    PostEnrichmentDto:
-      type: object
-      properties:
-        identifier:
-          description: Single person (mutually exclusive with identifiers)
-          allOf:
-          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        identifiers:
-          description: Batch (max 100); mutually exclusive with identifier
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonIdentifierRecordDto'
-        fields:
-          example:
-          - contact.email
-          - signals
-          type: array
-          items:
-            type: string
-        signals_config:
-          $ref: '#/components/schemas/SignalsConfigDto'
-      required:
-      - fields
-    EnrichmentQueuedResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        operationId:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-        pollUrl:
-          type: string
-        meta:
-          $ref: '#/components/schemas/PublicResponseMetaDto'
-      required:
-      - id
-      - operationId
-      - status
-      - pollUrl
-      - meta
-    SignalsConfigDto:
-      type: object
-      properties:
-        platforms:
-          description: Opt-in platforms; omit or empty = all
-          type: array
-          items:
-            type: string
-        max_posts:
-          type: object
-        intent_signals:
-          type: array
-          items:
-            type: string
-        since_days:
-          type: number
-        handles:
-          type: object
     EnrichmentSyncResponseDto:
       type: object
       properties:
@@ -271,37 +191,6 @@ components:
       required:
       - data
       - meta
-    OperationResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - queued
-          - processing
-          - succeeded
-          - failed
-          - partial_success
-          - cancelled
-        progress:
-          type:
-          - number
-          - 'null'
-        result:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        error:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-      required:
-      - id
-      - status
     PersonIdentifierRecordDto:
       type: object
       properties:
@@ -351,6 +240,117 @@ components:
           type: string
       required:
       - requestId
+    PublicValidationErrorItemDto:
+      type: object
+      properties:
+        property:
+          type: string
+          example: body.query
+        message:
+          type: string
+          example: query must be a string
+        constraints:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            isString: query must be a string
+      required:
+      - property
+      - message
+    EnrichmentQueuedResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+        pollUrl:
+          type: string
+        meta:
+          $ref: '#/components/schemas/PublicResponseMetaDto'
+      required:
+      - id
+      - operationId
+      - status
+      - pollUrl
+      - meta
+    SignalsConfigDto:
+      type: object
+      properties:
+        platforms:
+          description: Opt-in platforms; omit or empty = all
+          type: array
+          items:
+            type: string
+        max_posts:
+          type: object
+        intent_signals:
+          type: array
+          items:
+            type: string
+        since_days:
+          type: number
+        handles:
+          type: object
+    OperationResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - succeeded
+          - failed
+          - partial_success
+          - cancelled
+        progress:
+          type:
+          - number
+          - 'null'
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        error:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - id
+      - status
+    PostEnrichmentDto:
+      type: object
+      properties:
+        identifier:
+          description: Single person (mutually exclusive with identifiers)
+          allOf:
+          - $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        identifiers:
+          description: Batch (max 100); mutually exclusive with identifier
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonIdentifierRecordDto'
+        fields:
+          example:
+          - contact.email
+          - signals
+          type: array
+          items:
+            type: string
+        signals_config:
+          $ref: '#/components/schemas/SignalsConfigDto'
+      required:
+      - fields
   securitySchemes:
     AccessKey:
       type: apiKey
