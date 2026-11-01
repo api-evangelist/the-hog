@@ -64,6 +64,151 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The Hog is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+The Hog is a real-time web intelligence API for AI agents and go-to-market teams, founded in 2025 (Y Combinator F25) by Hudson Liao and Paulo Nascimento in San Francisco. One credit-based REST API unifies company and people search, contact enrichment, LLM-powered deep research, multi-platform web and social scraping (LinkedIn, X, Reddit, Instagram, TikTok, YouTube, Facebook), SEO intelligence, and recurring signal monitors. Fast calls return synchronously; long-running jobs run asynchronously with polling, organization-scoped idempotency keys, cursor pagination, request-id tracing, and a consistent JSON error envelope. A hosted OAuth MCP server and a local stdio MCP package expose the same capabilities to agents.
 
-Backed by: y-combinator
+**Areas:** Company · GTM Intelligence · Sales Intelligence · Data Enrichment · Web Scraping · People Data · Company Data · Deep Research · Social Monitoring · MCP · AI Agents · Y Combinator
+
+## The Hog on APIs.io
+
+Everything profiled for The Hog is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/the-hog/](https://apis.io/providers/the-hog/)** — or go straight to one of the APIs or properties below.
+
+### APIs (8)
+
+- [The Hog Company Search API](https://apis.io/apis/the-hog/the-hog-company-search-api/) — The Company Search API from The Hog — 1 operation(s) for company search.
+- [The Hog Deep Research API](https://apis.io/apis/the-hog/the-hog-deep-research-api/) — The Deep Research API from The Hog — 1 operation(s) for deep research.
+- [The Hog Enrichments API](https://apis.io/apis/the-hog/the-hog-enrichments-api/) — The Enrichments API from The Hog — 2 operation(s) for enrichments.
+- [The Hog Monitors API](https://apis.io/apis/the-hog/the-hog-monitors-api/) — The Monitors API from The Hog — 4 operation(s) for monitors.
+- [The Hog Operations API](https://apis.io/apis/the-hog/the-hog-operations-api/) — The Operations API from The Hog — 2 operation(s) for operations.
+- [The Hog People Search API](https://apis.io/apis/the-hog/the-hog-people-search-api/) — The People Search API from The Hog — 2 operation(s) for people search.
+- [The Hog Scrapers API](https://apis.io/apis/the-hog/the-hog-scrapers-api/) — The Scrapers API from The Hog — 34 operation(s) for scrapers.
+- [The Hog Search API](https://apis.io/apis/the-hog/the-hog-search-api/) — The Search API from The Hog — 2 operation(s) for search.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [The Hog](https://apis.io/servers/the-hog/the-hog/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [The Hog Agentic Access](https://apis.io/agentic-access/the-hog/the-hog-agentic-access/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [The Hog Company Search API](https://apis.io/collections/the-hog/open-the-hog-company-search-api/)
+- [The Hog Company Search Deep Research API](https://apis.io/collections/the-hog/open-the-hog-deep-research-api/)
+- [The Hog Company Search Enrichments API](https://apis.io/collections/the-hog/open-the-hog-enrichments-api/)
+- [The Hog Company Search Monitors API](https://apis.io/collections/the-hog/open-the-hog-monitors-api/)
+- [The Hog Company Search Operations API](https://apis.io/collections/the-hog/open-the-hog-operations-api/)
+- [The Hog Company Search People Search API](https://apis.io/collections/the-hog/open-the-hog-people-search-api/)
+- [The Hog Company Search Scrapers API](https://apis.io/collections/the-hog/open-the-hog-scrapers-api/)
+- [The Hog Company Search API](https://apis.io/collections/the-hog/open-the-hog-search-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [The Hog Openapi Overlay](https://apis.io/overlays/the-hog/the-hog-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [The Hog Authentication](https://apis.io/security/the-hog/the-hog-authentication/)
+- [The Hog Domain Security](https://apis.io/security/the-hog/the-hog-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [The Hog Scopes](https://apis.io/scopes/the-hog/the-hog-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [The Hog Plans Pricing](https://apis.io/plans/the-hog/the-hog-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [The Hog Rate Limits](https://apis.io/rate-limits/the-hog/the-hog-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://thehog.ai/)
+- [Documentation](https://docs.thehog.ai/)
+- [Getting started](https://docs.thehog.ai/quickstart)
+- [API reference](https://docs.thehog.ai/introduction)
+- [Pricing](https://thehog.ai/pricing)
+- [Sign up](https://platform.thehog.ai/)
+- [Blog](https://thehog.ai/blog)
+- [Terms of service](https://thehog.ai/terms)
+- [Privacy policy](https://thehog.ai/privacy)
+- [GitHub](https://github.com/The-Hog)
+
+## API Evangelist rating
+
+**Kin Score 50.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 52.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 69.0 |
+| Access clarity | 52.6 |
+
+**Agent readiness 65.6** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/the-hog/](https://apis.io/providers/the-hog/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for The Hog: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/the-hog/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
